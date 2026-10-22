@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Cobra - Profile</title>
+
+<!-- PWA META TAGS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{overscroll-behavior-y:none;}
+body{background:url('https://i.postimg.cc/wjMhFW5P/file-00000000ac7c8208af9529fec9dbbcf8.png') no-repeat center center fixed;background-size:cover;color:#fff;padding:15px;padding-bottom:150px;min-height:100vh;background-attachment:fixed !important;}
+
+.sm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:998;opacity:0;pointer-events:none;transition:0.25s;}
+.sm-overlay.active{opacity:1;pointer-events:all;}
+.side-menu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:linear-gradient(180deg,#1a1400,#0a0a0a);border-right:2px solid #FFD700;z-index:999;transition:left 0.28s;padding:25px 20px;overflow-y:auto;}
+.side-menu.active{left:0;}
+.menu-close{position:absolute;top:20px;right:15px;width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);border:1px solid #FFD700;color:#FFD700;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+.menu-header{display:flex;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid #2a2a2a;margin-bottom:20px;}
+.menu-logo{width:50px;height:50px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2px solid #FFD700;}
+.menu-header-info h4{font-size:14px;color:#FFD700;}
+.menu-header-info p{font-size:10px;color:#888;word-break:break-all;}
+.menu-items{display:flex;flex-direction:column;gap:5px;}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 12px;border-radius:12px;color:#ccc;font-size:13px;cursor:pointer;border:1px solid transparent;}
+.menu-item:active{background:rgba(255,215,0,0.1);color:#FFD700;}
+.menu-item i{font-size:18px;width:24px;text-align:center;color:#FFD700;}
+.menu-item.logout{color:#FF2E93;margin-top:15px;border-top:1px solid #2a2a2a;padding-top:20px;border-radius:0;}
+.menu-item.logout i{color:#FF2E93;}
+</style>
+</head><style>
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(20,16,5,0.85),rgba(10,10,10,0.9));padding:12px 16px;border-radius:18px;border:1px solid rgba(255,215,0,0.3);margin-bottom:15px;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.back-icon{width:42px;height:42px;background:#1a1a1a;border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1px solid rgba(255,215,0,0.4);}
+.page-title h3{font-size:16px;font-weight:700;color:#FFD700;letter-spacing:1px;}
+.page-title p{font-size:10px;color:#888;}
+.header-right{display:flex;align-items:center;gap:10px;}
+
+/* PROFILE HERO */
+.profile-hero{background:linear-gradient(135deg,rgba(42,26,0,0.15),rgba(26,13,0,0.25),rgba(13,5,0,0.35)),url('https://i.postimg.cc/gkS5WC6q/1789821267359.jpg') center/cover no-repeat;border:1.5px solid #FFD700;border-radius:22px;padding:26px 20px;margin-bottom:18px;position:relative;overflow:hidden;text-align:center;}
+.profile-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,215,0,0.25),transparent 70%);border-radius:50%;}
+.profile-hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:150px;height:150px;background:radial-gradient(circle,rgba(176,38,255,0.2),transparent 70%);border-radius:50%;}
+
+.avatar-section{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.avatar-wrapper{position:relative;width:120px;height:120px;}
+.avatar-img{width:120px;height:120px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:4px solid #FFD700;box-shadow:0 0 40px rgba(255,215,0,0.7);background-color:#0a0a0a;}
+.avatar-upload-btn{position:absolute;bottom:0;right:0;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#00FF88,#00BFFF);border:3px solid #0a0a0a;display:flex;justify-content:center;align-items:center;color:#000;font-size:15px;cursor:pointer;box-shadow:0 0 20px rgba(0,255,136,0.7);}
+.avatar-upload-btn:active{transform:scale(0.9);}
+.avatar-upload-btn.loading{pointer-events:none;background:linear-gradient(135deg,#666,#333);color:#888;}
+.avatar-upload-btn.loading i{animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.profile-name-display{font-size:20px;color:#FFD700;font-weight:900;letter-spacing:1px;text-shadow:0 0 20px rgba(255,215,0,0.6);}
+.profile-email-display{font-size:11px;color:#aaa;word-break:break-all;}
+.profile-status-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,191,255,0.1));border:1.5px solid #00FF88;border-radius:50px;padding:5px 14px;font-size:10px;color:#00FF88;font-weight:800;letter-spacing:1px;margin-top:6px;}
+.profile-status-badge .status-dot{width:8px;height:8px;background:#00FF88;border-radius:50%;box-shadow:0 0 10px #00FF88;animation:pulseDot 1.5s infinite;}
+@keyframes pulseDot{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+.profile-status-badge.blocked{background:linear-gradient(135deg,rgba(255,23,68,0.15),rgba(176,0,32,0.1));border-color:#FF1744;color:#FF1744;}
+.profile-status-badge.blocked .status-dot{background:#FF1744;box-shadow:0 0 10px #FF1744;}
+
+/* BALANCE MINI */
+.balance-mini{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.1));border:1.5px solid #FFD700;border-radius:12px;padding:12px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;}
+.balance-mini-label{font-size:10px;color:#888;letter-spacing:1.5px;margin-bottom:2px;}
+.balance-mini-amount{font-size:20px;color:#FFD700;font-weight:800;text-shadow:0 0 15px rgba(255,215,0,0.6);}
+.balance-mini-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-size:18px;}
+
+/* SECTION TITLE */
+.section-title{text-align:center;font-size:12px;font-weight:700;color:#FFD700;letter-spacing:4px;margin:22px 0 15px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:22%;height:1px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+
+/* INFO CARD */
+.info-card{background:linear-gradient(160deg,rgba(30,20,5,0.95),rgba(10,10,10,0.98));border:1.5px solid rgba(255,215,0,0.25);border-radius:18px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(255,215,0,0.15);gap:12px;}
+.info-row:last-child{border-bottom:none;}
+.info-row-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
+.info-row-left i{width:34px;height:34px;border-radius:10px;display:flex;justify-content:center;align-items:center;font-size:14px;flex-shrink:0;}
+.ic-gold{color:#FFD700;background:rgba(255,215,0,0.12);}
+.ic-pink{color:#FF2E93;background:rgba(255,46,147,0.12);}
+.ic-blue{color:#00BFFF;background:rgba(0,191,255,0.12);}
+.ic-green{color:#00FF88;background:rgba(0,255,136,0.12);}
+.ic-purple{color:#B026FF;background:rgba(176,38,255,0.12);}
+.ic-orange{color:#FF6B00;background:rgba(255,107,0,0.12);}
+.info-row-left p{font-size:9.5px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.info-row-left h4{font-size:13px;color:#fff;font-weight:700;word-break:break-all;}
+.info-row-action{font-size:11px;color:#FFD700;font-weight:800;cursor:pointer;padding:6px 12px;border:1.5px solid #FFD700;border-radius:8px;background:rgba(255,215,0,0.08);letter-spacing:0.5px;flex-shrink:0;}
+.info-row-action:active{transform:scale(0.95);}
+
+/* COPY BUTTON */
+.mini-copy{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:5px 10px;border-radius:6px;color:#000;font-weight:800;font-size:10px;cursor:pointer;flex-shrink:0;}
+</style><style>
+/* EDIT MODAL */
+.edit-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:999999;display:none;justify-content:center;align-items:center;padding:20px;}
+.edit-modal.show{display:flex;animation:fadeIn 0.25s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.edit-box{background:linear-gradient(160deg,#1a0a2a,#0d0518);border:2.5px solid #FFD700;border-radius:24px;padding:24px 20px;max-width:400px;width:100%;box-shadow:0 0 70px rgba(255,215,0,0.6);position:relative;animation:popIn 0.35s cubic-bezier(0.68,-0.55,0.27,1.55);}
+@keyframes popIn{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.edit-title{text-align:center;font-size:16px;color:#FFD700;font-weight:900;letter-spacing:2px;margin-bottom:6px;text-transform:uppercase;}
+.edit-subtitle{text-align:center;font-size:11px;color:#B026FF;font-weight:700;margin-bottom:18px;letter-spacing:1px;}
+
+.input-group{background:rgba(0,0,0,0.4);border:1.5px solid rgba(255,215,0,0.3);border-radius:12px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.input-group:focus-within{border-color:#FFD700;box-shadow:0 0 20px rgba(255,215,0,0.3);}
+.input-group i{color:#FFD700;font-size:16px;}
+.input-group input{flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:13px;font-family:'Poppins',sans-serif;}
+.input-group input::placeholder{color:#666;}
+
+.edit-btns{display:flex;gap:10px;margin-top:20px;}
+.edit-btn{flex:1;padding:14px;border-radius:12px;font-weight:900;font-size:12px;letter-spacing:1.5px;cursor:pointer;border:none;text-transform:uppercase;transition:transform 0.15s;}
+.edit-btn:active{transform:scale(0.96);}
+.edit-btn.cancel{background:rgba(255,255,255,0.08);color:#ccc;border:1.5px solid rgba(255,255,255,0.15);}
+.edit-btn.save{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;box-shadow:0 6px 20px rgba(255,215,0,0.5);}
+.edit-btn:disabled{opacity:0.6;cursor:not-allowed;}
+
+/* EDIT MENU LIST */
+.edit-menu-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}
+.edit-menu-item{display:flex;align-items:center;gap:12px;padding:14px;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(0,0,0,0.4));border:1.5px solid rgba(255,215,0,0.3);border-radius:12px;cursor:pointer;transition:all 0.2s;}
+.edit-menu-item:active{transform:scale(0.98);background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(0,0,0,0.5));}
+.edit-menu-item i{width:40px;height:40px;border-radius:11px;display:flex;justify-content:center;align-items:center;font-size:16px;flex-shrink:0;}
+.edit-menu-item-info{flex:1;min-width:0;}
+.edit-menu-item-info h4{font-size:12px;color:#FFD700;font-weight:800;margin-bottom:2px;}
+.edit-menu-item-info p{font-size:10px;color:#888;line-height:1.3;}
+.edit-menu-item-arrow{color:#FFD700;font-size:14px;}
+
+/* LOGOUT BUTTON */
+.logout-btn{width:100%;background:linear-gradient(135deg,#FF1744,#B00020);border:2px solid #FFD700;padding:16px;border-radius:14px;color:#fff;font-weight:900;font-size:14px;cursor:pointer;letter-spacing:2px;text-transform:uppercase;box-shadow:0 8px 25px rgba(255,23,68,0.5);display:flex;justify-content:center;align-items:center;gap:10px;margin-top:20px;}
+.logout-btn:active{transform:scale(0.98);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,10,10,0.98);border-top:1px solid rgba(255,215,0,0.25);display:flex;justify-content:space-around;align-items:center;padding:12px 8px 14px 8px;z-index:99999;box-shadow:0 -5px 25px rgba(0,0,0,0.6);}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:9px;cursor:pointer;gap:4px;flex:1;min-height:50px;}
+.nav-item i{font-size:22px;line-height:1;color:inherit;}
+.nav-item p{font-size:9px;color:inherit;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-28px;width:70px;height:70px;min-width:70px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;box-shadow:0 0 25px rgba(255,215,0,0.7);}
+
+/* TOAST */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 26px;border-radius:50px;font-weight:700;font-size:13px;z-index:999999;transition:all 0.35s;opacity:0;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+/* LOADING OVERLAY */
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999999;display:none;justify-content:center;align-items:center;flex-direction:column;gap:16px;}
+.loading-overlay.show{display:flex;}
+.loading-overlay .spinner{width:60px;height:60px;border:5px solid rgba(255,215,0,0.2);border-top-color:#FFD700;border-radius:50%;animation:spin 0.9s linear infinite;}
+.loading-overlay p{font-size:13px;color:#FFD700;letter-spacing:2px;font-weight:800;}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+<div class="spinner"></div>
+<p id="loadingText">PROCESSING...</p>
+</div>
+
+<!-- SIDE MENU -->
+<div class="sm-overlay" id="sideMenuOverlay" onclick="closeSideMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-close" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
+<div class="menu-header">
+<div class="menu-logo"></div>
+<div class="menu-header-info">
+<h4 id="menuUserName">Loading...</h4>
+<p id="menuUserEmail">Loading...</p>
+</div>
+</div>
+<div class="menu-items">
+<div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> Home</div>
+<div class="menu-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i> Invest</div>
+<div class="menu-item" onclick="window.location.href='deposit.html'"><i class="fas fa-wallet"></i> Deposit</div>
+<div class="menu-item" onclick="window.location.href='withdraw.html'"><i class="fas fa-money-bill-transfer"></i> Withdraw</div>
+<div class="menu-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i> Team</div>
+<div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> Profile</div>
+<div class="menu-item" onclick="window.location.href='support.html'"><i class="fas fa-headset"></i> Support</div>
+<div class="menu-item logout" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-left">
+<div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+<div class="page-title">
+<h3>MY PROFILE</h3>
+<p>Manage your account</p>
+</div>
+</div>
+<div class="header-right">
+<div class="menu-icon" onclick="openSideMenu()" style="width:42px;height:42px;background:#1a1a1a;border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1px solid rgba(255,215,0,0.4);"><i class="fas fa-bars"></i></div>
+</div>
+</div>
+
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+<div class="avatar-section">
+<div class="avatar-wrapper">
+<div class="avatar-img" id="profileAvatar"></div>
+<div class="avatar-upload-btn" id="avatarUploadBtn" onclick="document.getElementById('avatarInput').click()">
+<i class="fas fa-camera"></i>
+</div>
+<input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)">
+</div>
+<div class="profile-name-display" id="profileNameDisplay">Loading...</div>
+<div class="profile-email-display" id="profileEmailDisplay">Loading...</div>
+<div class="profile-status-badge" id="profileStatusBadge">
+<span class="status-dot"></span>
+<span id="statusText">ACTIVE</span>
+</div>
+</div>
+</div>
+
+<!-- BALANCE MINI -->
+<div class="balance-mini">
+<div>
+<div class="balance-mini-label">TOTAL BALANCE</div>
+<div class="balance-mini-amount" id="profileBalance">Rs. 0.00</div>
+</div>
+<div class="balance-mini-icon"><i class="fas fa-wallet"></i></div>
+</div>
+
+<!-- ACCOUNT INFO -->
+<div class="section-title">Account Information</div>
+<div class="info-card">
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-user ic-gold"></i>
+<div>
+<p>Full Name</p>
+<h4 id="infoName">Loading...</h4>
+</div>
+</div>
+<button class="info-row-action" onclick="openEditName()">EDIT</button>
+</div>
+
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-envelope ic-blue"></i>
+<div>
+<p>Email Address</p>
+<h4 id="infoEmail">Loading...</h4>
+</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-user-tag ic-purple"></i>
+<div>
+<p>Referral Code</p>
+<h4 id="infoReferralCode">N/A</h4>
+</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-user-friends ic-orange"></i>
+<div>
+<p>Refer by</p>
+<h4 id="infoRefBy">N/A</h4>
+</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-calendar-check ic-green"></i>
+<div>
+<p>Joined On</p>
+<h4 id="infoJoined">N/A</h4>
+</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-id-card ic-gold"></i>
+<div>
+<p>User ID</p>
+<h4 id="infoUserId" style="font-size:11px;">N/A</h4>
+</div>
+</div>
+<button class="mini-copy" onclick="copyUserId()"><i class="fas fa-copy"></i></button>
+</div>
+</div>
+
+<!-- REFERRAL LINK -->
+<div class="section-title">Your Referral Link</div>
+<div class="info-card">
+<div class="info-row">
+<div class="info-row-left">
+<i class="fas fa-link ic-purple"></i>
+<div>
+<p>Share & Earn</p>
+<h4 id="infoReferralLink" style="font-size:11px;word-break:break-all;">Loading...</h4>
+</div>
+</div>
+<button class="mini-copy" onclick="copyReferralLink()"><i class="fas fa-copy"></i></button>
+</div>
+</div>
+
+<!-- SETTINGS -->
+<div class="section-title">Settings</div>
+<div class="info-card">
+<div class="info-row" onclick="openEditName()" style="cursor:pointer;">
+<div class="info-row-left">
+<i class="fas fa-pen ic-gold"></i>
+<div>
+<p>Edit Profile</p>
+<h4>Change Name & Info</h4>
+</div>
+</div>
+<span class="info-row-action">OPEN</span>
+</div>
+
+<div class="info-row" onclick="openChangePassword()" style="cursor:pointer;">
+<div class="info-row-left">
+<i class="fas fa-key ic-pink"></i>
+<div>
+<p>Security</p>
+<h4>Change Password</h4>
+</div>
+</div>
+<span class="info-row-action">OPEN</span>
+</div>
+
+<div class="info-row" onclick="window.location.href='support.html'" style="cursor:pointer;">
+<div class="info-row-left">
+<i class="fas fa-headset ic-blue"></i>
+<div>
+<p>Support</p>
+<h4>Contact Help Center</h4>
+</div>
+</div>
+<span class="info-row-action">OPEN</span>
+</div>
+</div>
+
+<!-- LOGOUT -->
+<button class="logout-btn" onclick="confirmLogout()">
+<i class="fas fa-sign-out-alt"></i> LOGOUT ACCOUNT
+</button>
+
+<!-- EDIT NAME MODAL -->
+<div class="edit-modal" id="editNameModal">
+<div class="edit-box">
+<div class="edit-title"><i class="fas fa-pen"></i> EDIT NAME</div>
+<div class="edit-subtitle">Apna naam change karein</div>
+<div class="input-group">
+<i class="fas fa-user"></i>
+<input type="text" id="editNameInput" placeholder="Enter your full name" maxlength="50">
+</div>
+<div class="edit-btns">
+<button class="edit-btn cancel" onclick="closeEditName()">CANCEL</button>
+<button class="edit-btn save" id="saveNameBtn" onclick="saveName()">SAVE</button>
+</div>
+</div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="edit-modal" id="changePassModal">
+<div class="edit-box">
+<div class="edit-title"><i class="fas fa-key"></i> CHANGE PASSWORD</div>
+<div class="edit-subtitle">Naya password set karein</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="currentPassInput" placeholder="Current Password">
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="newPassInput" placeholder="New Password (min 6 chars)">
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="confirmPassInput" placeholder="Confirm New Password">
+</div>
+<div class="edit-btns">
+<button class="edit-btn cancel" onclick="closeChangePassword()">CANCEL</button>
+<button class="edit-btn save" id="savePassBtn" onclick="savePassword()">UPDATE</button>
+</div>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item active" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, getDoc, updateDoc, setDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+
+// ✅ NAYA LINK
+var BASE_URL = 'effervescent-selkie-4957fa.netlify.app';
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+window.showToast = showToast;
+
+/* ============================================================
+   LOADING OVERLAY
+   ============================================================ */
+function showLoading(text){
+  document.getElementById('loadingText').innerText = text || 'PROCESSING...';
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function hideLoading(){
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
+/* ============================================================
+   SIDE MENU
+   ============================================================ */
+window.openSideMenu = function(){
+  document.getElementById('sideMenu').classList.add('active');
+  document.getElementById('sideMenuOverlay').classList.add('active');
+};
+window.closeSideMenu = function(){
+  document.getElementById('sideMenu').classList.remove('active');
+  document.getElementById('sideMenuOverlay').classList.remove('active');
+};
+window.logoutUser = function(){
+  localStorage.removeItem('kingcobra_current');
+  sessionStorage.clear();
+  showToast('Logging out...');
+  setTimeout(function(){ window.location.href = 'index.html'; }, 700);
+};
+window.confirmLogout = function(){
+  if(confirm('Kya aap logout karna chahte hain?')){
+    logoutUser();
+  }
+};
+
+/* ============================================================
+   COPY FUNCTIONS
+   ============================================================ */
+window.copyReferralLink = function(){
+  var l = document.getElementById('infoReferralLink').innerText;
+  showToast('Referral Link Copied!', 'success');
+  if(navigator.clipboard){ navigator.clipboard.writeText(l); }
+};
+window.copyUserId = function(){
+  var id = document.getElementById('infoUserId').innerText;
+  if(id === 'N/A' || !id){ showToast('User ID not available', 'error'); return; }
+  showToast('User ID Copied!', 'success');
+  if(navigator.clipboard){ navigator.clipboard.writeText(id); }
+};
+
+/* ============================================================
+   AVATAR UPLOAD
+   ============================================================ */
+window.handleAvatarUpload = function(event){
+  var file = event.target.files[0];
+  if(!file){ return; }
+
+  // ✅ Check file size (max 1MB for base64, change if using Storage)
+  if(file.size > 1024 * 1024){
+    showToast('Image too large! Max 1MB', 'error');
+    event.target.value = '';
+    return;
+  }
+
+  // ✅ Check file type
+  if(!file.type.startsWith('image/')){
+    showToast('Only images allowed!', 'error');
+    event.target.value = '';
+    return;
+  }
+
+  var btn = document.getElementById('avatarUploadBtn');
+  btn.classList.add('loading');
+  btn.innerHTML = '<i class="fas fa-spinner"></i>';
+
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var base64Image = e.target.result;
+
+    // ✅ Update UI first
+    document.getElementById('profileAvatar').style.backgroundImage = 'url(' + base64Image + ')';
+
+    // ✅ Save to Firestore
+    saveAvatar(base64Image);
+  };
+  reader.onerror = function(){
+    showToast('Failed to read image', 'error');
+    btn.classList.remove('loading');
+    btn.innerHTML = '<i class="fas fa-camera"></i>';
+  };
+  reader.readAsDataURL(file);
+};
+
+async function saveAvatar(base64Image){
+  if(!userDocId){
+    showToast('User not loaded!', 'error');
+    resetUploadBtn();
+    return;
+  }
+
+  try{
+    await updateDoc(doc(db, 'users', userDocId), {
+      profileImage: base64Image,
+      profileImageUpdatedAt: new Date().toISOString()
+    });
+
+    // Update local
+    if(userData){
+      userData.profileImage = base64Image;
+    }
+    if(currentUser){
+      currentUser.profileImage = base64Image;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    showToast('Profile image updated!', 'success');
+
+  }catch(err){
+    console.error('Avatar save error:', err);
+    showToast('Failed to save image', 'error');
+  }finally{
+    resetUploadBtn();
+  }
+}
+
+function resetUploadBtn(){
+  var btn = document.getElementById('avatarUploadBtn');
+  btn.classList.remove('loading');
+  btn.innerHTML = '<i class="fas fa-camera"></i>';
+  document.getElementById('avatarInput').value = '';
+}
+
+/* ============================================================
+   EDIT NAME
+   ============================================================ */
+window.openEditName = function(){
+  if(!userData){ showToast('Data not loaded', 'error'); return; }
+  document.getElementById('editNameInput').value = userData.name || '';
+  document.getElementById('editNameModal').classList.add('show');
+};
+window.closeEditName = function(){
+  document.getElementById('editNameModal').classList.remove('show');
+};
+
+window.saveName = async function(){
+  var newName = document.getElementById('editNameInput').value.trim();
+
+  if(!newName){
+    showToast('Name cannot be empty!', 'error');
+    return;
+  }
+  if(newName.length < 2){
+    showToast('Name too short!', 'error');
+    return;
+  }
+  if(newName.length > 50){
+    showToast('Name too long!', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('saveNameBtn');
+  btn.disabled = true;
+  btn.innerText = 'SAVING...';
+
+  try{
+    await updateDoc(doc(db, 'users', userDocId), {
+      name: newName,
+      nameUpdatedAt: new Date().toISOString()
+    });
+
+    userData.name = newName;
+    if(currentUser){
+      currentUser.name = newName;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    // Update UI
+    document.getElementById('profileNameDisplay').innerText = newName;
+    document.getElementById('infoName').innerText = newName;
+    document.getElementById('menuUserName').innerText = newName;
+
+    closeEditName();
+    showToast('Name updated successfully!', 'success');
+
+  }catch(err){
+    console.error('Save name error:', err);
+    showToast('Failed to save name', 'error');
+  }finally{
+    btn.disabled = false;
+    btn.innerText = 'SAVE';
+  }
+};
+
+/* ============================================================
+   CHANGE PASSWORD
+   ============================================================ */
+window.openChangePassword = function(){
+  document.getElementById('currentPassInput').value = '';
+  document.getElementById('newPassInput').value = '';
+  document.getElementById('confirmPassInput').value = '';
+  document.getElementById('changePassModal').classList.add('show');
+};
+window.closeChangePassword = function(){
+  document.getElementById('changePassModal').classList.remove('show');
+};
+
+window.savePassword = async function(){
+  var currentPass = document.getElementById('currentPassInput').value;
+  var newPass = document.getElementById('newPassInput').value;
+  var confirmPass = document.getElementById('confirmPassInput').value;
+
+  if(!currentPass || !newPass || !confirmPass){
+    showToast('All fields required!', 'error');
+    return;
+  }
+  if(newPass.length < 6){
+    showToast('Password must be 6+ characters!', 'error');
+    return;
+  }
+  if(newPass !== confirmPass){
+    showToast('Passwords do not match!', 'error');
+    return;
+  }
+  if(currentPass !== userData.password){
+    showToast('Current password is wrong!', 'error');
+    return;
+  }
+  if(newPass === currentPass){
+    showToast('New password must be different!', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('savePassBtn');
+  btn.disabled = true;
+  btn.innerText = 'UPDATING...';
+
+  try{
+    await updateDoc(doc(db, 'users', userDocId), {
+      password: newPass,
+      passwordUpdatedAt: new Date().toISOString()
+    });
+
+    userData.password = newPass;
+    if(currentUser){
+      currentUser.password = newPass;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    closeChangePassword();
+    showToast('Password changed successfully!', 'success');
+
+  }catch(err){
+    console.error('Password save error:', err);
+    showToast('Failed to change password', 'error');
+  }finally{
+    btn.disabled = false;
+    btn.innerText = 'UPDATE';
+  }
+};
+
+console.log('Part 5 Loaded — Functions Ready');/* ============================================================
+   FIND USER DOCUMENT
+   ============================================================ */
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}
+
+/* ============================================================
+   UPDATE PROFILE UI
+   ============================================================ */
+function updateProfileUI(data){
+  if(!data) return;
+
+  // ✅ Name
+  var displayName = data.name || 'User';
+  document.getElementById('profileNameDisplay').innerText = displayName;
+  document.getElementById('infoName').innerText = displayName;
+  document.getElementById('menuUserName').innerText = displayName;
+
+  // ✅ Email
+  document.getElementById('profileEmailDisplay').innerText = data.email || 'N/A';
+  document.getElementById('infoEmail').innerText = data.email || 'N/A';
+  document.getElementById('menuUserEmail').innerText = data.email || '';
+
+  // ✅ Balance
+  var bal = Number(data.balance) || 0;
+  document.getElementById('profileBalance').innerText = 'Rs. ' + bal.toFixed(2);
+
+  // ✅ Referral Code
+  document.getElementById('infoReferralCode').innerText = data.email || 'N/A';
+
+  // ✅ Refer by
+  document.getElementById('infoRefBy').innerText = data.referral || 'N/A';
+
+  // ✅ Joined On
+  var joinedStr = 'N/A';
+  if(data.createdAt){
+    try{
+      joinedStr = new Date(data.createdAt).toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: 'numeric'
+      });
+    }catch(e){}
+  }
+  document.getElementById('infoJoined').innerText = joinedStr;
+
+  // ✅ User ID
+  document.getElementById('infoUserId').innerText = userDocId || 'N/A';
+
+  // ✅ Referral Link — NAYA LINK
+  var myEmail = (data.email || '').trim().toLowerCase();
+  var refURL = BASE_URL + '/index.html?ref=' + encodeURIComponent(myEmail);
+  document.getElementById('infoReferralLink').innerText = refURL;
+
+  // ✅ Status Badge
+  var statusBadge = document.getElementById('profileStatusBadge');
+  var statusText = document.getElementById('statusText');
+  if(data.blocked === true){
+    statusBadge.classList.add('blocked');
+    statusText.innerText = 'BLOCKED';
+  } else {
+    statusBadge.classList.remove('blocked');
+    statusText.innerText = 'ACTIVE';
+  }
+
+  // ✅ Profile Image
+  var avatarEl = document.getElementById('profileAvatar');
+  if(data.profileImage){
+    avatarEl.style.backgroundImage = 'url(' + data.profileImage + ')';
+  } else {
+    // Default image
+    avatarEl.style.backgroundImage = "url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg')";
+  }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  // ✅ Show cached data first
+  updateProfileUI(currentUser);
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    // ✅ Full UI update
+    updateProfileUI(userData);
+
+    // ✅ Save to localStorage
+    currentUser = Object.assign({}, currentUser, userData);
+    localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+
+    // ✅ Real-time listener
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        // Redirect to login or show blocked
+        document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0000;display:flex;justify-content:center;align-items:center;color:#FF1744;font-size:20px;font-weight:800;flex-direction:column;gap:16px;text-align:center;padding:30px;">' +
+          '<i class="fas fa-ban" style="font-size:60px;"></i>' +
+          '<h1>ACCOUNT BLOCKED</h1>' +
+          '<p style="font-size:14px;color:#aaa;">Please contact support for assistance.</p>' +
+          '</div>';
+        return;
+      }
+
+      updateProfileUI(u);
+
+      currentUser = Object.assign({}, currentUser, u);
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    });
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+  }
+});
+
+// ✅ Close modals on outside click
+document.addEventListener('click', function(e){
+  if(e.target.id === 'editNameModal') closeEditName();
+  if(e.target.id === 'changePassModal') closeChangePassword();
+});
+
+console.log('Profile Page Loaded Successfully');
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

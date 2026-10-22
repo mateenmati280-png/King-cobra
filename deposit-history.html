@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deposit History - King Cobra</title>
+
+<!-- PWA META TAGS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;-webkit-tap-highlight-color:transparent;}
+body{background:linear-gradient(160deg,#0a0a0a 0%,#1a0033 50%,#0a0a0a 100%);color:#fff;padding:15px;padding-bottom:100px;min-height:100vh;overflow-x:hidden;}
+.page-header{display:flex;align-items:center;gap:15px;background:linear-gradient(135deg,#280f50,#140528);padding:15px 20px;border-radius:20px;border:1.5px solid rgba(176,38,255,0.6);margin-bottom:20px;box-shadow:0 0 25px rgba(176,38,255,0.4);position:relative;overflow:hidden;}
+.page-header::before{content:'';position:absolute;top:-50%;right:-20%;width:150px;height:150px;background:radial-gradient(circle,rgba(176,38,255,0.4),transparent 70%);border-radius:50%;}
+.back-btn{width:44px;height:44px;background:linear-gradient(135deg,#2a0a4a,#0f0520);border-radius:14px;display:flex;justify-content:center;align-items:center;color:#B026FF;font-size:18px;cursor:pointer;border:1.5px solid rgba(176,38,255,0.6);text-decoration:none;position:relative;z-index:2;}
+.page-title{font-size:15px;font-weight:800;color:#B026FF;letter-spacing:2.5px;position:relative;z-index:2;}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+.stat-box{position:relative;background:linear-gradient(160deg,rgba(30,10,60,0.9),rgba(10,5,20,0.95));border-radius:18px;padding:16px 10px;text-align:center;border:2px solid;overflow:hidden;}
+.stat-box::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;opacity:0.3;filter:blur(20px);}
+.stat-box.pending{border-color:rgba(255,215,0,0.6);box-shadow:0 0 20px rgba(255,215,0,0.25);}
+.stat-box.pending::before{background:#FFD700;}
+.stat-box.approved{border-color:rgba(0,255,0,0.6);box-shadow:0 0 20px rgba(0,255,0,0.25);}
+.stat-box.approved::before{background:#00FF00;}
+.stat-box.rejected{border-color:rgba(255,23,68,0.6);box-shadow:0 0 20px rgba(255,23,68,0.25);}
+.stat-box.rejected::before{background:#FF1744;}
+.stat-box .stat-icon{font-size:18px;margin-bottom:6px;display:block;position:relative;z-index:2;}
+.stat-box.pending .stat-icon{color:#FFD700;}
+.stat-box.approved .stat-icon{color:#00FF00;}
+.stat-box.rejected .stat-icon{color:#FF1744;}
+.stat-box h4{font-size:22px;font-weight:800;margin-bottom:3px;position:relative;z-index:2;}
+.stat-box.pending h4{color:#FFD700;text-shadow:0 0 15px rgba(255,215,0,0.6);}
+.stat-box.approved h4{color:#00FF00;text-shadow:0 0 15px rgba(0,255,0,0.6);}
+.stat-box.rejected h4{color:#FF1744;text-shadow:0 0 15px rgba(255,23,68,0.6);}
+.stat-box p{font-size:9px;color:#aaa;letter-spacing:1.5px;font-weight:700;position:relative;z-index:2;}
+.filter-tabs{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding-bottom:5px;}
+.filter-tab{flex:1;min-width:80px;background:rgba(176,38,255,0.1);border:1.5px solid rgba(176,38,255,0.3);color:#ccc;padding:10px 12px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:1px;text-align:center;}
+.filter-tab.active{background:linear-gradient(135deg,#B026FF,#8A2BE2);color:#fff;border-color:#B026FF;box-shadow:0 0 20px rgba(176,38,255,0.6);}
+.history-card{position:relative;background:linear-gradient(160deg,rgba(30,10,60,0.85),rgba(10,5,20,0.95));border-radius:20px;padding:18px;margin-bottom:14px;border:2px solid;overflow:hidden;}
+.history-card::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;opacity:0.25;filter:blur(25px);pointer-events:none;}
+.history-card.pending{border-color:rgba(255,215,0,0.5);box-shadow:0 0 25px rgba(255,215,0,0.15);}
+.history-card.pending::before{background:#FFD700;}
+.history-card.approved{border-color:rgba(0,255,0,0.5);box-shadow:0 0 25px rgba(0,255,0,0.15);}
+.history-card.approved::before{background:#00FF00;}
+.history-card.rejected{border-color:rgba(255,23,68,0.5);box-shadow:0 0 25px rgba(255,23,68,0.15);}
+.history-card.rejected::before{background:#FF1744;}
+.hc-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;position:relative;z-index:2;}
+.hc-icon{width:46px;height:46px;border-radius:14px;display:flex;justify-content:center;align-items:center;font-size:20px;flex-shrink:0;}
+.history-card.pending .hc-icon{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;box-shadow:0 0 20px rgba(255,215,0,0.6);}
+.history-card.approved .hc-icon{background:linear-gradient(135deg,#00FF00,#00AA00);color:#000;box-shadow:0 0 20px rgba(0,255,0,0.6);}
+.history-card.rejected .hc-icon{background:linear-gradient(135deg,#FF1744,#8B0000);color:#fff;box-shadow:0 0 20px rgba(255,23,68,0.6);}
+.hc-title-wrap{flex:1;min-width:0;}
+.hc-title{font-size:10px;color:#888;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;}
+.hc-amount{font-size:22px;font-weight:800;color:#00FF00;text-shadow:0 0 20px rgba(0,255,0,0.5);}
+.hc-amount.pending{color:#FFD700;text-shadow:0 0 20px rgba(255,215,0,0.5);}
+.hc-amount.rejected{color:#FF1744;text-shadow:0 0 20px rgba(255,23,68,0.5);text-decoration:line-through;text-decoration-thickness:2px;}
+.hc-status{padding:6px 12px;border-radius:10px;font-size:9px;font-weight:800;letter-spacing:1.2px;position:relative;z-index:2;}
+.hs-pending{background:rgba(255,215,0,0.15);color:#FFD700;border:1.5px solid #FFD700;}
+.hs-approved{background:rgba(0,255,0,0.15);color:#00FF00;border:1.5px solid #00FF00;}
+.hs-rejected{background:rgba(255,23,68,0.15);color:#FF1744;border:1.5px solid #FF1744;}
+.hc-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;position:relative;z-index:2;}
+.hc-info-box{background:rgba(0,0,0,0.35);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:10px 12px;}
+.hc-info-box .lbl{font-size:9px;color:#888;letter-spacing:1px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:5px;}
+.hc-info-box .lbl i{color:#B026FF;font-size:10px;}
+.hc-info-box .val{font-size:11px;color:#FFD700;font-weight:700;word-break:break-all;}
+.hc-timeline{background:rgba(0,0,0,0.35);border-left:3px solid #B026FF;border-radius:8px;padding:10px 12px;margin-bottom:10px;position:relative;z-index:2;}
+.hc-timeline .tl-row{display:flex;align-items:center;gap:8px;font-size:10px;color:#aaa;margin-bottom:6px;}
+.hc-timeline .tl-row:last-child{margin-bottom:0;}
+.hc-timeline .tl-row i{color:#FFD700;width:14px;text-align:center;}
+.hc-timeline .tl-row b{color:#fff;font-weight:600;}
+.hc-screenshot{position:relative;z-index:2;margin-top:12px;}
+.hc-screenshot .ss-label{font-size:10px;color:#FFD700;margin-bottom:8px;letter-spacing:1px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.hc-screenshot img{width:100%;max-height:200px;object-fit:contain;border-radius:12px;border:2px solid rgba(255,215,0,0.5);background:#000;cursor:pointer;box-shadow:0 0 20px rgba(255,215,0,0.2);}
+.empty{text-align:center;padding:70px 20px;background:linear-gradient(160deg,rgba(30,10,60,0.5),rgba(10,5,20,0.8));border-radius:22px;border:1.5px dashed rgba(176,38,255,0.4);}
+.empty .empty-icon{width:90px;height:90px;margin:0 auto 20px;border-radius:50%;background:linear-gradient(135deg,rgba(176,38,255,0.2),rgba(255,215,0,0.1));display:flex;justify-content:center;align-items:center;font-size:40px;color:#B026FF;border:2px solid rgba(176,38,255,0.4);}
+.empty h4{font-size:15px;color:#ccc;margin-bottom:8px;font-weight:700;}
+.empty p{font-size:11px;color:#777;margin-bottom:18px;}
+.empty .go-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:12px 24px;border-radius:12px;font-weight:800;font-size:12px;letter-spacing:1px;text-decoration:none;box-shadow:0 0 25px rgba(255,215,0,0.5);}
+.loading{text-align:center;padding:80px 20px;color:#B026FF;}
+.loading i{font-size:50px;display:block;margin-bottom:18px;animation:spin 1s linear infinite;}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.loading p{font-size:12px;letter-spacing:2px;font-weight:700;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;display:none;justify-content:center;align-items:center;padding:20px;}
+.modal.show{display:flex;}
+.modal img{max-width:100%;max-height:90vh;border-radius:14px;border:3px solid #FFD700;box-shadow:0 0 60px rgba(255,215,0,0.6);}
+.modal-close{position:absolute;top:20px;right:20px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#8B0000);color:#fff;border:2px solid #FFD700;font-size:20px;cursor:pointer;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:rgba(0,0,0,0.3);}
+::-webkit-scrollbar-thumb{background:linear-gradient(#B026FF,#8A2BE2);border-radius:10px;}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+<a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+<div class="page-title"><i class="fas fa-file-invoice"></i> DEPOSIT HISTORY</div>
+</div>
+
+<div class="stats-row">
+<div class="stat-box pending">
+<i class="fas fa-clock stat-icon"></i>
+<h4 id="statPending">0</h4>
+<p>PENDING</p>
+</div>
+<div class="stat-box approved">
+<i class="fas fa-check-circle stat-icon"></i>
+<h4 id="statApproved">0</h4>
+<p>APPROVED</p>
+</div>
+<div class="stat-box rejected">
+<i class="fas fa-times-circle stat-icon"></i>
+<h4 id="statRejected">0</h4>
+<p>REJECTED</p>
+</div>
+</div>
+
+<div class="filter-tabs">
+<div class="filter-tab active" onclick="filterHistory('all', this)">ALL</div>
+<div class="filter-tab" onclick="filterHistory('pending', this)">PENDING</div>
+<div class="filter-tab" onclick="filterHistory('approved', this)">APPROVED</div>
+<div class="filter-tab" onclick="filterHistory('rejected', this)">REJECTED</div>
+</div>
+
+<div id="historyList">
+<div class="loading"><i class="fas fa-spinner"></i><p>LOADING...</p></div>
+</div>
+
+<div class="modal" id="imgModal" onclick="closeImg()">
+<button class="modal-close" onclick="closeImg()"><i class="fas fa-times"></i></button>
+<img src="" id="modalImg" onclick="event.stopPropagation()">
+</div>
+
+<script type="module">
+import { db, doc, collection, query, where, onSnapshot } from './firebase-config.js';
+
+var allDeposits = [];
+var currentFilter = 'all';
+var currentEmail = '';
+
+function showToast(msg){
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 24px;border-radius:50px;font-weight:700;font-size:12px;z-index:999999;transition:all 0.35s;opacity:0;font-family:Poppins,sans-serif;';
+    t.innerText = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.style.transform = 'translateX(-50%) translateY(0)'; t.style.opacity = '1'; }, 50);
+    setTimeout(function(){ t.style.transform = 'translateX(-50%) translateY(150px)'; t.style.opacity = '0'; setTimeout(function(){ t.remove(); }, 400); }, 2500);
+}
+
+window.openImg = function(src){ document.getElementById('modalImg').src = src; document.getElementById('imgModal').classList.add('show'); };
+window.closeImg = function(){ document.getElementById('imgModal').classList.remove('show'); };
+
+function formatDate(iso){
+    if(!iso) return 'N/A';
+    try{
+        var d = new Date(iso);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var day = d.getDate();
+        var mon = months[d.getMonth()];
+        var year = d.getFullYear();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        h = h % 12; if(h === 0) h = 12;
+        m = m < 10 ? '0' + m : m;
+        return day + ' ' + mon + ' ' + year + ' • ' + h + ':' + m + ' ' + ampm;
+    }catch(e){ return iso; }
+}
+
+function showBlockedScreen(){
+    document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(160deg,#1a0000 0%,#0a0000 60%,#000 100%);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center;font-family:Poppins,sans-serif;"><div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#8B0000);display:flex;justify-content:center;align-items:center;font-size:70px;color:#fff;margin-bottom:35px;box-shadow:0 0 80px rgba(255,23,68,0.9);"><i class="fas fa-ban"></i></div><h1 style="font-size:28px;font-weight:800;color:#FF1744;letter-spacing:3px;margin-bottom:15px;text-shadow:0 0 40px #FF1744;">ACCOUNT BLOCKED</h1><p style="font-size:13px;color:#aaa;">Aap ka account temporary block hai.</p></div>';
+}
+
+window.filterHistory = function(filter, el){
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('active'); });
+    el.classList.add('active');
+    renderHistory();
+};
+
+function renderHistory(){
+    var wrap = document.getElementById('historyList');
+
+    if(allDeposits.length === 0){
+        wrap.innerHTML = '<div class="empty"><div class="empty-icon"><i class="fas fa-inbox"></i></div><h4>Abhi Koi Deposit Nahi</h4><p>Aap ne abhi tak koi deposit nahi kiya</p><a href="deposit.html" class="go-btn"><i class="fas fa-plus-circle"></i> DEPOSIT NOW</a></div>';
+        return;
+    }
+
+    var list = currentFilter === 'all' ? allDeposits : allDeposits.filter(function(r){ return r.status === currentFilter; });
+
+    if(list.length === 0){
+        wrap.innerHTML = '<div class="empty"><div class="empty-icon"><i class="fas fa-filter"></i></div><h4>Koi ' + currentFilter.toUpperCase() + ' deposit nahi</h4><p>Is category mein koi record nahi mila</p></div>';
+        return;
+    }
+
+    var html = '';
+    list.forEach(function(r){
+        var isPending = r.status === 'pending';
+        var isApproved = r.status === 'approved';
+        var isRejected = r.status === 'rejected';
+        var iconClass = isPending ? 'fa-clock' : (isApproved ? 'fa-check-circle' : 'fa-times-circle');
+        var amountClass = isPending ? 'pending' : (isRejected ? 'rejected' : '');
+
+        html += '<div class="history-card ' + r.status + '">';
+        html += '<div class="hc-top">';
+        html += '<div class="hc-icon"><i class="fas ' + iconClass + '"></i></div>';
+        html += '<div class="hc-title-wrap"><div class="hc-title">DEPOSIT AMOUNT</div><div class="hc-amount ' + amountClass + '">Rs. ' + (r.amount || 0).toLocaleString() + '</div></div>';
+        html += '<div class="hc-status hs-' + r.status + '">' + r.status.toUpperCase() + '</div>';
+        html += '</div>';
+
+        html += '<div class="hc-info-grid">';
+        html += '<div class="hc-info-box"><div class="lbl"><i class="fas fa-hashtag"></i> TXN ID</div><div class="val">' + (r.txnId || 'N/A') + '</div></div>';
+        html += '<div class="hc-info-box"><div class="lbl"><i class="fas fa-user"></i> USER</div><div class="val">' + (r.userName || 'User') + '</div></div>';
+        html += '</div>';
+
+        html += '<div class="hc-timeline">';
+        html += '<div class="tl-row"><i class="fas fa-calendar-plus"></i> <span>Created:</span> <b>' + formatDate(r.createdAt) + '</b></div>';
+        if(r.approvedAt){
+            var label = isApproved ? 'Approved' : (isRejected ? 'Rejected' : 'Processed');
+            var icon = isApproved ? 'fa-check-circle' : 'fa-times-circle';
+            var color = isApproved ? '#00FF00' : '#FF1744';
+            html += '<div class="tl-row"><i class="fas ' + icon + '" style="color:' + color + '"></i> <span>' + label + ':</span> <b style="color:' + color + '">' + formatDate(r.approvedAt) + '</b></div>';
+        }
+        html += '</div>';
+
+        if(r.screenshot){
+            html += '<div class="hc-screenshot"><div class="ss-label"><i class="fas fa-image"></i> PAYMENT SCREENSHOT</div><img src="' + r.screenshot + '" onclick="openImg(this.src)" alt="Screenshot"></div>';
+        }
+
+        html += '</div>';
+    });
+
+    wrap.innerHTML = html;
+}
+
+function updateStats(){
+    var p = allDeposits.filter(function(r){ return r.status === 'pending'; }).length;
+    var a = allDeposits.filter(function(r){ return r.status === 'approved'; }).length;
+    var rj = allDeposits.filter(function(r){ return r.status === 'rejected'; }).length;
+    document.getElementById('statPending').innerText = p;
+    document.getElementById('statApproved').innerText = a;
+    document.getElementById('statRejected').innerText = rj;
+}
+
+window.addEventListener('load', function(){
+    var cur = localStorage.getItem('kingcobra_current');
+    if(!cur){ window.location.href = 'index.html'; return; }
+
+    var userData;
+    try{ userData = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+    if(!userData.email){ window.location.href = 'index.html'; return; }
+
+    currentEmail = userData.email;
+
+    onSnapshot(doc(db, 'users', currentEmail), function(snap){
+        if(!snap.exists()) return;
+        if(snap.data().blocked === true) showBlockedScreen();
+    });
+
+    var q = query(collection(db, 'requests'), where('userEmail', '==', currentEmail));
+    onSnapshot(q, function(snap){
+        allDeposits = [];
+        snap.forEach(function(d){
+            var r = d.data();
+            if(r.type === 'deposit') allDeposits.push(r);
+        });
+        allDeposits.sort(function(a,b){ return new Date(b.createdAt || 0) - new Date(a.createdAt || 0); });
+        updateStats();
+        renderHistory();
+    }, function(err){
+        document.getElementById('historyList').innerHTML = '<div class="empty"><div class="empty-icon"><i class="fas fa-exclamation-triangle"></i></div><h4>Error</h4><p>' + err.message + '</p></div>';
+    });
+});
+
+console.log("🐍 Deposit History Loaded");
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

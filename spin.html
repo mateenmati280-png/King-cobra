@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Cobra - Spin & Win</title>
+
+<!-- PWA META TAGS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{overscroll-behavior-y:none;}
+body{background:url('https://i.postimg.cc/wjMhFW5P/file-00000000ac7c8208af9529fec9dbbcf8.png') no-repeat center center fixed;background-size:cover;color:#fff;padding:15px;padding-bottom:150px;min-height:100vh;background-attachment:fixed !important;}
+
+.sm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:998;opacity:0;pointer-events:none;transition:0.25s;}
+.sm-overlay.active{opacity:1;pointer-events:all;}
+.side-menu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:linear-gradient(180deg,#1a1400,#0a0a0a);border-right:2px solid #FFD700;z-index:999;transition:left 0.28s;padding:25px 20px;overflow-y:auto;}
+.side-menu.active{left:0;}
+.menu-close{position:absolute;top:20px;right:15px;width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);border:1px solid #FFD700;color:#FFD700;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+.menu-header{display:flex;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid #2a2a2a;margin-bottom:20px;}
+.menu-logo{width:50px;height:50px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2px solid #FFD700;}
+.menu-header-info h4{font-size:14px;color:#FFD700;}
+.menu-header-info p{font-size:10px;color:#888;word-break:break-all;}
+.menu-items{display:flex;flex-direction:column;gap:5px;}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 12px;border-radius:12px;color:#ccc;font-size:13px;cursor:pointer;border:1px solid transparent;}
+.menu-item:active{background:rgba(255,215,0,0.1);color:#FFD700;}
+.menu-item i{font-size:18px;width:24px;text-align:center;color:#FFD700;}
+.menu-item.logout{color:#FF2E93;margin-top:15px;border-top:1px solid #2a2a2a;padding-top:20px;border-radius:0;}
+.menu-item.logout i{color:#FF2E93;}
+</style>
+<style>
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(20,16,5,0.85),rgba(10,10,10,0.9));padding:12px 16px;border-radius:18px;border:1px solid rgba(255,215,0,0.3);margin-bottom:15px;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.back-icon{width:42px;height:42px;background:#1a1a1a;border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1px solid rgba(255,215,0,0.4);}
+.page-title h3{font-size:16px;font-weight:700;color:#FFD700;letter-spacing:1px;}
+.page-title p{font-size:10px;color:#888;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.profile-icon{width:42px;height:42px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2px solid #FFD700;cursor:pointer;}
+
+.balance-mini{background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.1));border:1.5px solid #FFD700;border-radius:12px;padding:10px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;}
+.balance-mini-label{font-size:10px;color:#888;letter-spacing:1.5px;margin-bottom:2px;}
+.balance-mini-amount{font-size:18px;color:#FFD700;font-weight:800;text-shadow:0 0 15px rgba(255,215,0,0.6);}
+.balance-mini-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-size:16px;}
+
+.spin-hero{background:linear-gradient(135deg,rgba(42,26,0,0.15),rgba(26,13,0,0.25)),url('https://i.postimg.cc/gkS5WC6q/1789821267359.jpg') center/cover no-repeat;border:1.5px solid #FFD700;border-radius:22px;padding:22px 20px;margin-bottom:20px;position:relative;overflow:hidden;text-align:center;}
+.spin-hero::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,215,0,0.25),transparent 70%);border-radius:50%;}
+.spin-hero-content{position:relative;z-index:2;}
+.spin-hero h1{font-size:22px;color:#fff;font-weight:900;letter-spacing:2px;margin-bottom:6px;text-shadow:0 2px 15px rgba(0,0,0,1);}
+.spin-hero h1 span{color:#FFD700;text-shadow:0 0 20px rgba(255,215,0,0.8);}
+.spin-hero p{font-size:11px;color:#ddd;letter-spacing:1px;}
+.spin-hero-icon{position:absolute;top:20px;right:20px;font-size:55px;color:rgba(255,215,0,0.25);z-index:1;}
+
+.wheel-container{position:relative;width:100%;max-width:340px;margin:0 auto 20px auto;aspect-ratio:1;}
+.wheel-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#FFD700 0deg 45deg, #FFA500 45deg 90deg, #FFD700 90deg 135deg, #FFA500 135deg 180deg, #FFD700 180deg 225deg, #FFA500 225deg 270deg, #FFD700 270deg 315deg, #FFA500 315deg 360deg);padding:6px;box-shadow:0 0 40px rgba(255,215,0,0.6),0 0 80px rgba(255,215,0,0.3);}
+.wheel-bg{position:absolute;inset:6px;border-radius:50%;background:#0a0a0a;padding:6px;}
+.wheel{position:absolute;inset:6px;border-radius:50%;background:conic-gradient(from -22.5deg, #B026FF 0deg 45deg, #FF1744 45deg 90deg, #FFD700 90deg 135deg, #00FF88 135deg 180deg, #00BFFF 180deg 225deg, #FF4500 225deg 270deg, #8A2BE2 270deg 315deg, #FFA500 315deg 360deg);display:flex;justify-content:center;align-items:center;position:relative;overflow:hidden;box-shadow:inset 0 0 50px rgba(0,0,0,0.5);transition:transform 5s cubic-bezier(0.17,0.67,0.12,1);}
+.wheel::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%);pointer-events:none;}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);border:4px solid #FFD700;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:32px;font-weight:900;z-index:10;box-shadow:0 0 30px rgba(255,215,0,0.9);}
+.wheel-pointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-top:32px solid #FFD700;z-index:20;filter:drop-shadow(0 0 15px rgba(255,215,0,1));}
+.wheel-pointer::after{content:'';position:absolute;top:-32px;left:-14px;width:28px;height:28px;background:radial-gradient(circle,#FFD700,#FFA500);border-radius:50%;box-shadow:0 0 20px rgba(255,215,0,0.9);}
+.wheel-label{position:absolute;top:50%;left:50%;transform-origin:center;font-size:11px;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,1),0 0 12px rgba(0,0,0,0.9);pointer-events:none;z-index:5;letter-spacing:0.3px;text-align:center;width:60px;margin-left:-30px;margin-top:-8px;}
+
+.spin-btn-wrapper{text-align:center;margin-bottom:20px;}
+.spin-btn{background:linear-gradient(135deg,#FF1744,#B00020);border:3px solid #FFD700;padding:18px 50px;border-radius:50px;color:#fff;font-weight:900;font-size:16px;letter-spacing:2px;cursor:pointer;text-transform:uppercase;box-shadow:0 10px 40px rgba(255,23,68,0.7),0 0 60px rgba(255,215,0,0.4);transition:all 0.3s;position:relative;overflow:hidden;animation:spinBtnPulse 2s infinite;}
+@keyframes spinBtnPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.spin-btn::before{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);transform:skewX(-25deg);animation:shineBtn 3s infinite;}
+@keyframes shineBtn{0%{left:-100%;}55%{left:150%;}100%{left:150%;}}
+.spin-btn:active{transform:scale(0.96);}
+.spin-btn:disabled{background:linear-gradient(135deg,#333,#1a1a1a);color:#666;border-color:#333;cursor:not-allowed;animation:none;box-shadow:none;}
+.spin-btn:disabled::before{display:none;}
+.spin-btn.spin-available{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;border-color:#00FF88;box-shadow:0 10px 40px rgba(0,255,136,0.7),0 0 60px rgba(0,255,136,0.4);}
+</style>
+<style>
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.info-card{background:linear-gradient(160deg,rgba(30,20,5,0.95),rgba(10,10,10,0.98));border:1.5px solid rgba(255,215,0,0.25);border-radius:18px;padding:16px 14px;position:relative;overflow:hidden;}
+.info-card::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(255,215,0,0.15),transparent 70%);border-radius:50%;}
+.info-card .ic-icon{width:42px;height:42px;border-radius:12px;display:flex;justify-content:center;align-items:center;font-size:18px;margin-bottom:10px;}
+.ic-spins{color:#FFD700;background:rgba(255,215,0,0.15);}
+.ic-referrals{color:#B026FF;background:rgba(176,38,255,0.15);}
+.ic-bonus{color:#00FF88;background:rgba(0,255,136,0.15);}
+.ic-streak{color:#FF4500;background:rgba(255,69,0,0.15);}
+.info-card p{font-size:9.5px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.info-card h3{font-size:18px;color:#fff;font-weight:800;text-shadow:0 0 15px rgba(255,255,255,0.3);}
+
+.section-title{text-align:center;font-size:12px;font-weight:700;color:#FFD700;letter-spacing:4px;margin:25px 0 15px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:22%;height:1px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+
+.unlock-card{background:linear-gradient(160deg,rgba(30,20,5,0.95),rgba(10,10,10,0.98));border:2px solid #FF1744;border-radius:20px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden;box-shadow:0 0 25px rgba(255,23,68,0.3);}
+.unlock-card.unlocked{border-color:#00FF88;box-shadow:0 0 25px rgba(0,255,136,0.3);}
+.unlock-card.unlocked::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,#00FF88,#00BFFF,#00FF88);background-size:200% 100%;animation:slideGradient 3s linear infinite;}
+.unlock-card:not(.unlocked)::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,#FF1744,#FFD700,#FF1744);background-size:200% 100%;animation:slideGradient 3s linear infinite;}
+@keyframes slideGradient{0%{background-position:0% 0;}100%{background-position:200% 0;}}
+
+.unlock-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.unlock-icon{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#FF1744,#B00020);display:flex;justify-content:center;align-items:center;font-size:22px;color:#fff;flex-shrink:0;box-shadow:0 0 20px rgba(255,23,68,0.6);}
+.unlock-card.unlocked .unlock-icon{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;box-shadow:0 0 20px rgba(0,255,136,0.6);}
+.unlock-info{flex:1;min-width:0;}
+.unlock-info h4{font-size:14px;color:#FF1744;font-weight:900;margin-bottom:4px;letter-spacing:1.2px;}
+.unlock-card.unlocked .unlock-info h4{color:#00FF88;}
+.unlock-info p{font-size:10.5px;color:#aaa;line-height:1.5;}
+
+.progress-bar{width:100%;height:14px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;border:1px solid rgba(255,215,0,0.25);margin-bottom:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#FF1744,#FFD700,#00FF88);background-size:200% 100%;border-radius:10px;transition:width 0.8s ease;animation:slideGradient 3s linear infinite;width:0%;box-shadow:0 0 15px rgba(255,215,0,0.5);}
+.progress-text{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#FFD700;letter-spacing:0.5px;margin-bottom:4px;}
+.progress-text span:first-child{color:#FF1744;}
+.unlock-card.unlocked .progress-text span:first-child{color:#00FF88;}
+
+.next-steps{margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,215,0,0.3);display:flex;flex-direction:column;gap:10px;}
+.next-step-item{display:flex;gap:12px;align-items:center;padding:11px 12px;background:linear-gradient(135deg,rgba(255,215,0,0.05),rgba(0,0,0,0.3));border:1.5px solid rgba(255,215,0,0.25);border-radius:12px;position:relative;overflow:hidden;}
+.next-step-num{width:32px;height:32px;min-width:32px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;display:flex;justify-content:center;align-items:center;font-size:14px;font-weight:900;box-shadow:0 0 15px rgba(255,215,0,0.6);position:relative;z-index:2;}
+.next-step-info{flex:1;min-width:0;position:relative;z-index:2;}
+.next-step-info h5{font-size:11.5px;color:#FFD700;font-weight:800;margin-bottom:2px;letter-spacing:0.3px;}
+.next-step-info p{font-size:10px;color:#999;line-height:1.4;}
+.next-step-item.active-step{border-color:#00FF88;background:linear-gradient(135deg,rgba(0,255,136,0.1),rgba(0,0,0,0.4));}
+.next-step-item.active-step .next-step-num{background:linear-gradient(135deg,#00FF88,#00BFFF);box-shadow:0 0 20px rgba(0,255,136,0.7);animation:pulseStep 1.5s infinite;}
+@keyframes pulseStep{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+.unlock-card.unlocked .next-steps{display:none;}
+.unlock-complete-msg{display:none;text-align:center;color:#00FF88;font-size:11.5px;font-weight:800;margin-top:14px;padding:12px;background:linear-gradient(135deg,rgba(0,255,136,0.12),rgba(0,191,255,0.08));border:1.5px dashed rgba(0,255,136,0.5);border-radius:12px;letter-spacing:0.5px;line-height:1.5;}
+.unlock-card.unlocked .unlock-complete-msg{display:block;}
+
+.ref-share-box{background:linear-gradient(135deg,rgba(176,38,255,0.12),rgba(138,43,226,0.08));border:1.5px solid rgba(176,38,255,0.4);border-radius:16px;padding:14px;margin-bottom:20px;}
+.ref-share-box h4{font-size:11px;color:#B026FF;font-weight:800;letter-spacing:1.5px;margin-bottom:10px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.ref-share-box h4 i{font-size:13px;}
+.ref-link-row{display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.4);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+.ref-link-row small{flex:1;font-size:9.5px;color:#FFD700;word-break:break-all;line-height:1.4;}
+.ref-link-row button{background:linear-gradient(135deg,#B026FF,#8A2BE2);border:none;padding:6px 12px;border-radius:8px;color:#fff;font-weight:800;font-size:10px;cursor:pointer;letter-spacing:1px;flex-shrink:0;}
+.share-row{display:flex;gap:8px;}
+.share-btn{flex:1;padding:9px;border-radius:10px;font-size:11px;font-weight:800;cursor:pointer;border:none;display:flex;justify-content:center;align-items:center;gap:6px;letter-spacing:0.5px;}
+.share-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;}
+.share-telegram{background:linear-gradient(135deg,#0088CC,#005F8F);color:#fff;}
+
+.bonus-history{max-height:400px;overflow-y:auto;}
+.bonus-item{background:linear-gradient(135deg,rgba(40,20,70,0.9),rgba(15,5,35,0.95));border:1.5px solid rgba(176,38,255,0.4);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;}
+.bonus-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-weight:900;font-size:16px;flex-shrink:0;}
+.bonus-content{flex:1;min-width:0;}
+.bonus-content h4{font-size:12px;color:#fff;font-weight:800;margin-bottom:3px;}
+.bonus-content p{font-size:10px;color:#888;display:flex;align-items:center;gap:5px;}
+.bonus-content p i{color:#FFD700;font-size:9px;}
+.bonus-amount{text-align:right;flex-shrink:0;}
+.bonus-amount h5{font-size:15px;color:#00FF88;font-weight:900;text-shadow:0 0 12px rgba(0,255,136,0.6);}
+.bonus-amount small{font-size:8px;color:#888;letter-spacing:0.5px;}
+.empty-history{text-align:center;padding:30px 20px;background:linear-gradient(160deg,rgba(30,20,5,0.5),rgba(10,10,10,0.7));border:1.5px dashed rgba(255,215,0,0.3);border-radius:18px;}
+.empty-history i{font-size:45px;color:rgba(255,215,0,0.3);display:block;margin-bottom:12px;}
+.empty-history p{font-size:11px;color:#888;line-height:1.6;}
+
+.win-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:999999;display:none;justify-content:center;align-items:center;padding:20px;}
+.win-modal.show{display:flex;animation:fadeIn 0.3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.win-box{background:linear-gradient(160deg,#1a0a2a,#0d0518);border:3px solid #FFD700;border-radius:26px;padding:35px 25px;max-width:380px;width:100%;text-align:center;box-shadow:0 0 100px rgba(255,215,0,0.9);position:relative;animation:popWin 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);}
+@keyframes popWin{from{transform:scale(0.5) rotate(-10deg);opacity:0;}to{transform:scale(1) rotate(0deg);opacity:1;}}
+.win-box::before{content:'';position:absolute;inset:-4px;border-radius:28px;background:conic-gradient(#FFD700,#FFA500,#FF4500,#FFD700);z-index:-1;animation:rotateBorder 3s linear infinite;}
+@keyframes rotateBorder{to{transform:rotate(360deg);}}
+.win-icon{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;font-size:50px;margin:0 auto 20px;box-shadow:0 0 50px rgba(255,215,0,0.9);animation:bounceWin 1.2s infinite;}
+@keyframes bounceWin{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.1) rotate(-8deg);}}
+.win-box h2{font-size:20px;color:#FFD700;font-weight:900;letter-spacing:3px;margin-bottom:10px;text-transform:uppercase;}
+.win-box p{font-size:12px;color:#aaa;margin-bottom:15px;}
+.win-amount{font-size:44px;color:#00FF88;font-weight:900;margin:20px 0;text-shadow:0 0 30px rgba(0,255,136,0.9);animation:amountPulse 1s infinite;}
+@keyframes amountPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.win-box button{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:14px 40px;border-radius:50px;color:#000;font-weight:900;font-size:14px;cursor:pointer;letter-spacing:2px;margin-top:10px;box-shadow:0 8px 25px rgba(255,215,0,0.6);text-transform:uppercase;}
+
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,10,10,0.98);border-top:1px solid rgba(255,215,0,0.25);display:flex;justify-content:space-around;align-items:center;padding:12px 8px 14px 8px;z-index:99999;box-shadow:0 -5px 25px rgba(0,0,0,0.6);}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:9px;cursor:pointer;gap:4px;flex:1;min-height:50px;}
+.nav-item i{font-size:22px;line-height:1;color:inherit;}
+.nav-item p{font-size:9px;color:inherit;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-28px;width:70px;height:70px;min-width:70px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;box-shadow:0 0 25px rgba(255,215,0,0.7);}
+
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 26px;border-radius:50px;font-weight:700;font-size:13px;z-index:999999;transition:all 0.35s;opacity:0;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+.confetti{position:fixed;width:10px;height:10px;z-index:9999998;pointer-events:none;animation:confettiFall 3s linear forwards;}
+@keyframes confettiFall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<div class="sm-overlay" id="sideMenuOverlay" onclick="closeSideMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-close" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
+<div class="menu-header">
+<div class="menu-logo"></div>
+<div class="menu-header-info">
+<h4 id="menuUserName">Loading...</h4>
+<p id="menuUserEmail">Loading...</p>
+</div>
+</div>
+<div class="menu-items">
+<div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> Home</div>
+<div class="menu-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i> Invest</div>
+<div class="menu-item" onclick="window.location.href='deposit.html'"><i class="fas fa-wallet"></i> Deposit</div>
+<div class="menu-item" onclick="window.location.href='withdraw.html'"><i class="fas fa-money-bill-transfer"></i> Withdraw</div>
+<div class="menu-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i> Team</div>
+<div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> Profile</div>
+<div class="menu-item" onclick="window.location.href='support.html'"><i class="fas fa-headset"></i> Support</div>
+<div class="menu-item logout" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+</div>
+
+<!-- HEADER (sirf 1 dafa) -->
+<div class="header">
+    <div class="header-left">
+        <div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+        <div class="page-title">
+            <h3>SPIN & WIN</h3>
+            <p>Lucky Spin Wheel</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="profile-icon" onclick="window.location.href='profile.html'"></div>
+    </div>
+</div>
+
+<!-- BALANCE MINI (sirf 1 dafa) -->
+<div class="balance-mini">
+    <div>
+        <div class="balance-mini-label">YOUR BALANCE</div>
+        <div class="balance-mini-amount" id<body>
+
+<div id="toast" class="toast">Action!</div>
+
+<!-- SIDE MENU -->
+<div class="sm-overlay" id="sideMenuOverlay" onclick="closeSideMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-close" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
+<div class="menu-header">
+<div class="menu-logo"></div>
+<div class="menu-header-info">
+<h4 id="menuUserName">Loading...</h4>
+<p id="menuUserEmail">Loading...</p>
+</div>
+</div>
+<div class="menu-items">
+<div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> Home</div>
+<div class="menu-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i> Invest</div>
+<div class="menu-item" onclick="window.location.href='deposit.html'"><i class="fas fa-wallet"></i> Deposit</div>
+<div class="menu-item" onclick="window.location.href='withdraw.html'"><i class="fas fa-money-bill-transfer"></i> Withdraw</div>
+<div class="menu-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i> Team</div>
+<div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> Profile</div>
+<div class="menu-item" onclick="window.location.href='support.html'"><i class="fas fa-headset"></i> Support</div>
+<div class="menu-item logout" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+</div>
+
+<!-- HEADER (sirf 1 dafa - broken duplicate hata diya) -->
+<div class="header">
+    <div class="header-left">
+        <div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+        <div class="page-title">
+            <h3>SPIN & WIN</h3>
+            <p>Lucky Spin Wheel</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="profile-icon" onclick="window.location.href='profile.html'"></div>
+    </div>
+</div>
+
+<!-- BALANCE MINI (sirf 1 dafa) -->
+<div class="balance-mini">
+    <div>
+        <div class="balance-mini-label">YOUR BALANCE</div>
+        <div class="balance-mini-amount" id="userBalance">Rs. 0.00</div>
+    </div>
+    <div class="balance-mini-icon"><i class="fas fa-wallet"></i></div>
+</div>
+
+<!-- HERO -->
+<div class="spin-hero">
+<i class="fas fa-dharmachakra spin-hero-icon"></i>
+<div class="spin-hero-content">
+<h1>LUCKY <span>SPIN</span></h1>
+<p>Invite friends → They deposit → You spin & win!</p>
+</div>
+</div>
+
+<!-- INFO CARDS -->
+<div class="info-grid">
+<div class="info-card">
+<div class="ic-icon ic-spins"><i class="fas fa-dharmachakra"></i></div>
+<p>SPINS LEFT</p>
+<h3 id="spinsLeft">0</h3>
+</div>
+<div class="info-card">
+<div class="ic-icon ic-referrals"><i class="fas fa-user-plus"></i></div>
+<p>DEPOSITED TEAM</p>
+<h3 id="depositedTeam">0</h3>
+</div>
+<div class="info-card">
+<div class="ic-icon ic-bonus"><i class="fas fa-coins"></i></div>
+<p>TOTAL WON</p>
+<h3 id="totalWon">Rs.0</h3>
+</div>
+<div class="info-card">
+<div class="ic-icon ic-streak"><i class="fas fa-fire"></i></div>
+<p>TODAY SPINS</p>
+<h3 id="todaySpins">0</h3>
+</div>
+</div>
+
+<!-- SPIN WHEEL -->
+<div class="wheel-container">
+<div class="wheel-ring">
+<div class="wheel-bg">
+<div class="wheel" id="spinWheel">
+<div class="wheel-center"><i class="fas fa-star"></i></div>
+</div>
+</div>
+</div>
+<div class="wheel-pointer"></div>
+</div>
+
+<!-- SPIN BUTTON -->
+<div class="spin-btn-wrapper">
+<button class="spin-btn" id="spinBtn" onclick="doSpin()" disabled>
+<i class="fas fa-lock"></i> LOCKED
+</button>
+</div>
+
+<!-- UNLOCK REQUIREMENTS -->
+<div class="section-title">Unlock Requirements</div>
+<div class="unlock-card" id="unlockCard">
+<div class="unlock-header">
+<div class="unlock-icon" id="unlockIcon"><i class="fas fa-lock"></i></div>
+<div class="unlock-info">
+<h4 id="unlockTitle">SPIN LOCKED</h4>
+<p id="unlockText">Invite 1 friend who deposits and buys a plan to unlock your spin</p>
+</div>
+</div>
+
+<div class="progress-bar">
+<div class="progress-fill" id="unlockProgress"></div>
+</div>
+<div class="progress-text">
+<span id="unlockProgressLabel">Waiting for invite</span>
+<span id="unlockProgressText">0 / 1</span>
+</div>
+
+<div class="next-steps" id="nextSteps">
+<div class="next-step-item active-step">
+<div class="next-step-num">1</div>
+<div class="next-step-info">
+<h5>SHARE YOUR LINK</h5>
+<p>Invite friends using referral link below</p>
+</div>
+</div>
+<div class="next-step-item">
+<div class="next-step-num">2</div>
+<div class="next-step-info">
+<h5>FRIEND DEPOSITS</h5>
+<p>When your friend deposits any amount</p>
+</div>
+</div>
+<div class="next-step-item">
+<div class="next-step-num">3</div>
+<div class="next-step-info">
+<h5>SPIN UNLOCKS</h5>
+<p>Spin button will unlock instantly! 🎉</p>
+</div>
+</div>
+</div>
+
+<div class="unlock-complete-msg">
+<i class="fas fa-check-circle"></i> SPIN UNLOCKED! Har naya user deposit kare → <b>+1 Spin</b> milega
+</div>
+</div>
+
+<!-- REFERRAL SHARE -->
+<div class="section-title">Share Your Link</div>
+<div class="ref-share-box">
+<h4><i class="fas fa-share-alt"></i> INVITE FRIENDS & EARN SPINS</h4>
+<div class="ref-link-row">
+<small id="refLinkText">Loading...</small>
+<button onclick="copyRefLink()"><i class="fas fa-copy"></i></button>
+</div>
+<div class="share-row">
+<button class="share-btn share-whatsapp" onclick="shareWhatsApp()">
+<i class="fab fa-whatsapp"></i> WhatsApp
+</button>
+<button class="share-btn share-telegram" onclick="shareTelegram()">
+<i class="fab fa-telegram"></i> Telegram
+</button>
+</div>
+</div>
+
+<!-- BONUS HISTORY -->
+<div class="section-title">Referral Bonus History</div>
+<div class="bonus-history" id="bonusHistory">
+<div class="empty-history">
+<i class="fas fa-gift"></i>
+<p>Abhi tak koi referral bonus nahi mila.<br>Apne friends ko invite karein!</p>
+</div>
+</div>
+
+<!-- WIN MODAL -->
+<div class="win-modal" id="winModal">
+<div class="win-box">
+<div class="win-icon"><i class="fas fa-trophy"></i></div>
+<h2>CONGRATULATIONS!</h2>
+<p>You won</p>
+<div class="win-amount" id="winAmount">Rs. 0</div>
+<p style="color:#888;font-size:11px;">Balance added successfully</p>
+<button onclick="closeWinModal()"><i class="fas fa-check"></i> GREAT!</button>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, getDoc, updateDoc, addDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+var spinsAvailable = 0;
+var isSpinning = false;
+var canSpinNow = false;
+var userTeamMembers = {};
+
+// ✅ NAYA LINK
+var BASE_URL = 'effervescent-selkie-4957fa.netlify.app';
+
+// 🔴 STEP 1 MEIN TABDEELI: WHEEL_REWARDS BADLA
+var WHEEL_REWARDS = [20, 25, 30, 20, 25, 30, 40, 45];
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+window.showToast = showToast;
+
+window.openSideMenu = function(){
+  document.getElementById('sideMenu').classList.add('active');
+  document.getElementById('sideMenuOverlay').classList.add('active');
+};
+window.closeSideMenu = function(){
+  document.getElementById('sideMenu').classList.remove('active');
+  document.getElementById('sideMenuOverlay').classList.remove('active');
+};
+window.logoutUser = function(){
+  localStorage.removeItem('kingcobra_current');
+  sessionStorage.clear();
+  showToast('Logging out...');
+  setTimeout(function(){ window.location.href = 'index.html'; }, 700);
+};
+
+window.copyRefLink = function(){
+  var l = document.getElementById('refLinkText').innerText;
+  showToast('Referral Link Copied!', 'success');
+  if(navigator.clipboard){ navigator.clipboard.writeText(l); }
+};
+window.shareWhatsApp = function(){
+  var link = document.getElementById('refLinkText').innerText;
+  var msg = encodeURIComponent('🐍 Join King Cobra Investment!\n💰 Daily Earnings!\n🎡 Lucky Spin!\n\n' + link);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+};
+window.shareTelegram = function(){
+  var link = document.getElementById('refLinkText').innerText;
+  var msg = encodeURIComponent('🐍 Join King Cobra Investment!');
+  window.open('https://t.me/share/url?url=' + link + '&text=' + msg, '_blank');
+};
+
+function renderWheelLabels(){
+  var wheel = document.getElementById('spinWheel');
+  if(!wheel) return;
+
+  var oldLabels = wheel.querySelectorAll('.wheel-label');
+  oldLabels.forEach(function(el){ el.remove(); });
+
+  var segmentAngle = 360 / WHEEL_REWARDS.length;
+  var radius = 100;
+
+  WHEEL_REWARDS.forEach(function(amount, i){
+    var centerAngle = (i * segmentAngle) + (segmentAngle / 2);
+    var rad = (centerAngle - 90) * Math.PI / 180;
+    var x = Math.cos(rad) * radius;
+    var y = Math.sin(rad) * radius;
+
+    var label = document.createElement('div');
+    label.className = 'wheel-label';
+    label.innerText = 'Rs.' + amount;
+    label.style.transform = 'translate(' + x + 'px, ' + y + 'px) rotate(' + centerAngle + 'deg)';
+    wheel.appendChild(label);
+  });
+}
+
+function updateSpinUI(){
+  document.getElementById('spinsLeft').innerText = spinsAvailable;
+
+  var btn = document.getElementById('spinBtn');
+  if(isSpinning){
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
+  } else if(canSpinNow){
+    btn.disabled = false;
+    btn.classList.add('spin-available');
+    btn.innerHTML = '<i class="fas fa-star"></i> SPIN NOW';
+  } else {
+    btn.disabled = true;
+    btn.classList.remove('spin-available');
+    btn.innerHTML = '<i class="fas fa-lock"></i> LOCKED';
+  }
+}
+
+function updateUnlockUI(depositedCount){
+  var card = document.getElementById('unlockCard');
+  var icon = document.getElementById('unlockIcon');
+  var title = document.getElementById('unlockTitle');
+  var text = document.getElementById('unlockText');
+  var progress = document.getElementById('unlockProgress');
+  var progressText = document.getElementById('unlockProgressText');
+  var progressLabel = document.getElementById('unlockProgressLabel');
+
+  var hasUnlock = depositedCount > 0;
+
+  progress.style.width = (hasUnlock ? 100 : 0) + '%';
+  progressText.innerText = hasUnlock ? '1 / 1' : '0 / 1';
+
+  if(hasUnlock){
+    card.classList.add('unlocked');
+    icon.innerHTML = '<i class="fas fa-unlock"></i>';
+    title.innerText = 'SPIN UNLOCKED!';
+    title.style.color = '#00FF88';
+    text.innerText = 'Har naye user ke deposit par 1 spin unlock hota hai. ' + depositedCount + ' spins available hain!';
+    progressLabel.innerText = 'Ready to spin!';
+    canSpinNow = true;
+  } else {
+    card.classList.remove('unlocked');
+    icon.innerHTML = '<i class="fas fa-lock"></i>';
+    title.innerText = 'SPIN LOCKED';
+    title.style.color = '#FF1744';
+    text.innerText = 'Invite 1 friend who deposits to unlock your spin instantly';
+    progressLabel.innerText = 'Waiting for invite';
+    canSpinNow = false;
+  }
+}
+
+function renderBonusHistory(history){
+  var el = document.getElementById('bonusHistory');
+  if(!el) return;
+
+  if(!history || history.length === 0){
+    el.innerHTML = '<div class="empty-history"><i class="fas fa-gift"></i><p>Abhi tak koi referral bonus nahi mila.<br>Apne friends ko invite karein!</p></div>';
+    return;
+  }
+
+  history.sort(function(a,b){
+    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
+  var html = '';
+  var totalBonus = 0;
+
+  history.forEach(function(h){
+    var amount = Number(h.amount) || 0;
+    totalBonus += amount;
+    var name = h.fromUserName || h.fromUser || 'Team Member';
+    var initial = name.charAt(0).toUpperCase();
+    var planName = h.planName || 'Plan';
+    var level = h.level || 1;
+    var levelText = level === 1 ? 'Level 1' : 'Level 2';
+    var timeAgo = getTimeAgo(h.createdAt);
+
+    html += '<div class="bonus-item">';
+    html += '<div class="bonus-avatar">' + initial + '</div>';
+    html += '<div class="bonus-content">';
+    html += '<h4>' + name + '</h4>';
+    html += '<p><i class="fas fa-chart-line"></i> ' + planName + ' • ' + levelText + ' • ' + timeAgo + '</p>';
+    html += '</div>';
+    html += '<div class="bonus-amount">';
+    html += '<h5>+Rs.' + amount + '</h5>';
+    html += '<small>BONUS</small>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+  document.getElementById('totalWon').innerText = 'Rs.' + totalBonus;
+}
+
+function getTimeAgo(iso){
+  if(!iso) return 'Just now';
+  try{
+    var now = new Date();
+    var then = new Date(iso);
+    var diff = Math.floor((now - then) / 1000);
+    if(diff < 60) return 'Just now';
+    if(diff < 3600) return Math.floor(diff / 60) + ' min ago';
+    if(diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+    if(diff < 172800) return 'Yesterday';
+    return Math.floor(diff / 86400) + ' days ago';
+  }catch(e){ return 'Just now'; }
+}
+
+function showConfetti(){
+  var colors = ['#FFD700','#FF1744','#B026FF','#00FF88','#00BFFF','#FFA500'];
+  for(var i = 0; i < 60; i++){
+    var c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 0.8 + 's';
+    c.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(function(el){ return function(){ el.remove(); }; }(c), 4500);
+  }
+}
+
+console.log('Part 5 Loaded — Wheel Functions Ready');window.doSpin = async function(){
+  if(isSpinning) return;
+  if(!canSpinNow){
+    showToast('❌ Spin locked! Invite a friend to unlock.', 'error');
+    return;
+  }
+  if(!userData || !userDocId){
+    showToast('❌ User data not loaded', 'error');
+    return;
+  }
+
+  isSpinning = true;
+  updateSpinUI();
+
+  try{
+    var randomIndex = Math.floor(Math.random() * WHEEL_REWARDS.length);
+    var reward = WHEEL_REWARDS[randomIndex];
+
+    var wheel = document.getElementById('spinWheel');
+    var segmentAngle = 360 / WHEEL_REWARDS.length;
+    var targetAngle = (randomIndex * segmentAngle) + (segmentAngle / 2);
+    var fullRotation = 360 * 5;
+    var finalAngle = fullRotation + (360 - targetAngle);
+
+    wheel.style.transition = 'none';
+    wheel.style.transform = 'rotate(0deg)';
+    void wheel.offsetWidth;
+    wheel.style.transition = 'transform 5s cubic-bezier(0.17,0.67,0.12,1)';
+    wheel.style.transform = 'rotate(' + finalAngle + 'deg)';
+
+    setTimeout(async function(){
+      try{
+        var newBalance = (Number(userData.balance) || 0) + reward;
+        var newSpins = Math.max(0, spinsAvailable - 1);
+        var newDepositedCount = Math.max(0, (Number(userData.depositedTeamCount) || 0) - 1);
+
+        await updateDoc(doc(db, 'users', userDocId), {
+          balance: newBalance,
+          spinsAvailable: newSpins,
+          depositedTeamCount: newDepositedCount,
+          lastSpinAt: new Date().toISOString()
+        });
+
+        await addDoc(collection(db, 'spinHistory'), {
+          userEmail: userData.email,
+          userDocId: userDocId,
+          amount: reward,
+          createdAt: new Date().toISOString()
+        });
+
+        try{
+          await addDoc(collection(db, 'notifications'), {
+            userEmail: userData.email,
+            type: 'spin_win',
+            title: 'Spin Win!',
+            message: 'Congratulations! You won Rs.' + reward + ' from Lucky Spin',
+            amount: reward,
+            createdAt: new Date().toISOString(),
+            read: false
+          });
+        }catch(e){}
+
+        userData.balance = newBalance;
+        spinsAvailable = newSpins;
+        userData.depositedTeamCount = newDepositedCount;
+
+        if(currentUser){
+          currentUser.balance = newBalance;
+          localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+        }
+
+        document.getElementById('userBalance').innerText = 'Rs. ' + newBalance.toFixed(2);
+
+        document.getElementById('winAmount').innerText = 'Rs. ' + reward;
+        document.getElementById('winModal').classList.add('show');
+        showConfetti();
+
+        isSpinning = false;
+
+        if(newDepositedCount <= 0){
+          canSpinNow = false;
+        }
+        updateUnlockUI(newDepositedCount);
+        updateSpinUI();
+
+      }catch(err){
+        console.error('Reward error:', err);
+        showToast('❌ ' + err.message, 'error');
+        isSpinning = false;
+        updateSpinUI();
+      }
+    }, 5200);
+
+  }catch(err){
+    console.error('Spin error:', err);
+    showToast('❌ Spin failed', 'error');
+    isSpinning = false;
+    updateSpinUI();
+  }
+};
+
+window.closeWinModal = function(){
+  document.getElementById('winModal').classList.remove('show');
+};
+
+function loadReferralBonus(){
+  var q = query(
+    collection(db, 'referralBonuses'),
+    where('toUserEmail', '==', currentUser.email)
+  );
+
+  onSnapshot(q, function(snap){
+    var history = [];
+    snap.forEach(function(d){
+      var h = d.data();
+      h.id = d.id;
+      history.push(h);
+    });
+    renderBonusHistory(history);
+  }, function(err){
+    console.log('Referral bonus error:', err);
+  });
+}function loadTeamInvestments(){
+  var usersQuery = collection(db, 'users');
+  var allUsers = {};
+
+  onSnapshot(usersQuery, function(usersSnap){
+    usersSnap.forEach(function(d){
+      var u = d.data();
+      u._docId = d.id;
+      if(u.email){
+        allUsers[u.email.toLowerCase().trim()] = u;
+      }
+    });
+
+    var investQuery = collection(db, 'investments');
+
+    onSnapshot(investQuery, function(investSnap){
+      var myEmail = (currentUser.email || '').toLowerCase().trim();
+      var level1Emails = {};
+      var level2Emails = {};
+
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        if(refBy === myEmail){
+          level1Emails[u.email.toLowerCase().trim()] = u;
+        }
+      });
+
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        if(level1Emails[refBy]){
+          level2Emails[u.email.toLowerCase().trim()] = u;
+        }
+      });
+
+      var depositedUsers = {};
+      var depositedCount = 0;
+
+      investSnap.forEach(function(invDoc){
+        var inv = invDoc.data();
+        var invEmail = (inv.userEmail || '').toLowerCase().trim();
+        var amount = Number(inv.amount) || 0;
+
+        if(inv.status !== 'active' && inv.status !== 'completed' && inv.status){
+          return;
+        }
+
+        if(level1Emails[invEmail]){
+          if(!depositedUsers[invEmail]){
+            depositedUsers[invEmail] = true;
+            depositedCount++;
+          }
+          var bonusKey = 'L1_' + invDoc.id;
+          checkAndGiveBonus(invEmail, inv, amount, 1, bonusKey);
+        }
+
+        if(level2Emails[invEmail]){
+          var bonusKey2 = 'L2_' + invDoc.id;
+          checkAndGiveBonus(invEmail, inv, amount, 2, bonusKey2);
+        }
+      });
+
+      var currentCount = Number(userData.depositedTeamCount) || 0;
+      var usedSpins = Number(userData.usedSpins) || 0;
+      var availableSpins = Math.max(0, depositedCount - usedSpins);
+
+      document.getElementById('depositedTeam').innerText = depositedCount;
+
+      if(availableSpins > 0){
+        canSpinNow = true;
+        spinsAvailable = availableSpins;
+      } else {
+        canSpinNow = false;
+        spinsAvailable = 0;
+      }
+
+      updateUnlockUI(availableSpins > 0 ? 1 : 0);
+      updateSpinUI();
+
+    }, function(err){
+      console.log('Investments error:', err);
+    });
+
+  }, function(err){
+    console.log('Users error:', err);
+  });
+}
+
+var bonusProcessed = {};
+
+async function checkAndGiveBonus(fromEmail, inv, amount, level, bonusKey){
+  if(bonusProcessed[bonusKey]) return;
+  bonusProcessed[bonusKey] = true;
+
+  try{
+    var bonusQ = query(
+      collection(db, 'referralBonuses'),
+      where('bonusKey', '==', bonusKey),
+      where('toUserEmail', '==', currentUser.email)
+    );
+    var existing = await getDocs(bonusQ);
+    if(!existing.empty) return;
+
+    var levelMultiplier = level === 1 ? 1 : 0.3;
+
+    // 🔴 STEP 2 MEIN TABDEELI: BONUS VALUES 10 SE 50
+    var baseBonus = 0;
+    if(amount >= 2600) baseBonus = 50;
+    else if(amount >= 1500) baseBonus = 40;
+    else if(amount >= 1000) baseBonus = 30;
+    else if(amount >= 500) baseBonus = 20;
+    else baseBonus = 10;
+
+    // 🔴 STEP 3 MEIN TABDEELI: MIN 10 AUR MAX 50 LOCK
+    var bonusAmount = Math.round(baseBonus * levelMultiplier);
+    if(bonusAmount < 10) bonusAmount = 10;
+    if(bonusAmount > 50) bonusAmount = 50;
+    if(bonusAmount <= 0) return;
+
+    var fromUserDoc = await getDoc(doc(db, 'users', fromEmail));
+    var fromName = fromUserDoc.exists() ? (fromUserDoc.data().name || 'Team Member') : 'Team Member';
+
+    var currentBal = Number(userData.balance) || 0;
+    var newBal = currentBal + bonusAmount;
+
+    await updateDoc(doc(db, 'users', userDocId), {
+      balance: newBal
+    });
+
+    await addDoc(collection(db, 'referralBonuses'), {
+      toUserEmail: currentUser.email,
+      fromUserEmail: fromEmail,
+      fromUserName: fromName,
+      planName: inv.planName || 'Plan',
+      amount: bonusAmount,
+      level: level,
+      bonusKey: bonusKey,
+      createdAt: new Date().toISOString()
+    });
+
+    userData.balance = newBal;
+    if(currentUser){
+      currentUser.balance = newBal;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    document.getElementById('userBalance').innerText = 'Rs. ' + newBal.toFixed(2);
+
+    try{
+      await addDoc(collection(db, 'notifications'), {
+        userEmail: currentUser.email,
+        type: 'referral_bonus',
+        title: 'Referral Bonus!',
+        message: fromName + ' ne ' + (inv.planName || 'Plan') + ' kharida. Aap ko Rs.' + bonusAmount + ' bonus mila (Level ' + level + ')',
+        amount: bonusAmount,
+        createdAt: new Date().toISOString(),
+        read: false
+      });
+    }catch(e){}
+
+    showToast('🎉 Rs.' + bonusAmount + ' referral bonus!', 'success');
+
+  }catch(err){
+    console.error('Bonus error:', err);
+    delete bonusProcessed[bonusKey];
+  }
+}
+
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}
+
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  if(document.getElementById('menuUserName')) document.getElementById('menuUserName').innerText = currentUser.name || 'User';
+  if(document.getElementById('menuUserEmail')) document.getElementById('menuUserEmail').innerText = currentUser.email || '';
+
+  // ✅ Referral link — NAYA LINK
+  var myEmail = (currentUser.email || '').trim().toLowerCase();
+  var refURL = BASE_URL + '/index.html?ref=' + encodeURIComponent(myEmail);
+  document.getElementById('refLinkText').innerText = refURL;
+
+  renderWheelLabels();
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0000;display:flex;justify-content:center;align-items:center;color:#FF1744;font-size:20px;font-weight:800;">ACCOUNT BLOCKED</div>';
+        return;
+      }
+
+      var bal = Number(u.balance) || 0;
+      document.getElementById('userBalance').innerText = 'Rs. ' + bal.toFixed(2);
+
+      if(currentUser){
+        currentUser.balance = bal;
+        localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+      }
+    });
+
+    document.getElementById('userBalance').innerText = 'Rs. ' + (Number(userData.balance) || 0).toFixed(2);
+
+    loadReferralBonus();
+    loadTeamInvestments();
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+  }
+});
+
+console.log('Spin Page Loaded Successfully');
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Scratch & Win - King Cobra</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;-webkit-tap-highlight-color:transparent;}
+body{background:linear-gradient(160deg,#0a0510 0%,#1a0033 40%,#0a0218 100%);color:#fff;padding:15px;padding-bottom:150px;min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none;}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes softPulse{0%,100%{opacity:0.12;}50%{opacity:0.22;}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(80,20,60,0.85),rgba(30,5,30,0.98));padding:14px 18px;border-radius:20px;border:1.5px solid rgba(255,105,180,0.5);margin-bottom:16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,105,180,0.15),transparent 70%);border-radius:50%;}
+.header-left{display:flex;align-items:center;gap:12px;position:relative;z-index:2;}
+.back-icon{width:44px;height:44px;background:rgba(20,5,30,0.9);border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1.5px solid rgba(255,215,0,0.6);}
+.back-icon:active{transform:scale(0.92);}
+.page-title h3{font-size:16px;font-weight:900;color:#FF69B4;letter-spacing:2px;display:flex;align-items:center;gap:8px;}
+.page-title h3 i{font-size:18px;color:#FF69B4;}
+.page-title p{font-size:10px;color:#bbb;letter-spacing:1px;margin-top:2px;}
+.header-right{position:relative;z-index:2;}
+.profile-icon{width:44px;height:44px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2.5px solid #FF69B4;cursor:pointer;}
+
+.hero-banner{background:linear-gradient(135deg,rgba(80,20,60,0.9),rgba(50,10,50,0.95)),url('https://i.postimg.cc/gkS5WC6q/1789821267359.jpg') center/cover no-repeat;border:2px solid #FF69B4;border-radius:22px;padding:24px 20px;margin-bottom:18px;position:relative;overflow:hidden;text-align:center;}
+.hero-banner::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,105,180,0.15),transparent 50%);animation:softPulse 4s ease-in-out infinite;pointer-events:none;}
+.hero-content{position:relative;z-index:2;}
+.hero-content h1{font-size:22px;color:#fff;font-weight:900;letter-spacing:2px;margin-bottom:6px;text-shadow:0 4px 20px rgba(0,0,0,0.8);}
+.hero-content h1 span{color:#FFD700;}
+.hero-content p{font-size:11px;color:#ddd;letter-spacing:1px;line-height:1.5;}
+.hero-icon{position:absolute;top:16px;right:18px;font-size:50px;color:rgba(255,105,180,0.3);z-index:1;}
+</style><style>
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.stat-card{background:linear-gradient(160deg,rgba(50,15,50,0.95),rgba(20,5,25,0.98));border-radius:16px;padding:14px 12px;position:relative;overflow:hidden;border:1.5px solid rgba(255,105,180,0.4);animation:fadeInUp 0.4s ease-out;animation-fill-mode:both;}
+.stat-card:nth-child(1){animation-delay:0.05s;}
+.stat-card:nth-child(2){animation-delay:0.1s;}
+.stat-card:nth-child(3){animation-delay:0.15s;}
+.stat-card:nth-child(4){animation-delay:0.2s;}
+.stat-card::after{content:'';position:absolute;top:-40px;right:-40px;width:100px;height:100px;background:radial-gradient(circle,currentColor,transparent 70%);opacity:0.13;border-radius:50%;pointer-events:none;}
+
+.stat-card.pink{color:#FF69B4;border-color:rgba(255,105,180,0.6);}
+.stat-card.gold{color:#FFD700;border-color:rgba(255,215,0,0.6);}
+.stat-card.green{color:#00FF88;border-color:rgba(0,255,136,0.6);}
+.stat-card.purple{color:#B026FF;border-color:rgba(176,38,255,0.6);}
+
+.stat-icon{width:38px;height:38px;border-radius:11px;display:flex;justify-content:center;align-items:center;font-size:17px;margin-bottom:8px;position:relative;z-index:2;}
+.stat-card.pink .stat-icon{background:rgba(255,105,180,0.18);}
+.stat-card.gold .stat-icon{background:rgba(255,215,0,0.18);}
+.stat-card.green .stat-icon{background:rgba(0,255,136,0.18);}
+.stat-card.purple .stat-icon{background:rgba(176,38,255,0.18);}
+
+.stat-label{font-size:9px;color:#aaa;letter-spacing:1.2px;font-weight:800;margin-bottom:4px;text-transform:uppercase;position:relative;z-index:2;}
+.stat-value{font-size:18px;font-weight:900;position:relative;z-index:2;letter-spacing:0.5px;}
+.stat-card.pink .stat-value{color:#FF69B4;}
+.stat-card.gold .stat-value{color:#FFD700;}
+.stat-card.green .stat-value{color:#00FF88;}
+.stat-card.purple .stat-value{color:#B026FF;}
+
+.section-title{text-align:center;font-size:12px;font-weight:900;color:#FFD700;letter-spacing:3.5px;margin:22px 0 14px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:22%;height:1.5px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+</style><style>
+.scratch-wrapper{display:flex;justify-content:center;margin-bottom:20px;padding:0 4px;}
+
+.card-container{position:relative;width:100%;max-width:420px;border-radius:26px;padding:4px;background:linear-gradient(135deg,#FFD700,#FF69B4,#FFD700,#FF69B4);background-size:300% 300%;animation:borderShift 4s ease infinite;}
+@keyframes borderShift{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+
+.card-inner{position:relative;width:100%;aspect-ratio:1.55;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,#0a0a0a,#1a0a2a);}
+
+.prize-layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;background:radial-gradient(circle at 50% 50%,#1a0a2a,#0a0510);z-index:1;padding-top:30px;padding-bottom:40px;}
+.prize-layer::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,255,136,0.15),transparent 60%);pointer-events:none;}
+
+.prize-icon{font-size:55px;color:#FFD700;filter:drop-shadow(0 0 25px rgba(255,215,0,0.8));position:relative;z-index:2;}
+.prize-amount{font-size:60px;font-weight:900;color:#00FF88;text-shadow:0 0 50px rgba(0,255,136,1),0 0 100px rgba(0,255,136,0.6);position:relative;z-index:2;letter-spacing:2px;line-height:1;animation:prizeGlow 2s infinite;}
+@keyframes prizeGlow{0%,100%{text-shadow:0 0 50px rgba(0,255,136,1),0 0 100px rgba(0,255,136,0.6);}50%{text-shadow:0 0 70px rgba(0,255,136,1),0 0 130px rgba(0,255,136,0.9);}}
+.prize-label{font-size:13px;color:#FFD700;font-weight:900;letter-spacing:4px;position:relative;z-index:2;text-transform:uppercase;}
+.prize-decor{position:absolute;font-size:30px;color:rgba(255,215,0,0.3);}
+.prize-decor.d1{top:35%;left:10%;animation:floatDecor 3s infinite;}
+.prize-decor.d2{top:35%;right:10%;animation:floatDecor 3s infinite 0.5s;}
+.prize-decor.d3{bottom:25%;left:15%;animation:floatDecor 3s infinite 1s;font-size:24px;}
+.prize-decor.d4{bottom:25%;right:15%;animation:floatDecor 3s infinite 1.5s;font-size:24px;}
+@keyframes floatDecor{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.3;}50%{transform:translateY(-8px) rotate(10deg);opacity:0.6;}}
+
+#scratchCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:10;cursor:crosshair;touch-action:none;border-radius:22px;display:block;}
+
+.card-container.revealed #scratchCanvas{opacity:0;transition:opacity 0.6s;pointer-events:none;}
+
+.cooldown-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.92),rgba(30,10,20,0.95));z-index:30;display:none;flex-direction:column;justify-content:center;align-items:center;gap:14px;border-radius:22px;padding:20px;text-align:center;}
+.cooldown-overlay.show{display:flex;}
+.cooldown-overlay .co-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#222,#000);border:3px solid #FF4500;display:flex;justify-content:center;align-items:center;font-size:36px;color:#FF4500;box-shadow:0 0 35px rgba(255,69,0,0.6);animation:cooldownPulse 2s infinite;}
+@keyframes cooldownPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.cooldown-overlay .co-title{font-size:18px;color:#FF4500;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;}
+.cooldown-overlay .co-timer{font-size:34px;color:#FFD700;font-weight:900;letter-spacing:2px;padding:12px 24px;background:rgba(0,0,0,0.6);border:2px solid #FFD700;border-radius:16px;text-shadow:0 0 25px rgba(255,215,0,0.8);}
+.cooldown-overlay .co-msg{font-size:12px;color:#aaa;letter-spacing:0.5px;line-height:1.5;max-width:280px;}
+</style><style>
+.empty-state{text-align:center;padding:55px 20px;background:linear-gradient(160deg,rgba(50,15,50,0.6),rgba(20,5,25,0.9));border-radius:22px;border:1.5px dashed rgba(255,105,180,0.4);margin-bottom:18px;}
+.empty-state .empty-icon{width:100px;height:100px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,rgba(255,105,180,0.2),rgba(255,215,0,0.1));display:flex;justify-content:center;align-items:center;font-size:48px;color:#FF69B4;border:2px solid rgba(255,105,180,0.5);}
+.empty-state h3{font-size:15px;color:#FFD700;font-weight:900;margin-bottom:10px;letter-spacing:1.2px;}
+.empty-state p{font-size:12px;color:#999;line-height:1.7;margin-bottom:22px;}
+.empty-state .cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FF69B4,#FFD700);color:#000;padding:14px 26px;border-radius:50px;font-weight:900;font-size:12.5px;letter-spacing:1.5px;text-decoration:none;box-shadow:0 8px 25px rgba(255,105,180,0.5);text-transform:uppercase;}
+
+.loading-box{text-align:center;padding:70px 20px;}
+.loading-spinner{width:60px;height:60px;border:5px solid rgba(255,105,180,0.15);border-top-color:#FF69B4;border-radius:50%;animation:spin 0.9s linear infinite;margin:0 auto 18px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-box p{font-size:12px;color:#FF69B4;letter-spacing:3px;font-weight:800;}
+
+.win-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999999;display:none;justify-content:center;align-items:center;padding:20px;}
+.win-modal.show{display:flex;animation:fadeIn 0.3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.win-box{background:linear-gradient(160deg,#0a2a1a,#02120a);border:3px solid #00FF88;border-radius:26px;padding:34px 24px;text-align:center;max-width:360px;width:100%;box-shadow:0 0 100px rgba(0,255,136,0.8);position:relative;animation:popIn 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);}
+@keyframes popIn{from{transform:scale(0.4) rotate(-12deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.win-box::before{content:'';position:absolute;inset:-6px;border-radius:32px;background:conic-gradient(#FFD700,#FFA500,#00FF88,#00BFFF,#FFD700);z-index:-1;animation:rotate 3s linear infinite;}
+@keyframes rotate{to{transform:rotate(360deg);}}
+.win-icon{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-size:48px;margin:0 auto 18px;box-shadow:0 0 50px rgba(255,215,0,0.8);animation:winBounce 1.2s infinite;}
+@keyframes winBounce{0%,100%{transform:scale(1) rotate(0);}50%{transform:scale(1.12) rotate(-8deg);}}
+.win-box h2{font-size:20px;color:#00FF88;font-weight:900;letter-spacing:3px;margin-bottom:10px;text-transform:uppercase;}
+.win-box .win-msg{font-size:12px;color:#aaa;margin-bottom:14px;letter-spacing:0.5px;}
+.win-box .amount{font-size:48px;color:#FFD700;font-weight:900;margin:14px 0;text-shadow:0 0 40px rgba(255,215,0,0.9);animation:amountPulse 1s infinite;line-height:1;}
+@keyframes amountPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.win-box .plan-name{font-size:11px;color:#B026FF;font-weight:800;letter-spacing:2px;margin-bottom:20px;text-transform:uppercase;}
+.win-box button{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:14px 40px;border-radius:50px;color:#000;font-weight:900;font-size:13px;cursor:pointer;letter-spacing:2px;text-transform:uppercase;box-shadow:0 8px 25px rgba(255,215,0,0.6);}
+.win-box button:active{transform:scale(0.96);}
+
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,5,20,0.98);border-top:1.5px solid rgba(255,105,180,0.4);display:flex;justify-content:space-around;align-items:center;padding:12px 8px 14px 8px;z-index:99999;box-shadow:0 -5px 30px rgba(255,105,180,0.25);}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:9px;cursor:pointer;gap:4px;flex:1;min-height:50px;}
+.nav-item:active{transform:scale(0.92);}
+.nav-item i{font-size:22px;line-height:1;color:inherit;}
+.nav-item p{font-size:9px;color:inherit;font-weight:600;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-28px;width:70px;height:70px;min-width:70px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;box-shadow:0 0 25px rgba(255,215,0,0.7);}
+
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 24px;border-radius:50px;font-weight:800;font-size:12.5px;z-index:999999;transition:all 0.3s;opacity:0;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,0.6);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+.confetti{position:fixed;width:11px;height:11px;top:-10px;z-index:99999998;pointer-events:none;border-radius:2px;animation:confettiFall 3s linear forwards;}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+
+.sparkle{position:absolute;width:7px;height:7px;background:#FFD700;border-radius:50%;pointer-events:none;box-shadow:0 0 12px #FFD700;animation:sparkleFloat 2s ease-out forwards;z-index:15;}
+@keyframes sparkleFloat{0%{transform:translate(0,0) scale(1);opacity:1;}100%{transform:translate(var(--tx,20px),-50px) scale(0);opacity:0;}}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<div class="header">
+<div class="header-left">
+<div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+<div class="page-title">
+<h3><i class="fas fa-hand-sparkles"></i> SCRATCH & WIN</h3>
+<p>Slide to scratch • Win rewards</p>
+</div>
+</div>
+<div class="header-right">
+<div class="profile-icon" onclick="window.location.href='profile.html'"></div>
+</div>
+</div>
+
+<div class="hero-banner">
+<i class="fas fa-ticket hero-icon"></i>
+<div class="hero-content">
+<h1>SCRATCH <span>& WIN</span></h1>
+<p>Finger slide karo • Paise kamao • 24 hours baad dobara</p>
+</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card pink">
+<div class="stat-icon"><i class="fas fa-ticket"></i></div>
+<div class="stat-label">Status</div>
+<div class="stat-value" id="statStatus">--</div>
+</div>
+
+<div class="stat-card gold">
+<div class="stat-icon"><i class="fas fa-crown"></i></div>
+<div class="stat-label">Plan</div>
+<div class="stat-value" id="statPlan">--</div>
+</div>
+
+<div class="stat-card green">
+<div class="stat-icon"><i class="fas fa-coins"></i></div>
+<div class="stat-label">Total Won</div>
+<div class="stat-value" id="statWon">Rs. 0</div>
+</div>
+
+<div class="stat-card purple">
+<div class="stat-icon"><i class="fas fa-gift"></i></div>
+<div class="stat-label">Reward Range</div>
+<div class="stat-value" id="statRange">--</div>
+</div>
+</div>
+
+<div class="section-title">Your Scratch Card</div>
+<div class="scratch-wrapper" id="scratchWrapper">
+<div class="loading-box">
+<div class="loading-spinner"></div>
+<p>LOADING...</p>
+</div>
+</div>
+
+<div class="win-modal" id="winModal">
+<div class="win-box">
+<div class="win-icon"><i class="fas fa-trophy"></i></div>
+<h2>YOU WON!</h2>
+<div class="win-msg">Congratulations!</div>
+<div class="amount" id="winAmount">Rs. 0</div>
+<div class="plan-name" id="winPlanName">PLAN NAME</div>
+<button onclick="closeWinModal()"><i class="fas fa-check"></i> GREAT!</button>
+</div>
+</div>
+
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, getDoc, addDoc, updateDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+var userPlans = [];
+var userScratchData = {};
+var totalWon = 0;
+var selectedPlan = null;
+var currentReward = 0;
+
+var COOLDOWN_HOURS = 24;
+
+var PLAN_REWARDS = {
+  '05': { min: 6, max: 12 },
+  '06': { min: 12, max: 13 },
+  '07': { min: 13, max: 15 },
+  '08': { min: 15, max: 18 },
+  '09': { min: 18, max: 22 },
+  '10': { min: 22, max: 25 },
+  '11': { min: 25, max: 28 },
+  '12': { min: 28, max: 30 }
+};
+
+var PLAN_NUMBERS = {
+  'King Cobra': '01', 'Black Mamba': '02', 'Python': '03', 'Rattlesnake': '04',
+  'Anaconda': '05', 'Viper': '06', 'Cobra': '07', 'Krait': '08',
+  'Boa': '09', 'Taipan': '10', 'Adder': '11', 'Serpent': '12'
+};
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+
+function fmt(n){
+  n = Number(n) || 0;
+  return n.toLocaleString('en-US');
+}
+
+function animateValue(el, start, end, duration){
+  if(!el) return;
+  var startTime = null;
+  var isCurrency = el.innerText.indexOf('Rs.') !== -1;
+  duration = duration || 800;
+
+  function step(timestamp){
+    if(!startTime) startTime = timestamp;
+    var progress = Math.min((timestamp - startTime) / duration, 1);
+    var currentValue = Math.floor(progress * (end - start) + start);
+    el.innerText = isCurrency ? 'Rs. ' + currentValue.toLocaleString() : currentValue.toLocaleString();
+    if(progress < 1){
+      window.requestAnimationFrame(step);
+    } else {
+      el.innerText = isCurrency ? 'Rs. ' + end.toLocaleString() : end.toLocaleString();
+    }
+  }
+  window.requestAnimationFrame(step);
+}
+
+function showConfetti(){
+  var colors = ['#FFD700','#FF1744','#B026FF','#00FF88','#00BFFF','#FF69B4','#FFA500'];
+  for(var i = 0; i < 60; i++){
+    var c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 0.6 + 's';
+    c.style.animationDuration = (2 + Math.random() * 1) + 's';
+    document.body.appendChild(c);
+    setTimeout(function(el){ return function(){ el.remove(); }; }(c), 4000);
+  }
+}
+
+function showSparkles(cardEl){
+  var rect = cardEl.getBoundingClientRect();
+  for(var i = 0; i < 18; i++){
+    var s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = (rect.left + Math.random() * rect.width) + 'px';
+    s.style.top = (rect.top + Math.random() * rect.height) + 'px';
+    s.style.setProperty('--tx', (Math.random() * 80 - 40) + 'px');
+    document.body.appendChild(s);
+    setTimeout(function(el){ return function(){ el.remove(); }; }(s), 2000);
+  }
+}
+
+function formatTimeRemaining(expiresAt){
+  try{
+    var now = new Date();
+    var exp = new Date(expiresAt);
+    var diff = exp - now;
+    if(diff <= 0) return null;
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((diff % (1000 * 60)) / 1000);
+    if(hours > 0) return hours + 'h ' + mins + 'm';
+    if(mins > 0) return mins + 'm ' + secs + 's';
+    return secs + 's';
+  }catch(e){ return null; }
+}
+
+function getRandomReward(planNum){
+  var range = PLAN_REWARDS[planNum];
+  if(!range) return 5;
+  return Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+}function renderScratchCard(){
+  var el = document.getElementById('scratchWrapper');
+  if(!el) return;
+
+  var eligiblePlans = userPlans.filter(function(p){
+    var num = PLAN_NUMBERS[p.planName] || '00';
+    return PLAN_REWARDS[num] !== undefined;
+  });
+
+  if(eligiblePlans.length === 0){
+    el.innerHTML = '<div class="empty-state">' +
+      '<div class="empty-icon"><i class="fas fa-ticket"></i></div>' +
+      '<h3>NO ACTIVE PLAN</h3>' +
+      '<p>Scratch card khelne ke liye aap ko <b style="color:#FFD700;">Plan 5 (Anaconda)</b> se le kar <b style="color:#FFD700;">Plan 12 (Serpent)</b> tak koi plan active karna hoga.</p>' +
+      '<a href="invest.html" class="cta-btn"><i class="fas fa-rocket"></i> INVEST NOW</a>' +
+      '</div>';
+    document.getElementById('statStatus').innerText = '--';
+    document.getElementById('statPlan').innerText = '--';
+    document.getElementById('statRange').innerText = '--';
+    return;
+  }
+
+  eligiblePlans.sort(function(a, b){
+    return parseInt(PLAN_NUMBERS[b.planName] || '0') - parseInt(PLAN_NUMBERS[a.planName] || '0');
+  });
+  var bestPlan = eligiblePlans[0];
+  
+  // FIX: Agar card pehle se bana hua hai aur wahi plan hai, to dubara render mat karo (Hang fix)
+  if(selectedPlan && selectedPlan.id === bestPlan.id && document.getElementById('cardContainer')){
+    return;
+  }
+
+  selectedPlan = bestPlan;
+  var planNum = PLAN_NUMBERS[bestPlan.planName] || '00';
+  
+  document.getElementById('statPlan').innerText = '#' + planNum;
+  document.getElementById('statRange').innerText = 'Hidden';
+
+  var key = bestPlan.id + '_scratch';
+  var expiry = userScratchData[key];
+  var cooldownTime = expiry ? formatTimeRemaining(expiry) : null;
+  var isCooldown = cooldownTime !== null;
+
+  if(isCooldown){
+    document.getElementById('statStatus').innerText = 'LOCKED';
+  } else {
+    document.getElementById('statStatus').innerText = 'READY';
+  }
+
+  currentReward = getRandomReward(planNum);
+
+  var html = '';
+  html += '<div class="card-container" id="cardContainer">';
+  html += '<div class="card-inner">';
+
+  // Prize layer
+  html += '<div class="prize-layer">';
+  html += '<i class="fas fa-coins prize-icon"></i>';
+  html += '<div class="prize-amount">Rs.' + currentReward + '</div>';
+  html += '<div class="prize-label">You Won!</div>';
+  html += '<i class="fas fa-star prize-decor d1"></i>';
+  html += '<i class="fas fa-gem prize-decor d2"></i>';
+  html += '<i class="fas fa-crown prize-decor d3"></i>';
+  html += '<i class="fas fa-trophy prize-decor d4"></i>';
+  html += '</div>';
+
+  html += '<canvas id="scratchCanvas"></canvas>';
+
+  // Cooldown overlay
+  html += '<div class="cooldown-overlay ' + (isCooldown ? 'show' : '') + '" id="cooldownOverlay">';
+  html += '<div class="co-icon"><i class="fas fa-clock"></i></div>';
+  html += '<div class="co-title">Card Locked</div>';
+  html += '<div class="co-timer" id="cooldownTimer">' + (cooldownTime || '00:00') + '</div>';
+  html += '<div class="co-msg">Ye card 24 ghante baad dobara scratch kar sakte hain.</div>';
+  html += '</div>';
+
+  html += '</div>';
+  html += '</div>';
+
+  el.innerHTML = html;
+
+  setTimeout(function(){
+    initCanvasScratch(isCooldown);
+  }, 150);
+}
+
+// 🔥 SCRATCH FIX (Touch & Mouse Working - No Hanging)
+function initCanvasScratch(isCooldown){
+  var canvas = document.getElementById('scratchCanvas');
+  var container = document.getElementById('cardContainer');
+  if(!canvas || !container) return;
+
+  var rect = container.getBoundingClientRect();
+  var width = Math.floor(rect.width);
+  var height = Math.floor(rect.height);
+
+  if(width === 0 || height === 0){
+    setTimeout(function(){ initCanvasScratch(isCooldown); }, 200);
+    return;
+  }
+
+  canvas.width = width;
+  canvas.height = height;
+  canvas.style.width = width + 'px';
+  canvas.style.height = height + 'px';
+
+  var ctx = canvas.getContext('2d', { willReadFrequently: true });
+  ctx.globalCompositeOperation = 'source-over';
+
+  var grad = ctx.createLinearGradient(0, 0, width, height);
+  grad.addColorStop(0, '#C0C0C0');
+  grad.addColorStop(0.25, '#E8E8E8');
+  grad.addColorStop(0.5, '#909090');
+  grad.addColorStop(0.75, '#D0D0D0');
+  grad.addColorStop(1, '#A0A0A0');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
+
+  for(var i = 0; i < 3000; i++){
+    var x = Math.random() * width;
+    var y = Math.random() * height;
+    ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)';
+    ctx.fillRect(x, y, 2, 2);
+  }
+
+  ctx.fillStyle = 'rgba(255,215,0,0.85)';
+  ctx.font = 'bold 60px Poppins, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🪙', width / 2, height / 2 - 55);
+
+  ctx.fillStyle = 'rgba(30,30,30,0.9)';
+  ctx.font = 'bold 28px Poppins, sans-serif';
+  ctx.fillText('SCRATCH & WIN', width / 2, height / 2 + 5);
+
+  ctx.fillStyle = 'rgba(60,60,60,0.9)';
+  ctx.font = 'bold 14px Poppins, sans-serif';
+  ctx.fillText('FINGER SLIDE TO REVEAL', width / 2, height / 2 + 45);
+
+  ctx.globalCompositeOperation = 'destination-out';
+
+  var isDrawing = false;
+  var lastX = null;
+  var lastY = null;
+  var revealed = false;
+
+  if(isCooldown){
+    return;
+  }
+
+  function getPos(e){
+    var r = canvas.getBoundingClientRect();
+    var clientX, clientY;
+
+    if(e.touches && e.touches.length > 0){
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else if(e.changedTouches && e.changedTouches.length > 0){
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    var scaleX = canvas.width / r.width;
+    var scaleY = canvas.height / r.height;
+
+    return {
+      x: (clientX - r.left) * scaleX,
+      y: (clientY - r.top) * scaleY
+    };
+  }
+
+  function drawDot(x, y, size){
+    ctx.beginPath();
+    ctx.arc(x, y, size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawLine(x1, y1, x2, y2, size){
+    var dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    var steps = Math.max(1, Math.ceil(dist / 3));
+    for(var i = 0; i <= steps; i++){
+      var t = i / steps;
+      var x = x1 + (x2 - x1) * t;
+      var y = y1 + (y2 - y1) * t;
+      drawDot(x, y, size);
+    }
+  }
+
+  function checkScratchPercentage(){
+    if(revealed) return;
+    try{
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var pixels = imageData.data;
+      var transparent = 0;
+      var totalSampled = 0;
+
+      for(var i = 3; i < pixels.length; i += 160){
+        totalSampled++;
+        if(pixels[i] === 0) transparent++;
+      }
+
+      var pct = (transparent / totalSampled) * 100;
+      if(pct >= 45){
+        revealCard();
+      }
+    }catch(e){
+      console.log('Check error:', e);
+    }
+  }
+
+  function startDraw(e){
+    if(revealed) return;
+    e.preventDefault();
+    isDrawing = true;
+    var pos = getPos(e);
+    lastX = pos.x;
+    lastY = pos.y;
+    drawDot(pos.x, pos.y, Math.max(30, canvas.width * 0.08));
+  }
+
+  function moveDraw(e){
+    if(!isDrawing || revealed) return;
+    e.preventDefault();
+    var pos = getPos(e);
+    var brushSize = Math.max(30, canvas.width * 0.08);
+
+    if(lastX !== null && lastY !== null){
+      drawLine(lastX, lastY, pos.x, pos.y, brushSize);
+    } else {
+      drawDot(pos.x, pos.y, brushSize);
+    }
+    lastX = pos.x;
+    lastY = pos.y;
+
+    checkScratchPercentage();
+  }
+
+  function endDraw(e){
+    if(revealed) return;
+    isDrawing = false;
+    lastX = null;
+    lastY = null;
+    checkScratchPercentage();
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', moveDraw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+
+  canvas.addEventListener('touchstart', startDraw, {passive: false});
+  canvas.addEventListener('touchmove', moveDraw, {passive: false});
+  canvas.addEventListener('touchend', endDraw, {passive: false});
+  canvas.addEventListener('touchcancel', endDraw, {passive: false});
+}
+
+function revealCard(){
+  var container = document.getElementById('cardContainer');
+  if(!container) return;
+  if(container.classList.contains('revealed')) return;
+
+  container.classList.add('revealed');
+  showSparkles(container);
+
+  setTimeout(function(){
+    claimScratchReward();
+  }, 500);
+}
+
+async function claimScratchReward(){
+  if(!selectedPlan || !currentReward) return;
+  if(!currentUser || !userDocId) return;
+
+  try{
+    var now = new Date();
+    var expiry = new Date(now.getTime() + (COOLDOWN_HOURS * 60 * 60 * 1000));
+    var key = selectedPlan.id + '_scratch';
+
+    var newScratchData = Object.assign({}, userScratchData);
+    newScratchData[key] = expiry.toISOString();
+
+    var currentBal = Number(userData.balance) || 0;
+    var newBal = currentBal + currentReward;
+
+    await updateDoc(doc(db, 'users', userDocId), {
+      balance: newBal,
+      scratchData: newScratchData,
+      lastScratchAt: now.toISOString()
+    });
+
+    try{
+      await addDoc(collection(db, 'scratchHistory'), {
+        userEmail: currentUser.email,
+        userDocId: userDocId,
+        investmentId: selectedPlan.id,
+        planName: selectedPlan.planName,
+        amount: currentReward,
+        createdAt: now.toISOString()
+      });
+    }catch(e){}
+
+    try{
+      await addDoc(collection(db, 'notifications'), {
+        userEmail: currentUser.email,
+        type: 'scratch_win',
+        title: 'Scratch Reward!',
+        message: 'You won Rs.' + fmt(currentReward) + ' from ' + selectedPlan.planName + ' Scratch Card!',
+        amount: currentReward,
+        createdAt: now.toISOString(),
+        read: false
+      });
+    }catch(e){}
+
+    userData.balance = newBal;
+    userData.scratchData = newScratchData;
+    userScratchData = newScratchData;
+    totalWon += currentReward;
+
+    if(currentUser){
+      currentUser.balance = newBal;
+      currentUser.scratchData = newScratchData;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    animateValue(document.getElementById('statWon'), 0, totalWon, 800);
+    document.getElementById('statStatus').innerText = 'LOCKED';
+
+    document.getElementById('winAmount').innerText = 'Rs. ' + fmt(currentReward);
+    document.getElementById('winPlanName').innerText = selectedPlan.planName + ' • PLAN #' + (PLAN_NUMBERS[selectedPlan.planName] || '00');
+    document.getElementById('winModal').classList.add('show');
+    showConfetti();
+    showToast('🎉 Rs.' + fmt(currentReward) + ' added to balance!', 'success');
+
+    setTimeout(function(){
+      renderScratchCard();
+    }, 2000);
+
+  }catch(err){
+    console.error('Claim error:', err);
+    showToast('❌ Failed to claim reward', 'error');
+  }
+}
+
+window.closeWinModal = function(){
+  document.getElementById('winModal').classList.remove('show');
+  renderScratchCard();
+};
+
+function loadUserPlans(){
+  var investQ = query(
+    collection(db, 'investments'),
+    where('userEmail', '==', currentUser.email)
+  );
+
+  onSnapshot(investQ, function(snap){
+    userPlans = [];
+    snap.forEach(function(d){
+      var inv = d.data();
+      inv.id = d.id;
+
+      if(inv.status === 'active' || inv.status === 'completed' || !inv.status){
+        userPlans.push(inv);
+      }
+    });
+
+    renderScratchCard();
+  }, function(err){
+    console.log('Plans load error:', err);
+  });
+}
+
+function loadScratchHistory(){
+  var q = query(
+    collection(db, 'scratchHistory'),
+    where('userEmail', '==', currentUser.email)
+  );
+
+  onSnapshot(q, function(snap){
+    var total = 0;
+    snap.forEach(function(d){
+      total += Number(d.data().amount) || 0;
+    });
+    totalWon = total;
+    animateValue(document.getElementById('statWon'), 0, totalWon, 1000);
+  }, function(err){
+    console.log('History error:', err);
+  });
+}
+
+function startCooldownTimer(){
+  setInterval(function(){
+    var timerEl = document.getElementById('cooldownTimer');
+    if(!timerEl || !selectedPlan) return;
+
+    var key = selectedPlan.id + '_scratch';
+    var expiry = userScratchData[key];
+    if(!expiry) return;
+
+    var timeLeft = formatTimeRemaining(expiry);
+    if(timeLeft){
+      timerEl.innerText = timeLeft;
+    } else {
+      renderScratchCard();
+    }
+  }, 1000);
+}
+
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}
+
+function showBlockedScreen(){
+  document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(160deg,#1a0000 0%,#0a0000 60%,#000 100%);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center;font-family:Poppins,sans-serif;">' +
+    '<div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#8B0000);display:flex;justify-content:center;align-items:center;font-size:70px;color:#fff;margin-bottom:35px;">' +
+    '<i class="fas fa-ban"></i></div>' +
+    '<h1 style="font-size:28px;font-weight:800;color:#FF1744;letter-spacing:3px;">ACCOUNT BLOCKED</h1>' +
+    '</div>';
+}
+
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    if(userData.scratchData){
+      userScratchData = userData.scratchData;
+    }
+
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        showBlockedScreen();
+        return;
+      }
+
+      if(u.scratchData){
+        userScratchData = u.scratchData;
+      }
+
+      currentUser = Object.assign({}, currentUser, u);
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    });
+
+    loadUserPlans();
+    loadScratchHistory();
+    startCooldownTimer();
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+
+    document.getElementById('scratchWrapper').innerHTML = 
+      '<div class="empty-state">' +
+      '<div class="empty-icon" style="color:#FF1744;"><i class="fas fa-exclamation-triangle"></i></div>' +
+      '<h3>USER DATA NAHI MILA</h3>' +
+      '<p>' + err.message + '</p>' +
+      '<a href="dashboard.html" class="cta-btn">GO TO DASHBOARD</a>' +
+      '</div>';
+  }
+});
+
+console.log('Scratch Page Loaded Successfully');
+</script>
+
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

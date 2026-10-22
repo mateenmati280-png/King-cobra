@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Support - King Cobra</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;-webkit-tap-highlight-color:transparent;}
+html, body {height: 100%;overflow: hidden;}
+body{
+    background:linear-gradient(160deg,#0a0510 0%,#1a0033 40%,#0a0218 100%);
+    color:#fff;display: flex;flex-direction: column;
+    height: 100vh;padding: 8px 10px 0 10px;
+}
+
+/* ===== HEADER ===== */
+.header{
+    display:flex;justify-content:space-between;align-items:center;
+    background:linear-gradient(135deg,rgba(20,60,90,0.85),rgba(5,20,30,0.98));
+    padding:10px 14px;border-radius:16px;
+    border:1.5px solid rgba(0,191,255,0.5);
+    margin-bottom:10px;position:relative;overflow:hidden;flex-shrink: 0;
+}
+.header-left{display:flex;align-items:center;gap:10px;position:relative;z-index:2;}
+.back-icon{width:38px;height:38px;background:rgba(5,20,30,0.9);border-radius:10px;display:flex;justify-content:center;align-items:center;color:#00BFFF;font-size:16px;cursor:pointer;border:1.5px solid rgba(0,191,255,0.6);}
+.back-icon:active{transform:scale(0.92);}
+.page-title h3{font-size:14px;font-weight:900;color:#00BFFF;letter-spacing:2px;display:flex;align-items:center;gap:6px;}
+.page-title p{font-size:9px;color:#bbb;letter-spacing:1px;margin-top:1px;}
+
+/* ===== SUPPORT CONTAINER ===== */
+.support-container{
+    background:linear-gradient(165deg,rgba(18,32,48,0.98),rgba(6,12,22,0.99));
+    border:2px solid rgba(37,211,102,0.35);border-radius:24px;padding:26px 18px 22px;
+    margin-bottom:10px;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;flex: 1;min-height: 0;
+    justify-content:center;align-items:center;text-align:center;
+    box-shadow:0 0 40px rgba(37,211,102,0.12),inset 0 0 60px rgba(0,191,255,0.04);
+}
+.support-container::before{
+    content:'';position:absolute;top:-70px;right:-70px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(37,211,102,0.16),transparent 70%);border-radius:50%;
+    filter:blur(10px);
+}
+.support-container::after{
+    content:'';position:absolute;bottom:-80px;left:-80px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(0,191,255,0.14),transparent 70%);border-radius:50%;
+    filter:blur(10px);
+}
+
+/* ===== WHATSAPP ICON ===== */
+.wa-icon-wrap{position:relative;margin-bottom:20px;z-index:2;}
+.wa-icon{
+    width:104px;height:104px;border-radius:50%;
+    background:linear-gradient(135deg,#2BE87B,#0E9F6E);
+    display:flex;justify-content:center;align-items:center;
+    font-size:54px;color:#fff;position:relative;
+    box-shadow:0 0 40px rgba(37,211,102,0.55),0 0 80px rgba(37,211,102,0.2),inset 0 -4px 12px rgba(0,0,0,0.15);
+    animation:floaty 3.5s ease-in-out infinite;
+}
+.wa-pulse{
+    position:absolute;top:0;left:0;width:104px;height:104px;border-radius:50%;
+    border:2px solid rgba(43,232,123,0.55);
+    animation:pulseRing 2.4s ease-out infinite;
+}
+.wa-pulse.delay{animation-delay:1.2s;}
+@keyframes pulseRing{
+    0%{transform:scale(1);opacity:0.7;}
+    100%{transform:scale(1.85);opacity:0;}
+}
+@keyframes floaty{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-7px);}
+}
+
+/* ===== TEXT ===== */
+.wa-title{
+    font-size:19px;font-weight:900;color:#fff;letter-spacing:0.5px;z-index:2;
+    margin-bottom:6px;display:flex;align-items:center;gap:7px;justify-content:center;
+}
+.wa-title .crown{font-size:14px;color:#FFD700;filter:drop-shadow(0 0 6px rgba(255,215,0,0.7));}
+.wa-title span{color:#2BE87B;}
+.wa-sub{
+    font-size:11.5px;color:#9fb4c7;font-weight:500;z-index:2;
+    margin-bottom:22px;line-height:1.7;max-width:290px;
+}
+
+/* ===== HIDDEN NUMBER BADGE ===== */
+.wa-secure{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(37,211,102,0.07);
+    border:1.5px dashed rgba(37,211,102,0.4);
+    border-radius:50px;padding:8px 18px;margin-bottom:22px;z-index:2;
+}
+.wa-secure i{color:#2BE87B;font-size:13px;}
+.wa-secure span{
+    font-size:10.5px;font-weight:700;color:#8ff0b8;
+    letter-spacing:0.8px;text-transform:uppercase;
+}
+
+/* ===== BUTTON ===== */
+.wa-btn{
+    display:flex;align-items:center;justify-content:center;gap:11px;
+    width:100%;max-width:310px;padding:16px 22px;border:none;border-radius:16px;
+    background:linear-gradient(135deg,#2BE87B,#0E9F6E);
+    color:#fff;font-size:14.5px;font-weight:800;letter-spacing:0.6px;
+    font-family:'Poppins',sans-serif;cursor:pointer;z-index:2;
+    box-shadow:0 10px 30px rgba(37,211,102,0.45),inset 0 -3px 0 rgba(0,0,0,0.15);
+    transition:transform 0.15s, box-shadow 0.15s;
+    position:relative;overflow:hidden;
+}
+.wa-btn::after{
+    content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+    animation:shine 3s infinite;
+}
+@keyframes shine{0%{left:-100%;}50%,100%{left:100%;}}
+.wa-btn:active{transform:scale(0.96);box-shadow:0 5px 18px rgba(37,211,102,0.5);}
+.wa-btn i{font-size:22px;}
+
+/* ===== STATUS ===== */
+.wa-status{
+    display:flex;align-items:center;gap:7px;margin-top:18px;z-index:2;
+    font-size:10.5px;color:#2BE87B;font-weight:700;letter-spacing:0.5px;
+}
+.wa-status .dot{
+    width:8px;height:8px;border-radius:50%;background:#2BE87B;
+    box-shadow:0 0 10px #2BE87B;animation:blink 1.5s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+
+.wa-note{
+    font-size:9.5px;color:#6b7a88;margin-top:14px;z-index:2;
+    line-height:1.7;max-width:290px;font-weight:500;
+}
+.wa-note i{color:#2BE87B;font-size:9px;margin-right:3px;}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(5,10,20,0.98);border-top:1.5px solid rgba(0,191,255,0.4);display:flex;justify-content:space-around;align-items:center;padding:6px 6px 8px 6px;z-index:99999;flex-shrink: 0;}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:8.5px;cursor:pointer;gap:3px;flex:1;min-height:42px;}
+.nav-item i{font-size:19px;color:inherit;}
+.nav-item p{font-size:8px;color:inherit;font-weight:600;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-22px;width:58px;height:58px;min-width:58px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;box-shadow:0 0 25px rgba(255,215,0,0.7);}
+.nav-spacer { height: 70px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-left">
+        <div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+        <div class="page-title">
+            <h3><i class="fas fa-headset"></i> SUPPORT</h3>
+            <p>Chat with admin</p>
+        </div>
+    </div>
+</div>
+
+<div class="support-container">
+    <div class="wa-icon-wrap">
+        <div class="wa-pulse"></div>
+        <div class="wa-pulse delay"></div>
+        <div class="wa-icon"><i class="fab fa-whatsapp"></i></div>
+    </div>
+
+    <div class="wa-title"><i class="fas fa-crown crown"></i> WhatsApp <span>Admin</span></div>
+    <div class="wa-sub">Koi bhi masla ya sawal ho — direct WhatsApp par admin se baat karein. Turant jawab milega.</div>
+
+    <div class="wa-secure">
+        <i class="fas fa-shield-alt"></i>
+        <span>Private & Secure Support</span>
+    </div>
+
+    <button class="wa-btn" onclick="openWhatsApp()">
+        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+    </button>
+
+    <div class="wa-status"><span class="dot"></span> Admin Online — 24/7 Available</div>
+    <div class="wa-note"><i class="fas fa-lock"></i> Aapka number aur data 100% secure hai. Click karke seedha admin se baat karein.</div>
+</div>
+
+<div class="nav-spacer"></div>
+
+<div class="bottom-nav">
+    <div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+    <div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+    <div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+    <div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+    <div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div>
+
+<script>
+// WhatsApp number (hidden from UI — only used when button is clicked)
+var WA_NUMBER = '923157262843';
+
+// Pre-filled message
+var WA_MESSAGE = 'Assalam o Alaikum Admin! Mujhe aap ki madad chahiye. Please help me.';
+
+function openWhatsApp() {
+    var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_MESSAGE);
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>

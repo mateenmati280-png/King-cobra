@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Cobra - Team</title>
+
+<!-- PWA META TAGS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{overscroll-behavior-y:none;}
+body{background:url('https://i.postimg.cc/wjMhFW5P/file-00000000ac7c8208af9529fec9dbbcf8.png') no-repeat center center fixed;background-size:cover;color:#fff;padding:15px;padding-bottom:150px;min-height:100vh;background-attachment:fixed !important;}
+
+.sm-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:998;opacity:0;pointer-events:none;transition:0.25s;}
+.sm-overlay.active{opacity:1;pointer-events:all;}
+.side-menu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:linear-gradient(180deg,#1a1400,#0a0a0a);border-right:2px solid #FFD700;z-index:999;transition:left 0.28s;padding:25px 20px;overflow-y:auto;}
+.side-menu.active{left:0;}
+.menu-close{position:absolute;top:20px;right:15px;width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.1);border:1px solid #FFD700;color:#FFD700;display:flex;justify-content:center;align-items:center;cursor:pointer;}
+.menu-header{display:flex;align-items:center;gap:12px;padding-bottom:20px;border-bottom:1px solid #2a2a2a;margin-bottom:20px;}
+.menu-logo{width:50px;height:50px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2px solid #FFD700;}
+.menu-header-info h4{font-size:14px;color:#FFD700;}
+.menu-header-info p{font-size:10px;color:#888;word-break:break-all;}
+.menu-items{display:flex;flex-direction:column;gap:5px;}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 12px;border-radius:12px;color:#ccc;font-size:13px;cursor:pointer;border:1px solid transparent;}
+.menu-item:active{background:rgba(255,215,0,0.1);color:#FFD700;}
+.menu-item i{font-size:18px;width:24px;text-align:center;color:#FFD700;}
+.menu-item.logout{color:#FF2E93;margin-top:15px;border-top:1px solid #2a2a2a;padding-top:20px;border-radius:0;}
+.menu-item.logout i{color:#FF2E93;}
+</style><style>
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(20,16,5,0.85),rgba(10,10,10,0.9));padding:12px 16px;border-radius:18px;border:1px solid rgba(255,215,0,0.3);margin-bottom:15px;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.back-icon{width:42px;height:42px;background:#1a1a1a;border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1px solid rgba(255,215,0,0.4);}
+.page-title h3{font-size:16px;font-weight:700;color:#FFD700;letter-spacing:1px;}
+.page-title p{font-size:10px;color:#888;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.profile-icon{width:42px;height:42px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2px solid #FFD700;cursor:pointer;}
+
+.hero-banner{background:linear-gradient(135deg,rgba(42,26,0,0.15),rgba(26,13,0,0.25),rgba(13,5,0,0.35)),url('https://i.postimg.cc/gkS5WC6q/1789821267359.jpg') center/cover no-repeat;border:1.5px solid #FFD700;border-radius:22px;padding:22px 20px;margin-bottom:20px;position:relative;overflow:hidden;min-height:130px;display:flex;flex-direction:column;justify-content:center;}
+.hero-banner::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(255,215,0,0.25),transparent 70%);border-radius:50%;}
+.hero-banner::after{content:'';position:absolute;bottom:-60px;left:-60px;width:150px;height:150px;background:radial-gradient(circle,rgba(0,255,255,0.2),transparent 70%);border-radius:50%;}
+.hero-content{position:relative;z-index:2;}
+.hero-content h1{font-size:20px;color:#fff;font-weight:800;margin-bottom:6px;letter-spacing:1px;text-shadow:0 2px 15px rgba(0,0,0,1);}
+.hero-content h1 span{color:#00FFFF;text-shadow:0 0 20px rgba(0,255,255,0.8);}
+.hero-content p{font-size:11px;color:#ddd;letter-spacing:1px;}
+.hero-icon{position:absolute;top:20px;right:20px;font-size:55px;color:rgba(0,255,255,0.25);z-index:1;}
+
+.referral-share{background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,165,0,0.05));border:1.5px solid #FFD700;border-radius:16px;padding:14px;margin-bottom:18px;}
+.referral-share h4{font-size:11px;color:#FFD700;font-weight:800;letter-spacing:1.5px;margin-bottom:10px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.ref-link-row{display:flex;gap:8px;align-items:center;background:rgba(0,0,0,0.4);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+.ref-link-row small{flex:1;font-size:9.5px;color:#FFD700;word-break:break-all;line-height:1.4;}
+.ref-link-row button{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:6px 12px;border-radius:8px;color:#000;font-weight:800;font-size:10px;cursor:pointer;letter-spacing:1px;flex-shrink:0;}
+.share-btns-row{display:flex;gap:8px;}
+.share-btn-team{flex:1;padding:9px;border-radius:10px;font-size:11px;font-weight:800;cursor:pointer;border:none;display:flex;justify-content:center;align-items:center;gap:6px;letter-spacing:0.5px;}
+.sb-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;}
+.sb-telegram{background:linear-gradient(135deg,#0088CC,#005F8F);color:#fff;}
+
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.summary-card{background:linear-gradient(160deg,rgba(30,20,5,0.95),rgba(10,10,10,0.98));border:1.5px solid rgba(255,215,0,0.25);border-radius:18px;padding:16px 14px;position:relative;overflow:hidden;}
+.summary-card::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(255,215,0,0.15),transparent 70%);border-radius:50%;}
+.summary-card .sc-icon{width:42px;height:42px;border-radius:12px;display:flex;justify-content:center;align-items:center;font-size:18px;margin-bottom:10px;}
+.sc-total{color:#FFD700;background:rgba(255,215,0,0.15);}
+.sc-level1{color:#00FF88;background:rgba(0,255,136,0.15);}
+.sc-level2{color:#00BFFF;background:rgba(0,191,255,0.15);}
+.sc-active{color:#B026FF;background:rgba(176,38,255,0.15);}
+.summary-card p{font-size:9.5px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.summary-card h3{font-size:18px;color:#fff;font-weight:800;text-shadow:0 0 15px rgba(255,255,255,0.3);}
+
+.section-title{text-align:center;font-size:12px;font-weight:700;color:#FFD700;letter-spacing:4px;margin:25px 0 15px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:22%;height:1px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+</style><style>
+.team-tabs{display:flex;gap:8px;margin-bottom:18px;background:rgba(15,15,15,0.8);border:1.5px solid rgba(255,215,0,0.25);border-radius:14px;padding:6px;}
+.team-tab{flex:1;padding:10px;border-radius:10px;text-align:center;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer;color:#888;text-transform:uppercase;transition:all 0.2s;}
+.team-tab:active{transform:scale(0.95);}
+.team-tab.active{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;box-shadow:0 4px 15px rgba(255,215,0,0.4);}
+
+.team-member{background:linear-gradient(160deg,rgba(30,20,5,0.95),rgba(10,10,10,0.98));border:1.5px solid rgba(255,215,0,0.25);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden;transition:transform 0.2s;}
+.team-member:active{transform:scale(0.98);}
+.team-member.active-user{border-color:#00FF88;box-shadow:0 0 20px rgba(0,255,136,0.3);}
+.team-member.level2-member{border-color:#00BFFF;box-shadow:0 0 15px rgba(0,191,255,0.2);}
+.tm-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-weight:900;font-size:18px;flex-shrink:0;box-shadow:0 0 15px rgba(255,215,0,0.5);}
+.team-member.active-user .tm-avatar{background:linear-gradient(135deg,#00FF88,#00BFFF);box-shadow:0 0 15px rgba(0,255,136,0.6);}
+.team-member.level2-member .tm-avatar{background:linear-gradient(135deg,#00BFFF,#0080FF);color:#fff;box-shadow:0 0 15px rgba(0,191,255,0.6);}
+.tm-info{flex:1;min-width:0;}
+.tm-info h4{font-size:13px;color:#fff;font-weight:800;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tm-info p{font-size:10px;color:#888;display:flex;align-items:center;gap:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tm-info p i{color:#FFD700;font-size:9px;}
+.tm-info .tm-plan{display:inline-block;margin-top:4px;font-size:9px;color:#00FF88;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);padding:2px 7px;border-radius:5px;font-weight:700;letter-spacing:0.5px;}
+.tm-badge{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.tm-level-badge{font-size:8.5px;font-weight:900;padding:3px 8px;border-radius:6px;letter-spacing:0.5px;text-transform:uppercase;}
+.tm-level-badge.l1{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+.tm-level-badge.l2{background:linear-gradient(135deg,#00BFFF,#0080FF);color:#fff;}
+.tm-status{font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px;letter-spacing:0.3px;}
+.tm-status.active{background:rgba(0,255,136,0.15);color:#00FF88;border:1px solid rgba(0,255,136,0.4);}
+.tm-status.inactive{background:rgba(255,69,0,0.15);color:#FF4500;border:1px solid rgba(255,69,0,0.4);}
+.tm-status.none{background:rgba(136,136,136,0.15);color:#888;border:1px solid rgba(136,136,136,0.4);}
+
+.bonus-history-box{max-height:500px;overflow-y:auto;}
+.bonus-item{background:linear-gradient(135deg,rgba(40,20,70,0.9),rgba(15,5,35,0.95));border:1.5px solid rgba(176,38,255,0.4);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;align-items:center;}
+.bonus-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#B026FF,#8A2BE2);display:flex;justify-content:center;align-items:center;color:#fff;font-weight:900;font-size:16px;flex-shrink:0;box-shadow:0 0 15px rgba(176,38,255,0.5);}
+.bonus-content{flex:1;min-width:0;}
+.bonus-content h4{font-size:12px;color:#fff;font-weight:800;margin-bottom:3px;}
+.bonus-content p{font-size:10px;color:#888;display:flex;align-items:center;gap:5px;}
+.bonus-content p i{color:#FFD700;font-size:9px;}
+.bonus-amount{text-align:right;flex-shrink:0;}
+.bonus-amount h5{font-size:15px;color:#00FF88;font-weight:900;text-shadow:0 0 12px rgba(0,255,136,0.6);}
+.bonus-amount small{font-size:8px;color:#888;letter-spacing:0.5px;}
+
+.empty-team{text-align:center;padding:50px 20px;background:linear-gradient(160deg,rgba(30,20,5,0.9),rgba(10,10,10,0.95));border:1.5px dashed rgba(255,215,0,0.3);border-radius:22px;}
+.empty-team i.empty-icon{font-size:60px;color:rgba(255,215,0,0.3);margin-bottom:18px;display:block;}
+.empty-team h3{font-size:16px;color:#FFD700;font-weight:800;margin-bottom:8px;letter-spacing:1px;}
+.empty-team p{font-size:11px;color:#888;line-height:1.6;margin-bottom:20px;}
+.empty-team button{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:14px 32px;border-radius:50px;color:#000;font-weight:900;font-size:13px;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;box-shadow:0 8px 25px rgba(255,215,0,0.5);}
+
+.loading-box{text-align:center;padding:60px 20px;}
+.loading-spinner{width:50px;height:50px;border:4px solid rgba(255,215,0,0.15);border-top-color:#FFD700;border-radius:50%;animation:spin 0.9s linear infinite;margin:0 auto 18px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-box p{font-size:12px;color:#FFD700;letter-spacing:2px;font-weight:700;}
+
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,10,10,0.98);border-top:1px solid rgba(255,215,0,0.25);display:flex;justify-content:space-around;align-items:center;padding:12px 8px 14px 8px;z-index:99999;box-shadow:0 -5px 25px rgba(0,0,0,0.6);}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:9px;cursor:pointer;gap:4px;flex:1;min-height:50px;}
+.nav-item i{font-size:22px;line-height:1;color:inherit;}
+.nav-item p{font-size:9px;color:inherit;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-28px;width:70px;height:70px;min-width:70px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;box-shadow:0 0 25px rgba(255,215,0,0.7);}
+
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 26px;border-radius:50px;font-weight:700;font-size:13px;z-index:999999;transition:all 0.35s;opacity:0;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<!-- SIDE MENU -->
+<div class="sm-overlay" id="sideMenuOverlay" onclick="closeSideMenu()"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-close" onclick="closeSideMenu()"><i class="fas fa-times"></i></div>
+<div class="menu-header">
+<div class="menu-logo"></div>
+<div class="menu-header-info">
+<h4 id="menuUserName">Loading...</h4>
+<p id="menuUserEmail">Loading...</p>
+</div>
+</div>
+<div class="menu-items">
+<div class="menu-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i> Home</div>
+<div class="menu-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i> Invest</div>
+<div class="menu-item" onclick="window.location.href='deposit.html'"><i class="fas fa-wallet"></i> Deposit</div>
+<div class="menu-item" onclick="window.location.href='withdraw.html'"><i class="fas fa-money-bill-transfer"></i> Withdraw</div>
+<div class="menu-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i> Team</div>
+<div class="menu-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i> Profile</div>
+<div class="menu-item" onclick="window.location.href='support.html'"><i class="fas fa-headset"></i> Support</div>
+<div class="menu-item logout" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+</div>
+</div><!-- HEADER -->
+<div class="header">
+<div class="header-left">
+<div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+<div class="page-title">
+<h3>MY TEAM</h3>
+<p>Track your referrals</p>
+</div>
+</div>
+<div class="header-right">
+<div class="profile-icon" onclick="window.location.href='profile.html'"></div>
+</div>
+</div>
+
+<!-- HERO BANNER -->
+<div class="hero-banner">
+<i class="fas fa-users hero-icon"></i>
+<div class="hero-content">
+<h1>YOUR <span>TEAM</span></h1>
+<p>Invite friends and earn big bonuses!</p>
+</div>
+</div>
+
+<!-- REFERRAL SHARE -->
+<div class="referral-share">
+<h4><i class="fas fa-share-alt"></i> SHARE YOUR LINK</h4>
+<div class="ref-link-row">
+<small id="refLinkText">Loading...</small>
+<button onclick="copyRefLink()"><i class="fas fa-copy"></i></button>
+</div>
+<div class="share-btns-row">
+<button class="share-btn-team sb-whatsapp" onclick="shareWhatsApp()">
+<i class="fab fa-whatsapp"></i> WhatsApp
+</button>
+<button class="share-btn-team sb-telegram" onclick="shareTelegram()">
+<i class="fab fa-telegram"></i> Telegram
+</button>
+</div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-grid">
+<div class="summary-card">
+<div class="sc-icon sc-total"><i class="fas fa-users"></i></div>
+<p>Total Team</p>
+<h3 id="sumTotal">0</h3>
+</div>
+<div class="summary-card">
+<div class="sc-icon sc-level1"><i class="fas fa-user-check"></i></div>
+<p>Level 1</p>
+<h3 id="sumLevel1">0</h3>
+</div>
+<div class="summary-card">
+<div class="sc-icon sc-level2"><i class="fas fa-user-friends"></i></div>
+<p>Level 2</p>
+<h3 id="sumLevel2">0</h3>
+</div>
+<div class="summary-card">
+<div class="sc-icon sc-active"><i class="fas fa-coins"></i></div>
+<p>Total Bonus</p>
+<h3 id="sumBonus">Rs.0</h3>
+</div>
+</div>
+
+<!-- TABS -->
+<div class="team-tabs">
+<div class="team-tab active" id="tabLevel1" onclick="switchTeamTab('level1')">Level 1</div>
+<div class="team-tab" id="tabLevel2" onclick="switchTeamTab('level2')">Level 2</div>
+<div class="team-tab" id="tabBonus" onclick="switchTeamTab('bonus')">Bonus</div>
+</div>
+
+<!-- TEAM LIST -->
+<div id="teamList">
+<div class="loading-box">
+<div class="loading-spinner"></div>
+<p>LOADING TEAM...</p>
+</div>
+</div>
+
+<!-- BONUS HISTORY -->
+<div id="bonusList" style="display:none;">
+<div class="bonus-history-box" id="bonusHistoryBox">
+<div class="loading-box">
+<div class="loading-spinner"></div>
+<p>LOADING BONUS...</p>
+</div>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item active" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, getDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+var teamLevel1 = [];
+var teamLevel2 = [];
+var bonusHistory = [];
+var currentTab = 'level1';
+
+// ✅ NAYA LINK
+var BASE_URL = 'effervescent-selkie-4957fa.netlify.app';
+
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+window.showToast = showToast;
+
+window.openSideMenu = function(){
+  document.getElementById('sideMenu').classList.add('active');
+  document.getElementById('sideMenuOverlay').classList.add('active');
+};
+window.closeSideMenu = function(){
+  document.getElementById('sideMenu').classList.remove('active');
+  document.getElementById('sideMenuOverlay').classList.remove('active');
+};
+window.logoutUser = function(){
+  localStorage.removeItem('kingcobra_current');
+  sessionStorage.clear();
+  showToast('Logging out...');
+  setTimeout(function(){ window.location.href = 'index.html'; }, 700);
+};
+
+window.copyRefLink = function(){
+  var l = document.getElementById('refLinkText').innerText;
+  showToast('Referral Link Copied!', 'success');
+  if(navigator.clipboard){ navigator.clipboard.writeText(l); }
+};
+window.shareWhatsApp = function(){
+  var link = document.getElementById('refLinkText').innerText;
+  var msg = encodeURIComponent('🐍 Join King Cobra Investment!\n💰 Daily Earnings!\n🎡 Lucky Spin!\n\n' + link);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+};
+window.shareTelegram = function(){
+  var link = document.getElementById('refLinkText').innerText;
+  var msg = encodeURIComponent('🐍 Join King Cobra Investment!');
+  window.open('https://t.me/share/url?url=' + link + '&text=' + msg, '_blank');
+};
+
+function fmt(n){
+  n = Number(n) || 0;
+  return n.toLocaleString('en-US');
+}
+
+function getTimeAgo(iso){
+  if(!iso) return 'Just now';
+  try{
+    var now = new Date();
+    var then = new Date(iso);
+    var diff = Math.floor((now - then) / 1000);
+    if(diff < 60) return 'Just now';
+    if(diff < 3600) return Math.floor(diff / 60) + ' min ago';
+    if(diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+    if(diff < 172800) return 'Yesterday';
+    return Math.floor(diff / 86400) + ' days ago';
+  }catch(e){ return 'Just now'; }
+}
+
+window.switchTeamTab = function(tab){
+  currentTab = tab;
+
+  document.getElementById('tabLevel1').classList.toggle('active', tab === 'level1');
+  document.getElementById('tabLevel2').classList.toggle('active', tab === 'level2');
+  document.getElementById('tabBonus').classList.toggle('active', tab === 'bonus');
+
+  if(tab === 'bonus'){
+    document.getElementById('teamList').style.display = 'none';
+    document.getElementById('bonusList').style.display = 'block';
+    renderBonusList();
+  } else {
+    document.getElementById('teamList').style.display = 'block';
+    document.getElementById('bonusList').style.display = 'none';
+    renderTeamList(tab);
+  }
+};
+
+function renderTeamList(level){
+  var el = document.getElementById('teamList');
+  if(!el) return;
+
+  var list = level === 'level1' ? teamLevel1 : teamLevel2;
+
+  if(list.length === 0){
+    el.innerHTML = '<div class="empty-team">' +
+      '<i class="fas fa-users empty-icon"></i>' +
+      '<h3>NO TEAM MEMBERS</h3>' +
+      '<p>' + (level === 'level1' ? 'Abhi tak kisi ko invite nahi kiya.<br>Apne friends ko invite karein!' : 'Koi level 2 team member nahi hai.') + '</p>' +
+      (level === 'level1' ? '<button onclick="window.scrollTo({top:0,behavior:\'smooth\'})"><i class="fas fa-share-alt"></i> INVITE NOW</button>' : '') +
+      '</div>';
+    return;
+  }
+
+  var html = '';
+  list.forEach(function(m){
+    var initial = (m.name || 'U').charAt(0).toUpperCase();
+    var planName = m.planName || '';
+    var hasDeposit = m.hasDeposit || false;
+    var levelClass = level === 'level2' ? 'level2-member' : '';
+    var activeClass = hasDeposit ? 'active-user' : '';
+
+    html += '<div class="team-member ' + levelClass + ' ' + activeClass + '">';
+    html += '<div class="tm-avatar">' + initial + '</div>';
+    html += '<div class="tm-info">';
+    html += '<h4>' + (m.name || 'User') + '</h4>';
+    html += '<p><i class="fas fa-envelope"></i> ' + (m.email || 'N/A') + '</p>';
+    if(planName){
+      html += '<span class="tm-plan"><i class="fas fa-crown"></i> ' + planName + '</span>';
+    }
+    html += '</div>';
+    html += '<div class="tm-badge">';
+    html += '<span class="tm-level-badge ' + (level === 'level1' ? 'l1' : 'l2') + '">' + (level === 'level1' ? 'L1' : 'L2') + '</span>';
+    if(hasDeposit){
+      html += '<span class="tm-status active">ACTIVE</span>';
+    } else {
+      html += '<span class="tm-status none">PENDING</span>';
+    }
+    html += '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+}
+
+function renderBonusList(){
+  var el = document.getElementById('bonusHistoryBox');
+  if(!el) return;
+
+  if(bonusHistory.length === 0){
+    el.innerHTML = '<div class="empty-team">' +
+      '<i class="fas fa-gift empty-icon"></i>' +
+      '<h3>NO BONUS YET</h3>' +
+      '<p>Abhi tak koi referral bonus nahi mila.<br>Apne friends ko invite karein!</p>' +      '<button onclick="window.scrollTo({top:0,behavior:\'smooth\'})"><i class="fas fa-share-alt"></i> INVITE NOW</button>' +
+      '</div>';
+    return;
+  }
+
+  var sorted = bonusHistory.slice().sort(function(a,b){
+    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
+  var html = '';
+  sorted.forEach(function(h){
+    var amount = Number(h.amount) || 0;
+    var name = h.fromUserName || 'Team Member';
+    var initial = name.charAt(0).toUpperCase();
+    var planName = h.planName || 'Plan';
+    var level = h.level || 1;
+    var levelText = level === 1 ? 'Level 1' : 'Level 2';
+    var timeAgo = getTimeAgo(h.createdAt);
+
+    html += '<div class="bonus-item">';
+    html += '<div class="bonus-avatar">' + initial + '</div>';
+    html += '<div class="bonus-content">';
+    html += '<h4>' + name + '</h4>';
+    html += '<p><i class="fas fa-chart-line"></i> ' + planName + ' • ' + levelText + ' • ' + timeAgo + '</p>';
+    html += '</div>';
+    html += '<div class="bonus-amount">';
+    html += '<h5>+Rs.' + amount + '</h5>';
+    html += '<small>BONUS</small>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+}
+
+console.log('Part 5 Loaded — Team Functions Ready');
+
+/* ============================================================
+   LOAD TEAM MEMBERS + BONUS
+   ============================================================ */
+function loadTeamData(){
+  var myEmail = (currentUser.email || '').toLowerCase().trim();
+
+  onSnapshot(collection(db, 'users'), function(usersSnap){
+    var allUsers = {};
+    usersSnap.forEach(function(d){
+      var u = d.data();
+      u._docId = d.id;
+      if(u.email){
+        allUsers[u.email.toLowerCase().trim()] = u;
+      }
+    });
+
+    onSnapshot(collection(db, 'investments'), function(investSnap){
+      var userHasDeposit = {};
+      var userPlanName = {};
+
+      investSnap.forEach(function(invDoc){
+        var inv = invDoc.data();
+        var invEmail = (inv.userEmail || '').toLowerCase().trim();
+
+        if(inv.status !== 'active' && inv.status !== 'completed' && inv.status){
+          return;
+        }
+
+        userHasDeposit[invEmail] = true;
+        userPlanName[invEmail] = inv.planName || '';
+      });
+
+      // ✅ Level 1 — Direct referrals
+      var level1 = [];
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        if(refBy === myEmail){
+          var uEmail = (u.email || '').toLowerCase().trim();
+          level1.push({
+            name: u.name || 'User',
+            email: u.email || '',
+            hasDeposit: !!userHasDeposit[uEmail],
+            planName: userPlanName[uEmail] || ''
+          });
+        }
+      });
+
+      // ✅ Level 2 — Chain referrals
+      var level1Emails = {};
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        if(refBy === myEmail){
+          level1Emails[(u.email || '').toLowerCase().trim()] = true;
+        }
+      });
+
+      var level2 = [];
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        if(level1Emails[refBy]){
+          var uEmail = (u.email || '').toLowerCase().trim();
+          level2.push({
+            name: u.name || 'User',
+            email: u.email || '',
+            hasDeposit: !!userHasDeposit[uEmail],
+            planName: userPlanName[uEmail] || ''
+          });
+        }
+      });
+
+      teamLevel1 = level1;
+      teamLevel2 = level2;
+
+      document.getElementById('sumTotal').innerText = level1.length + level2.length;
+      document.getElementById('sumLevel1').innerText = level1.length;
+      document.getElementById('sumLevel2').innerText = level2.length;
+
+      renderTeamList(currentTab === 'level2' ? 'level2' : 'level1');
+
+    }, function(err){ console.log('Investments error:', err); });
+
+  }, function(err){ console.log('Users error:', err); });
+}
+
+/* ============================================================
+   LOAD BONUS HISTORY
+   ============================================================ */
+function loadBonusHistory(){
+  var q = query(
+    collection(db, 'referralBonuses'),
+    where('toUserEmail', '==', currentUser.email)
+  );
+
+  onSnapshot(q, function(snap){
+    bonusHistory = [];
+    var total = 0;
+
+    snap.forEach(function(d){
+      var h = d.data();
+      h.id = d.id;
+      bonusHistory.push(h);
+      total += Number(h.amount) || 0;
+    });
+
+    document.getElementById('sumBonus').innerText = 'Rs.' + fmt(total);
+
+    if(currentTab === 'bonus'){
+      renderBonusList();
+    }
+  }, function(err){
+    console.log('Bonus error:', err);
+  });
+}
+
+/* ============================================================
+   FIND USER
+   ============================================================ */
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  if(document.getElementById('menuUserName')) document.getElementById('menuUserName').innerText = currentUser.name || 'User';
+  if(document.getElementById('menuUserEmail')) document.getElementById('menuUserEmail').innerText = currentUser.email || '';
+
+  // ✅ Referral link — NAYA LINK
+  var myEmail = (currentUser.email || '').trim().toLowerCase();
+  var refURL = BASE_URL + '/index.html?ref=' + encodeURIComponent(myEmail);
+  document.getElementById('refLinkText').innerText = refURL;
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    // ✅ Blocked check
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0000;display:flex;justify-content:center;align-items:center;color:#FF1744;font-size:20px;font-weight:800;">ACCOUNT BLOCKED</div>';
+        return;
+      }
+    });
+
+    // ✅ Load data
+    loadTeamData();
+    loadBonusHistory();
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+
+    document.getElementById('teamList').innerHTML = 
+      '<div class="empty-team">' +
+      '<i class="fas fa-exclamation-triangle empty-icon" style="color:#FF1744;"></i>' +
+      '<h3>USER DATA NAHI MILA</h3>' +
+      '<p>' + err.message + '</p>' +
+      '<button onclick="window.location.reload()">RETRY</button>' +
+      '</div>';
+  }
+});
+
+console.log('Team Page Loaded Successfully');
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

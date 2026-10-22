@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonus - King Cobra</title>
+
+<!-- PWA META TAGS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;-webkit-tap-highlight-color:transparent;}
+body{background:linear-gradient(160deg,#0a0510 0%,#1a0033 40%,#0a0218 100%);color:#fff;padding:15px;padding-bottom:150px;min-height:100vh;overflow-x:hidden;}
+</style>
+</head><style>
+/* ==================== LIGHT ANIMATIONS ONLY ==================== */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes softPulse{0%,100%{opacity:0.15;}50%{opacity:0.25;}}
+
+/* ==================== HEADER ==================== */
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(60,20,80,0.85),rgba(20,5,30,0.98));padding:14px 18px;border-radius:20px;border:1.5px solid rgba(255,215,0,0.5);margin-bottom:16px;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,215,0,0.12),transparent 70%);border-radius:50%;}
+.header-left{display:flex;align-items:center;gap:12px;position:relative;z-index:2;}
+.back-icon{width:44px;height:44px;background:rgba(20,5,30,0.9);border-radius:12px;display:flex;justify-content:center;align-items:center;color:#FFD700;font-size:18px;cursor:pointer;border:1.5px solid rgba(255,215,0,0.6);}
+.back-icon:active{transform:scale(0.92);background:rgba(255,215,0,0.15);}
+.page-title h3{font-size:16px;font-weight:900;color:#FFD700;letter-spacing:2px;display:flex;align-items:center;gap:8px;}
+.page-title h3 i{font-size:18px;}
+.page-title p{font-size:10px;color:#bbb;letter-spacing:1px;margin-top:2px;}
+.header-right{position:relative;z-index:2;}
+.profile-icon{width:44px;height:44px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2.5px solid #FFD700;cursor:pointer;}
+
+/* ==================== HERO ==================== */
+.hero-banner{background:linear-gradient(135deg,rgba(60,20,80,0.9),rgba(40,10,60,0.95)),url('https://i.postimg.cc/gkS5WC6q/1789821267359.jpg') center/cover no-repeat;border:2px solid #FFD700;border-radius:22px;padding:24px 20px;margin-bottom:20px;position:relative;overflow:hidden;text-align:center;}
+.hero-banner::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,215,0,0.12),transparent 50%);animation:softPulse 4s ease-in-out infinite;pointer-events:none;}
+.hero-content{position:relative;z-index:2;}
+.hero-content h1{font-size:24px;color:#fff;font-weight:900;letter-spacing:2px;margin-bottom:8px;}
+.hero-content h1 span{color:#FFD700;}
+.hero-content p{font-size:11.5px;color:#ddd;letter-spacing:1px;line-height:1.5;}
+.hero-icon{position:absolute;top:18px;right:20px;font-size:55px;color:rgba(255,215,0,0.3);z-index:1;}
+
+/* ==================== STATS ==================== */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;}
+.stat-card{background:linear-gradient(160deg,rgba(40,15,60,0.95),rgba(15,5,25,0.98));border-radius:20px;padding:18px 16px;position:relative;overflow:hidden;border:1.5px solid rgba(255,215,0,0.35);animation:fadeInUp 0.4s ease-out;animation-fill-mode:both;}
+.stat-card:nth-child(1){animation-delay:0.05s;}
+.stat-card:nth-child(2){animation-delay:0.1s;}
+.stat-card:nth-child(3){animation-delay:0.15s;}
+.stat-card:nth-child(4){animation-delay:0.2s;}
+.stat-card::after{content:'';position:absolute;top:-40px;right:-40px;width:110px;height:110px;background:radial-gradient(circle,currentColor,transparent 70%);opacity:0.12;border-radius:50%;pointer-events:none;}
+
+.stat-card.gold{color:#FFD700;border-color:rgba(255,215,0,0.6);}
+.stat-card.green{color:#00FF88;border-color:rgba(0,255,136,0.6);}
+.stat-card.purple{color:#B026FF;border-color:rgba(176,38,255,0.6);}
+.stat-card.pink{color:#FF2E93;border-color:rgba(255,46,147,0.6);}
+
+.stat-icon{width:44px;height:44px;border-radius:13px;display:flex;justify-content:center;align-items:center;font-size:20px;margin-bottom:10px;position:relative;z-index:2;}
+.stat-card.gold .stat-icon{background:rgba(255,215,0,0.18);}
+.stat-card.green .stat-icon{background:rgba(0,255,136,0.18);}
+.stat-card.purple .stat-icon{background:rgba(176,38,255,0.18);}
+.stat-card.pink .stat-icon{background:rgba(255,46,147,0.18);}
+
+.stat-label{font-size:10px;color:#aaa;letter-spacing:1.5px;font-weight:800;margin-bottom:6px;text-transform:uppercase;position:relative;z-index:2;}
+.stat-value{font-size:22px;font-weight:900;position:relative;z-index:2;letter-spacing:0.5px;}
+.stat-card.gold .stat-value{color:#FFD700;}
+.stat-card.green .stat-value{color:#00FF88;}
+.stat-card.purple .stat-value{color:#B026FF;}
+.stat-card.pink .stat-value{color:#FF2E93;}
+.stat-sub{font-size:9px;color:#888;margin-top:4px;position:relative;z-index:2;letter-spacing:0.5px;}
+
+/* ==================== SECTION TITLE ==================== */
+.section-title{text-align:center;font-size:13px;font-weight:900;color:#FFD700;letter-spacing:4px;margin:26px 0 16px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:24%;height:1.5px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+</style><style>
+/* ==================== LEVELS ==================== */
+.levels-container{display:flex;flex-direction:column;gap:14px;margin-bottom:22px;}
+.level-card{position:relative;border-radius:22px;padding:20px 18px;overflow:hidden;border:2px solid;background:linear-gradient(160deg,rgba(30,15,50,0.95),rgba(10,5,20,0.98));}
+.level-card:active{transform:scale(0.99);}
+.level-card::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,currentColor,transparent 70%);opacity:0.10;pointer-events:none;}
+
+.level-card.bronze{color:#CD7F32;border-color:#CD7F32;}
+.level-card.silver{color:#C0C0C0;border-color:#C0C0C0;}
+.level-card.gold-lvl{color:#FFD700;border-color:#FFD700;}
+.level-card.platinum{color:#E5E4E2;border-color:#E5E4E2;}
+.level-card.diamond{color:#B9F2FF;border-color:#B9F2FF;}
+
+.level-card.completed{border-color:#00FF88 !important;}
+.level-card.completed::after{background:radial-gradient(circle,rgba(0,255,136,0.25),transparent 70%) !important;opacity:0.15;}
+.level-card.claimed{opacity:0.6;filter:grayscale(0.3);}
+
+/* Level Header */
+.level-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;position:relative;z-index:2;}
+.level-badge{width:58px;height:58px;border-radius:16px;display:flex;justify-content:center;align-items:center;font-size:26px;flex-shrink:0;}
+.level-card.bronze .level-badge{background:linear-gradient(135deg,#CD7F32,#8B4513);color:#fff;}
+.level-card.silver .level-badge{background:linear-gradient(135deg,#E8E8E8,#A8A8A8);color:#333;}
+.level-card.gold-lvl .level-badge{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;}
+.level-card.platinum .level-badge{background:linear-gradient(135deg,#FFFFFF,#B0C4DE);color:#333;}
+.level-card.diamond .level-badge{background:linear-gradient(135deg,#B9F2FF,#8A2BE2);color:#fff;}
+
+.level-info{flex:1;min-width:0;position:relative;z-index:2;}
+.level-name{font-size:16px;font-weight:900;letter-spacing:1.2px;margin-bottom:4px;}
+.level-req{font-size:10.5px;color:#aaa;letter-spacing:0.5px;font-weight:600;}
+
+.level-card.bronze .level-name{color:#CD7F32;}
+.level-card.silver .level-name{color:#C0C0C0;}
+.level-card.gold-lvl .level-name{color:#FFD700;}
+.level-card.platinum .level-name{color:#E5E4E2;}
+.level-card.diamond .level-name{color:#B9F2FF;}
+
+/* Reward Badge */
+.reward-badge{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;font-weight:900;font-size:12.5px;padding:6px 12px;border-radius:10px;letter-spacing:1px;z-index:3;}
+.level-card.bronze .reward-badge{background:linear-gradient(135deg,#FFB347,#CD7F32);color:#fff;}
+.level-card.silver .reward-badge{background:linear-gradient(135deg,#E8E8E8,#C0C0C0);color:#333;}
+.level-card.platinum .reward-badge{background:linear-gradient(135deg,#FFFFFF,#B0C4DE);color:#333;}
+.level-card.diamond .reward-badge{background:linear-gradient(135deg,#B9F2FF,#8A2BE2);color:#fff;}
+.reward-badge.claimed-badge{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+/* Progress */
+.level-progress-wrap{position:relative;z-index:2;margin-bottom:14px;}
+.level-progress-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.level-progress-label{font-size:10px;color:#888;letter-spacing:1.2px;font-weight:800;text-transform:uppercase;}
+.level-progress-value{font-size:13px;font-weight:900;color:#FFD700;}
+.level-progress-track{width:100%;height:12px;background:rgba(0,0,0,0.6);border-radius:10px;overflow:hidden;border:1.5px solid rgba(255,215,0,0.3);position:relative;}
+.level-progress-fill{height:100%;background:linear-gradient(90deg,#FFD700,#FFA500);border-radius:10px;transition:width 0.8s ease;box-shadow:0 0 12px rgba(255,215,0,0.5);}
+.level-card.bronze .level-progress-fill{background:linear-gradient(90deg,#CD7F32,#FFB347);}
+.level-card.silver .level-progress-fill{background:linear-gradient(90deg,#C0C0C0,#F0F0F0);}
+.level-card.platinum .level-progress-fill{background:linear-gradient(90deg,#E5E4E2,#FFFFFF);}
+.level-card.diamond .level-progress-fill{background:linear-gradient(90deg,#B9F2FF,#8A2BE2);}
+.level-card.completed .level-progress-fill{background:linear-gradient(90deg,#00FF88,#00BFFF);}
+
+/* Claim Button */
+.claim-btn{width:100%;background:linear-gradient(135deg,#00FF88,#00BFFF);border:none;padding:15px;border-radius:14px;color:#000;font-weight:900;font-size:13px;letter-spacing:2.5px;cursor:pointer;text-transform:uppercase;display:flex;justify-content:center;align-items:center;gap:10px;position:relative;z-index:2;}
+.claim-btn:active{transform:scale(0.97);}
+.claim-btn i{font-size:16px;}
+
+/* Claimed Label */
+.claimed-label{text-align:center;padding:15px;background:rgba(0,255,136,0.12);border:2px solid rgba(0,255,136,0.5);border-radius:14px;color:#00FF88;font-weight:900;font-size:12.5px;letter-spacing:1.5px;position:relative;z-index:2;display:flex;justify-content:center;align-items:center;gap:8px;text-transform:uppercase;}
+
+/* Locked Info */
+.locked-info{text-align:center;padding:12px;background:rgba(0,0,0,0.4);border:1.5px dashed rgba(255,215,0,0.3);border-radius:12px;color:#888;font-size:11px;font-weight:700;letter-spacing:0.5px;position:relative;z-index:2;display:flex;justify-content:center;align-items:center;gap:6px;}
+.locked-info i{color:#FFD700;}
+</style><style>
+/* ==================== HISTORY ==================== */
+.history-list{display:flex;flex-direction:column;gap:10px;}
+.history-item{background:linear-gradient(160deg,rgba(30,15,50,0.95),rgba(10,5,20,0.98));border:1.5px solid rgba(255,215,0,0.35);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;animation:fadeInUp 0.3s ease-out;}
+.history-item::before{content:'';position:absolute;left:0;top:0;height:100%;width:4px;background:linear-gradient(180deg,#FFD700,#FFA500);}
+.history-item.claimed-item::before{background:linear-gradient(180deg,#00FF88,#00BFFF);}
+.history-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-weight:900;font-size:16px;flex-shrink:0;}
+.history-item.claimed-item .history-avatar{background:linear-gradient(135deg,#00FF88,#00BFFF);}
+.history-content{flex:1;min-width:0;}
+.history-content h4{font-size:12.5px;color:#fff;font-weight:900;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.history-content .meta{font-size:10px;color:#999;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.history-content .meta i{color:#FFD700;font-size:9px;}
+.history-content .plan-tag{display:inline-block;background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.4);color:#FFD700;font-size:9px;font-weight:800;padding:2px 8px;border-radius:5px;letter-spacing:0.5px;margin-top:5px;}
+.history-content .plan-tag.level-bronze{color:#CD7F32;border-color:#CD7F32;background:rgba(205,127,50,0.12);}
+.history-content .plan-tag.level-silver{color:#C0C0C0;border-color:#C0C0C0;background:rgba(192,192,192,0.12);}
+.history-content .plan-tag.level-gold{color:#FFD700;border-color:#FFD700;background:rgba(255,215,0,0.12);}
+.history-content .plan-tag.level-platinum{color:#E5E4E2;border-color:#E5E4E2;background:rgba(229,228,226,0.12);}
+.history-content .plan-tag.level-diamond{color:#B9F2FF;border-color:#B9F2FF;background:rgba(185,242,255,0.12);}
+.history-amount{text-align:right;flex-shrink:0;}
+.history-amount .amt{font-size:16px;font-weight:900;color:#00FF88;}
+.history-amount .time{font-size:9px;color:#888;font-weight:600;margin-top:3px;}
+
+/* ==================== EMPTY ==================== */
+.empty-state{text-align:center;padding:55px 20px;background:linear-gradient(160deg,rgba(30,15,50,0.6),rgba(10,5,20,0.9));border-radius:22px;border:1.5px dashed rgba(255,215,0,0.4);margin-bottom:18px;}
+.empty-state .empty-icon{width:100px;height:100px;margin:0 auto 20px;border-radius:50%;background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(176,38,255,0.1));display:flex;justify-content:center;align-items:center;font-size:46px;color:#FFD700;border:2px solid rgba(255,215,0,0.5);}
+.empty-state h3{font-size:15px;color:#FFD700;font-weight:900;margin-bottom:10px;letter-spacing:1.2px;}
+.empty-state p{font-size:11.5px;color:#999;line-height:1.7;margin-bottom:20px;}
+.empty-state .cta-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:13px 26px;border-radius:50px;font-weight:900;font-size:12px;letter-spacing:1.5px;text-decoration:none;box-shadow:0 6px 20px rgba(255,215,0,0.5);text-transform:uppercase;}
+
+/* ==================== LOADING ==================== */
+.loading-box{text-align:center;padding:60px 20px;}
+.loading-spinner{width:55px;height:55px;border:4px solid rgba(255,215,0,0.15);border-top-color:#FFD700;border-radius:50%;animation:spin 0.9s linear infinite;margin:0 auto 18px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-box p{font-size:12px;color:#FFD700;letter-spacing:3px;font-weight:800;}
+
+/* ==================== SUCCESS MODAL ==================== */
+.success-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999999;display:none;justify-content:center;align-items:center;padding:20px;}
+.success-modal.show{display:flex;animation:fadeIn 0.3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.success-box{background:linear-gradient(160deg,#0a2a1a,#02120a);border:3px solid #00FF88;border-radius:26px;padding:32px 26px;text-align:center;max-width:350px;width:100%;box-shadow:0 0 80px rgba(0,255,136,0.7);position:relative;animation:popIn 0.4s cubic-bezier(0.68,-0.55,0.27,1.55);}
+@keyframes popIn{from{transform:scale(0.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.success-icon{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-size:45px;margin:0 auto 18px;box-shadow:0 0 40px rgba(255,215,0,0.8);}
+.success-box h2{font-size:20px;color:#00FF88;font-weight:900;letter-spacing:3px;margin-bottom:10px;text-transform:uppercase;}
+.success-box .success-msg{font-size:12.5px;color:#aaa;margin-bottom:14px;}
+.success-box .amount{font-size:40px;color:#FFD700;font-weight:900;margin:14px 0;}
+.success-box .level-reached{font-size:11px;color:#B026FF;font-weight:800;letter-spacing:1.5px;margin-bottom:20px;text-transform:uppercase;}
+.success-box button{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:14px 36px;border-radius:50px;color:#000;font-weight:900;font-size:13px;cursor:pointer;letter-spacing:2px;box-shadow:0 6px 20px rgba(255,215,0,0.6);text-transform:uppercase;}
+.success-box button:active{transform:scale(0.96);}
+
+/* ==================== BOTTOM NAV ==================== */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,5,20,0.98);border-top:1.5px solid rgba(255,215,0,0.35);display:flex;justify-content:space-around;align-items:center;padding:12px 8px 14px 8px;z-index:99999;}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:9px;cursor:pointer;gap:4px;flex:1;min-height:50px;}
+.nav-item:active{transform:scale(0.92);}
+.nav-item i{font-size:22px;line-height:1;color:inherit;}
+.nav-item p{font-size:9px;color:inherit;font-weight:600;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-28px;width:70px;height:70px;min-width:70px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:3px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;}
+
+/* ==================== TOAST ==================== */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:14px 24px;border-radius:50px;font-weight:800;font-size:12.5px;z-index:999999;transition:all 0.3s;opacity:0;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,0.6);}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+/* ==================== CONFETTI ==================== */
+.confetti{position:fixed;width:10px;height:10px;top:-10px;z-index:99999998;pointer-events:none;border-radius:2px;animation:confettiFall 3s linear forwards;}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(105vh) rotate(720deg);opacity:0;}}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:rgba(0,0,0,0.3);}
+::-webkit-scrollbar-thumb{background:linear-gradient(#FFD700,#B026FF);border-radius:10px;}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-left">
+<div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+<div class="page-title">
+<h3><i class="fas fa-gift"></i> BONUS HUB</h3>
+<p>Track all your bonuses</p>
+</div>
+</div>
+<div class="header-right">
+<div class="profile-icon" onclick="window.location.href='profile.html'"></div>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero-banner">
+<i class="fas fa-trophy hero-icon"></i>
+<div class="hero-content">
+<h1>YOUR <span>BONUS</span> REWARDS</h1>
+<p>Team build karein • Bonus claim karein • Level up karein</p>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-grid">
+<div class="stat-card gold">
+<div class="stat-icon"><i class="fas fa-coins"></i></div>
+<div class="stat-label">Total Bonus</div>
+<div class="stat-value" id="statTotal">Rs. 0</div>
+<div class="stat-sub">All time earnings</div>
+</div>
+
+<div class="stat-card green">
+<div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+<div class="stat-label">Claimed</div>
+<div class="stat-value" id="statClaimed">Rs. 0</div>
+<div class="stat-sub">Paid out</div>
+</div>
+
+<div class="stat-card purple">
+<div class="stat-icon"><i class="fas fa-users"></i></div>
+<div class="stat-label">Active Team</div>
+<div class="stat-value" id="statTeam">0</div>
+<div class="stat-sub">With purchase</div>
+</div>
+
+<div class="stat-card pink">
+<div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+<div class="stat-label">Pending</div>
+<div class="stat-value" id="statPending">Rs. 0</div>
+<div class="stat-sub">Ready to claim</div>
+</div>
+</div>
+
+<!-- BONUS LEVELS -->
+<div class="section-title">Claim Your Bonus</div>
+<div class="levels-container" id="levelsContainer">
+<div class="loading-box">
+<div class="loading-spinner"></div>
+<p>LOADING LEVELS...</p>
+</div>
+</div>
+
+<!-- BONUS HISTORY -->
+<div class="section-title">Bonus History</div>
+<div class="history-list" id="bonusHistoryList">
+<div class="loading-box">
+<div class="loading-spinner"></div>
+<p>LOADING HISTORY...</p>
+</div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="success-modal" id="successModal">
+<div class="success-box">
+<div class="success-icon"><i class="fas fa-trophy"></i></div>
+<h2>CONGRATULATIONS!</h2>
+<div class="success-msg">Aap ne bonus claim kar liya!</div>
+<div class="amount" id="successAmount">Rs. 0</div>
+<div class="level-reached" id="successLevel">BRONZE LEVEL</div>
+<button onclick="closeSuccessModal()"><i class="fas fa-check"></i> GREAT!</button>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, getDoc, addDoc, updateDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+var allBonuses = [];
+var claimedLevels = {};
+var activeTeamCount = 0;
+var claimedTotal = 0;
+var pendingTotal = 0;
+
+// ✅ NAYA NETLIFY URL
+var BASE_URL = 'effervescent-selkie-4957fa.netlify.app';
+
+/* ============================================================
+   LEVEL CONFIG
+   ============================================================ */
+var LEVELS = [
+  { id: 'bronze', name: 'BRONZE', emoji: '🥉', icon: 'fa-medal', req: 5, amount: 70, color: 'bronze' },
+  { id: 'silver', name: 'SILVER', emoji: '🥈', icon: 'fa-award', req: 15, amount: 250, color: 'silver' },
+  { id: 'gold', name: 'GOLD', emoji: '🥇', icon: 'fa-crown', req: 30, amount: 600, color: 'gold-lvl' },
+  { id: 'platinum', name: 'PLATINUM', emoji: '💎', icon: 'fa-star', req: 50, amount: 1000, color: 'platinum' },
+  { id: 'diamond', name: 'DIAMOND', emoji: '👑', icon: 'fa-gem', req: 51, amount: 3000, color: 'diamond' }
+];
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+window.showToast = showToast;
+
+/* ============================================================
+   FORMAT
+   ============================================================ */
+function fmt(n){
+  n = Number(n) || 0;
+  return n.toLocaleString('en-US');
+}
+
+/* ============================================================
+   ANIMATED COUNTER (Light)
+   ============================================================ */
+function animateValue(el, start, end, duration){
+  if(!el) return;
+  var startTime = null;
+  var isCurrency = el.innerText.indexOf('Rs.') !== -1;
+  duration = duration || 800;
+
+  function step(timestamp){
+    if(!startTime) startTime = timestamp;
+    var progress = Math.min((timestamp - startTime) / duration, 1);
+    var currentValue = Math.floor(progress * (end - start) + start);
+    el.innerText = isCurrency ? 'Rs. ' + currentValue.toLocaleString() : currentValue.toLocaleString();
+    if(progress < 1){
+      window.requestAnimationFrame(step);
+    } else {
+      el.innerText = isCurrency ? 'Rs. ' + end.toLocaleString() : end.toLocaleString();
+    }
+  }
+  window.requestAnimationFrame(step);
+}
+
+/* ============================================================
+   CONFETTI (Light)
+   ============================================================ */
+function showConfetti(){
+  var colors = ['#FFD700','#FF1744','#B026FF','#00FF88','#00BFFF','#FFA500'];
+  for(var i = 0; i < 40; i++){
+    var c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDelay = Math.random() * 0.6 + 's';
+    c.style.animationDuration = (2 + Math.random() * 1) + 's';
+    document.body.appendChild(c);
+    setTimeout(function(el){ return function(){ el.remove(); }; }(c), 4000);
+  }
+}
+
+/* ============================================================
+   TIME AGO
+   ============================================================ */
+function getTimeAgo(iso){
+  if(!iso) return 'Just now';
+  try{
+    var now = new Date();
+    var then = new Date(iso);
+    var diff = Math.floor((now - then) / 1000);
+    if(diff < 60) return 'Just now';
+    if(diff < 3600) return Math.floor(diff / 60) + ' min ago';
+    if(diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+    if(diff < 172800) return 'Yesterday';
+    if(diff < 604800) return Math.floor(diff / 86400) + ' days ago';
+    return then.toLocaleDateString('en-GB', {day: '2-digit', month: 'short'});
+  }catch(e){ return 'Just now'; }
+}
+
+/* ============================================================
+   RENDER LEVELS
+   ============================================================ */
+function renderLevels(){
+  var el = document.getElementById('levelsContainer');
+  if(!el) return;
+
+  var html = '';
+  var pendingCount = 0;
+
+  LEVELS.forEach(function(lvl){
+    var isCompleted = activeTeamCount >= lvl.req;
+    var isClaimed = claimedLevels[lvl.id] === true;
+    var progress = Math.min(activeTeamCount, lvl.req);
+    var pct = Math.min(100, (progress / lvl.req) * 100);
+
+    if(isCompleted && !isClaimed){
+      pendingCount += lvl.amount;
+    }
+
+    var cardClasses = 'level-card ' + lvl.color;
+    if(isCompleted) cardClasses += ' completed';
+    if(isClaimed) cardClasses += ' claimed';
+
+    html += '<div class="' + cardClasses + '">';
+
+    // Reward badge
+    if(isClaimed){
+      html += '<div class="reward-badge claimed-badge">✓ CLAIMED</div>';
+    } else {
+      html += '<div class="reward-badge">Rs.' + fmt(lvl.amount) + '</div>';
+    }
+
+    // Header
+    html += '<div class="level-header">';
+    html += '<div class="level-badge"><i class="fas ' + lvl.icon + '"></i></div>';
+    html += '<div class="level-info">';
+    html += '<div class="level-name">' + lvl.emoji + ' ' + lvl.name + '</div>';
+    html += '<div class="level-req">Requires: ' + lvl.req + ' Active Team Members</div>';
+    html += '</div>';
+    html += '</div>';
+
+    // Progress
+    html += '<div class="level-progress-wrap">';
+    html += '<div class="level-progress-head">';
+    html += '<span class="level-progress-label">Your Progress</span>';
+    html += '<span class="level-progress-value">' + progress + ' / ' + lvl.req + '</span>';
+    html += '</div>';
+    html += '<div class="level-progress-track">';
+    html += '<div class="level-progress-fill" style="width:' + pct + '%"></div>';
+    html += '</div>';
+    html += '</div>';
+
+    // Action
+    if(isClaimed){
+      html += '<div class="claimed-label"><i class="fas fa-check-circle"></i> BONUS CLAIMED</div>';
+    } else if(isCompleted){
+      html += '<button class="claim-btn" onclick="claimBonus(\'' + lvl.id + '\', ' + lvl.amount + ')">';
+      html += '<i class="fas fa-gift"></i> CLAIM RS.' + fmt(lvl.amount);
+      html += '</button>';
+    } else {
+      var remaining = lvl.req - activeTeamCount;
+      html += '<div class="locked-info">';
+      html += '<i class="fas fa-lock"></i> ' + remaining + ' more active members needed';
+      html += '</div>';
+    }
+
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+  pendingTotal = pendingCount;
+}
+
+/* ============================================================
+   UPDATE STATS
+   ============================================================ */
+function updateStats(){
+  var totalReferralBonus = 0;
+  allBonuses.forEach(function(b){
+    if(b.type !== 'claim' && b.source !== 'claim'){
+      totalReferralBonus += Number(b.amount) || 0;
+    }
+  });
+
+  animateValue(document.getElementById('statTotal'), 0, totalReferralBonus + claimedTotal, 800);
+  animateValue(document.getElementById('statClaimed'), 0, claimedTotal, 700);
+  animateValue(document.getElementById('statTeam'), 0, activeTeamCount, 600);
+  animateValue(document.getElementById('statPending'), 0, pendingTotal, 700);
+}
+
+/* ============================================================
+   RENDER HISTORY
+   ============================================================ */
+function renderBonusHistory(){
+  var el = document.getElementById('bonusHistoryList');
+  if(!el) return;
+
+  if(allBonuses.length === 0){
+    el.innerHTML = '<div class="empty-state">' +
+      '<div class="empty-icon"><i class="fas fa-gift"></i></div>' +
+      '<h3>NO BONUS YET</h3>' +
+      '<p>Abhi tak koi bonus nahi mila.<br>Apne friends ko invite karein aur team banayein!</p>' +
+      '<a href="team.html" class="cta-btn"><i class="fas fa-share-alt"></i> INVITE FRIENDS</a>' +
+      '</div>';
+    return;
+  }
+
+  var sorted = allBonuses.slice().sort(function(a, b){
+    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+  });
+
+  var html = '';
+  sorted.forEach(function(b){
+    var amount = Number(b.amount) || 0;
+    var isClaimItem = b.type === 'claim' || b.source === 'claim';
+    var name = b.fromUserName || b.fromUser || 'Team Member';
+    var initial = name.charAt(0).toUpperCase();
+    var planName = b.planName || 'Plan';
+    var level = b.level || 1;
+    var levelClass = 'level-bronze';
+    var levelText = 'LEVEL 1';
+
+    if(isClaimItem){
+      levelClass = 'level-gold';
+      levelText = 'LEVEL BONUS';
+    } else if(level === 1){
+      levelClass = 'level-bronze';
+      levelText = 'LEVEL 1';
+    } else if(level === 2){
+      levelClass = 'level-silver';
+      levelText = 'LEVEL 2';
+    }
+
+    var timeAgo = getTimeAgo(b.createdAt);
+    var itemClass = isClaimItem ? 'claimed-item' : '';
+
+    html += '<div class="history-item ' + itemClass + '">';
+    html += '<div class="history-avatar">' + (isClaimItem ? '🎁' : initial) + '</div>';
+    html += '<div class="history-content">';
+    html += '<h4>' + (isClaimItem ? 'Level Bonus Claimed' : name) + '</h4>';
+    html += '<div class="meta"><i class="fas fa-clock"></i> ' + timeAgo + '</div>';
+    html += '<span class="plan-tag ' + levelClass + '">' + (isClaimItem ? 'LEVEL BONUS' : planName + ' • ' + levelText) + '</span>';
+    html += '</div>';
+    html += '<div class="history-amount">';
+    html += '<div class="amt">+Rs.' + amount + '</div>';
+    html += '<div class="time">' + (isClaimItem ? 'Claimed' : 'Bonus') + '</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+}
+
+/* ============================================================
+   CLAIM BONUS — Main Function
+   ============================================================ */
+window.claimBonus = async function(levelId, amount){
+  if(!currentUser || !userDocId){
+    showToast('❌ User data not loaded', 'error');
+    return;
+  }
+
+  if(claimedLevels[levelId]){
+    showToast('⚠️ Ye bonus already claim ho chuka hai', 'error');
+    return;
+  }
+
+  var lvl = LEVELS.find(function(l){ return l.id === levelId; });
+  if(!lvl){
+    showToast('❌ Invalid level', 'error');
+    return;
+  }
+  if(activeTeamCount < lvl.req){
+    showToast('⚠️ Aap ne target poora nahi kiya', 'error');
+    return;
+  }
+
+  try{
+    showToast('⏳ Claiming bonus...', 'success');
+
+    var now = new Date();
+    var currentBal = Number(userData.balance) || 0;
+    var newBal = currentBal + amount;
+
+    // ✅ 1. Update user balance
+    await updateDoc(doc(db, 'users', userDocId), {
+      balance: newBal,
+      lastBonusClaimAt: now.toISOString()
+    });
+
+    // ✅ 2. Save claimed levels
+    var newClaimedLevels = Object.assign({}, claimedLevels);
+    newClaimedLevels[levelId] = true;
+
+    await updateDoc(doc(db, 'users', userDocId), {
+      claimedLevels: newClaimedLevels
+    });
+
+    // ✅ 3. Save claim in history
+    await addDoc(collection(db, 'referralBonuses'), {
+      toUserEmail: currentUser.email,
+      fromUserName: 'LEVEL BONUS',
+      fromUser: 'LEVEL BONUS',
+      planName: lvl.name + ' Level',
+      amount: amount,
+      level: 'bonus',
+      type: 'claim',
+      source: 'claim',
+      levelId: levelId,
+      createdAt: now.toISOString()
+    });
+
+    // ✅ 4. Add notification
+    try{
+      await addDoc(collection(db, 'notifications'), {
+        userEmail: currentUser.email,
+        type: 'bonus_claim',
+        title: 'Bonus Claimed!',
+        message: lvl.name + ' level bonus of Rs.' + fmt(amount) + ' has been added to your balance.',
+        amount: amount,
+        createdAt: now.toISOString(),
+        read: false
+      });
+    }catch(e){}
+
+    // ✅ 5. Update local + localStorage (Dashboard sync)
+    userData.balance = newBal;
+    userData.claimedLevels = newClaimedLevels;
+    claimedLevels = newClaimedLevels;
+    claimedTotal += amount;
+
+    if(currentUser){
+      currentUser.balance = newBal;
+      currentUser.claimedLevels = newClaimedLevels;
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    }
+
+    // ✅ 6. Update UI
+    renderLevels();
+    updateStats();
+
+    // ✅ 7. Success modal + confetti
+    document.getElementById('successAmount').innerText = 'Rs. ' + fmt(amount);
+    document.getElementById('successLevel').innerText = lvl.emoji + ' ' + lvl.name + ' LEVEL';
+    document.getElementById('successModal').classList.add('show');
+    showConfetti();
+
+  }catch(err){
+    console.error('Claim error:', err);
+    showToast('❌ Claim failed', 'error');
+  }
+};
+
+window.closeSuccessModal = function(){
+  document.getElementById('successModal').classList.remove('show');
+};
+
+console.log('Part 6 Loaded — Functions Ready');/* ============================================================
+   LOAD BONUSES + ACTIVE TEAM COUNT
+   ============================================================ */
+function loadBonuses(){
+  var myEmail = (currentUser.email || '').trim().toLowerCase();
+
+  // ✅ BONUSES listener
+  var bonusQ = query(
+    collection(db, 'referralBonuses'),
+    where('toUserEmail', '==', myEmail)
+  );
+
+  onSnapshot(bonusQ, function(snap){
+    allBonuses = [];
+    var totalClaimed = 0;
+
+    snap.forEach(function(d){
+      var b = d.data();
+      b.id = d.id;
+      allBonuses.push(b);
+
+      if(b.type === 'claim' || b.source === 'claim'){
+        totalClaimed += Number(b.amount) || 0;
+      }
+    });
+
+    claimedTotal = totalClaimed;
+
+    renderBonusHistory();
+    updateStats();
+  }, function(err){
+    console.log('Bonus load error:', err);
+  });
+
+  // ✅ ACTIVE TEAM COUNT
+  onSnapshot(collection(db, 'users'), function(usersSnap){
+    var allUsers = {};
+    usersSnap.forEach(function(d){
+      var u = d.data();
+      u._docId = d.id;
+      if(u.email){
+        allUsers[u.email.toLowerCase().trim()] = u;
+      }
+    });
+
+    onSnapshot(collection(db, 'investments'), function(investSnap){
+      var usersWithPurchase = {};
+
+      investSnap.forEach(function(invDoc){
+        var inv = invDoc.data();
+        var invEmail = (inv.userEmail || '').toLowerCase().trim();
+
+        if(inv.status === 'active' || inv.status === 'completed' || !inv.status){
+          usersWithPurchase[invEmail] = true;
+        }
+      });
+
+      var count = 0;
+      Object.values(allUsers).forEach(function(u){
+        var refBy = (u.referral || '').toLowerCase().trim();
+        var uEmail = (u.email || '').toLowerCase().trim();
+
+        if(refBy === myEmail && usersWithPurchase[uEmail]){
+          count++;
+        }
+      });
+
+      activeTeamCount = count;
+      renderLevels();
+      updateStats();
+    }, function(err){
+      console.log('Investments error:', err);
+    });
+  }, function(err){
+    console.log('Users error:', err);
+  });
+}
+
+/* ============================================================
+   FIND USER
+   ============================================================ */
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}
+
+/* ============================================================
+   BLOCKED SCREEN
+   ============================================================ */
+function showBlockedScreen(){
+  document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(160deg,#1a0000 0%,#0a0000 60%,#000 100%);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center;font-family:Poppins,sans-serif;">' +
+    '<div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#8B0000);display:flex;justify-content:center;align-items:center;font-size:70px;color:#fff;margin-bottom:35px;">' +
+    '<i class="fas fa-ban"></i></div>' +
+    '<h1 style="font-size:28px;font-weight:800;color:#FF1744;letter-spacing:3px;">ACCOUNT BLOCKED</h1>' +
+    '<p style="font-size:13px;color:#aaa;margin-top:15px;">Aap ka account temporary block hai.</p>' +
+    '</div>';
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    // Load claimed levels
+    if(userData.claimedLevels){
+      claimedLevels = userData.claimedLevels;
+    }
+
+    // Real-time user listener
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        showBlockedScreen();
+        return;
+      }
+
+      if(u.claimedLevels){
+        claimedLevels = u.claimedLevels;
+      }
+
+      currentUser = Object.assign({}, currentUser, u);
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    });
+
+    // Load bonuses + team count
+    loadBonuses();
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+
+    document.getElementById('bonusHistoryList').innerHTML = 
+      '<div class="empty-state">' +
+      '<div class="empty-icon" style="color:#FF1744;"><i class="fas fa-exclamation-triangle"></i></div>' +
+      '<h3>USER DATA NAHI MILA</h3>' +
+      '<p>' + err.message + '</p>' +
+      '<a href="dashboard.html" class="cta-btn">GO TO DASHBOARD</a>' +
+      '</div>';
+  }
+});
+
+console.log('Bonus Page Loaded Successfully');
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

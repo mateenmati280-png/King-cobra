@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Cobra - Deposit</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0510;color:#fff;padding:12px;padding-bottom:120px;min-height:100vh;}
+
+.header{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,rgba(60,20,80,0.6),rgba(20,5,30,0.9));padding:10px 14px;border-radius:14px;border:1.5px solid rgba(176,38,255,0.5);margin-bottom:12px;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.back-icon{width:38px;height:38px;background:rgba(20,5,30,0.8);border-radius:10px;display:flex;justify-content:center;align-items:center;color:#B026FF;font-size:15px;cursor:pointer;border:1.5px solid rgba(176,38,255,0.6);}
+.page-title{display:flex;align-items:center;gap:6px;}
+.page-title i{font-size:16px;color:#B026FF;}
+.page-title h3{font-size:16px;font-weight:900;color:#B026FF;letter-spacing:2px;}
+
+.balance-card{background:linear-gradient(135deg,rgba(60,20,80,0.9),rgba(40,10,60,0.95)),url('https://i.postimg.cc/LsD1XYcS/1789841059750.jpg') center/cover no-repeat;border:1.5px solid #B026FF;border-radius:16px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;min-height:110px;display:flex;flex-direction:column;justify-content:center;}
+.balance-card::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,0.75) 30%,transparent 100%);pointer-events:none;}
+.balance-card > *{position:relative;z-index:2;}
+.balance-label{font-size:9px;color:#FFD700;letter-spacing:2px;margin-bottom:5px;font-weight:800;}
+.balance-amount{font-size:28px;font-weight:900;color:#FFD700;margin-bottom:6px;}
+.balance-status{display:flex;align-items:center;gap:5px;font-size:10px;color:#fff;font-weight:600;}
+.status-dot{width:8px;height:8px;background:#00FF88;border-radius:50%;box-shadow:0 0 8px #00FF88;}
+.balance-icon{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#FFD700,#FFA500);display:flex;justify-content:center;align-items:center;color:#000;font-size:20px;z-index:3;}
+
+.section-title{text-align:center;font-size:11px;font-weight:900;color:#FFD700;letter-spacing:3px;margin:18px 0 12px 0;position:relative;text-transform:uppercase;}
+.section-title::before,.section-title::after{content:'';position:absolute;top:50%;width:22%;height:1.5px;background:linear-gradient(to right,transparent,#FFD700);}
+.section-title::before{left:0;}
+.section-title::after{right:0;transform:scaleX(-1);}
+</style><style>
+/* PAYMENT METHOD CARD */
+.payment-card{background:linear-gradient(135deg,rgba(40,5,5,0.95),rgba(20,0,0,0.95));border:1.5px solid #FF1744;border-radius:16px;padding:14px;margin-bottom:14px;position:relative;overflow:hidden;cursor:pointer;}
+.payment-card.selected{border-color:#00FF88;box-shadow:0 0 25px rgba(0,255,136,0.4);}
+.payment-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 100% 0%,rgba(255,23,68,0.35),transparent 60%);pointer-events:none;}
+.payment-card.selected::before{background:radial-gradient(circle at 100% 0%,rgba(0,255,136,0.35),transparent 60%);}
+.payment-card-content{display:flex;gap:12px;align-items:center;position:relative;z-index:2;}
+.jazzcash-logo{width:56px;height:56px;border-radius:12px;background:url('https://i.postimg.cc/HxrPrftM/file-00000000549082119d0f09e7ad391f18.png') center/contain no-repeat,#fff;border:2px solid #FFD700;flex-shrink:0;padding:4px;}
+.payment-info{flex:1;min-width:0;}
+.payment-info h3{font-size:16px;color:#fff;font-weight:900;margin-bottom:2px;}
+.payment-info .payment-sub{font-size:10px;color:#ffaaaa;font-weight:600;margin-bottom:6px;}
+.payment-badges{display:flex;gap:4px;flex-wrap:wrap;}
+.pay-badge{font-size:8px;font-weight:900;padding:3px 7px;border-radius:5px;letter-spacing:0.5px;background:rgba(0,0,0,0.5);border:1px solid;text-transform:uppercase;}
+.pay-badge.instant{color:#00FF88;border-color:#00FF88;}
+.pay-badge.secure{color:#00BFFF;border-color:#00BFFF;}
+.pay-badge.trusted{color:#FFD700;border-color:#FFD700;}
+.payment-arrow{color:#FFD700;font-size:18px;font-weight:900;flex-shrink:0;transition:transform 0.3s;}
+.payment-card.selected .payment-arrow{transform:rotate(90deg);color:#00FF88;}
+.payment-hint{font-size:9px;color:#888;text-align:center;margin-top:6px;font-weight:700;position:relative;z-index:2;}
+.payment-card.selected .payment-hint{color:#00FF88;}
+
+/* JAZZCASH DETAILS (Hidden by default) */
+.jc-details-card{background:linear-gradient(160deg,rgba(60,5,30,0.98),rgba(30,0,15,0.98));border:2px solid #FF1744;border-radius:18px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;display:none;}
+.jc-details-card.show{display:block;}
+.jc-details-header{text-align:center;margin-bottom:14px;position:relative;z-index:2;}
+.jc-details-header h3{font-size:16px;font-weight:900;color:#FFD700;letter-spacing:1.5px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.jc-details-header h3 i{font-size:18px;}
+.jc-details-header p{font-size:10.5px;color:#ff8888;font-weight:600;}
+.jc-details-header::after{content:'';display:block;width:85%;height:1.5px;margin:10px auto 0;background:linear-gradient(90deg,transparent,#FF1744,#FFD700,#FF1744,transparent);}
+.jc-info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed rgba(255,215,0,0.2);gap:10px;position:relative;z-index:2;}
+.jc-info-row:last-of-type{border-bottom:none;}
+.jc-info-label{font-size:9.5px;color:#ffaaaa;letter-spacing:1.5px;font-weight:800;text-transform:uppercase;}
+.jc-info-value{font-size:14px;color:#FFD700;font-weight:900;letter-spacing:1px;display:flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);padding:8px 12px;border-radius:10px;border:1.5px solid rgba(255,215,0,0.4);}
+.jc-copy-btn{background:linear-gradient(135deg,#FFD700,#FFA500);border:none;width:26px;height:26px;border-radius:7px;color:#000;font-size:11px;cursor:pointer;display:flex;justify-content:center;align-items:center;flex-shrink:0;}
+
+/* INPUT FIELDS */
+.field-label{font-size:11px;color:#FFD700;font-weight:900;letter-spacing:1.5px;margin-bottom:8px;margin-top:14px;text-transform:uppercase;position:relative;z-index:2;display:flex;align-items:center;gap:5px;}
+.field-label i{font-size:12px;}
+.field-label .required{color:#FF1744;font-size:13px;}
+.field-input{width:100%;background:rgba(0,0,0,0.5);border:1.5px solid rgba(255,215,0,0.4);border-radius:11px;padding:13px 14px;color:#fff;font-size:13px;font-weight:600;outline:none;position:relative;z-index:2;}
+.field-input:focus{border-color:#FFD700;background:rgba(0,0,0,0.7);}
+.field-input::placeholder{color:#666;font-weight:500;font-size:12px;}
+.field-input.amount-input{font-size:18px;font-weight:900;letter-spacing:1.5px;color:#FFD700;}
+
+/* UPLOAD AREA */
+.upload-area{background:rgba(0,0,0,0.4);border:2px dashed rgba(255,215,0,0.6);border-radius:13px;padding:20px 14px;text-align:center;cursor:pointer;position:relative;z-index:2;min-height:140px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;}
+.upload-area.has-image{border-style:solid;border-color:#00FF88;padding:0;min-height:auto;background:transparent;}
+.upload-area i.upload-icon{font-size:40px;color:#FFD700;}
+.upload-area h4{font-size:12px;color:#fff;font-weight:800;line-height:1.4;}
+.upload-area p{font-size:10px;color:#ff8888;font-weight:500;}
+.upload-preview-img{width:100%;display:block;border-radius:11px;max-height:280px;object-fit:contain;background:#000;}
+.upload-area.has-image .upload-placeholder-content{display:none;}
+.upload-remove-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#B00020);border:2px solid #FFD700;color:#fff;font-size:13px;cursor:pointer;display:flex;justify-content:center;align-items:center;z-index:10;}
+
+/* CONFIRM BUTTON */
+.confirm-btn-big{width:100%;background:linear-gradient(135deg,#FFD700,#FFA500);border:none;padding:14px;border-radius:13px;color:#000;font-weight:900;font-size:13px;letter-spacing:2.5px;cursor:pointer;margin-top:14px;display:flex;justify-content:center;align-items:center;gap:8px;text-transform:uppercase;}
+.confirm-btn-big:disabled{background:linear-gradient(135deg,#333,#1a1a1a);color:#666;cursor:not-allowed;}
+.confirm-btn-big i{font-size:14px;}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,5,20,0.98);border-top:1.5px solid rgba(255,215,0,0.3);display:flex;justify-content:space-around;align-items:center;padding:10px 6px 12px 6px;z-index:99999;}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;color:#666;font-size:8px;cursor:pointer;gap:3px;flex:1;min-height:44px;}
+.nav-item i{font-size:19px;}
+.nav-item p{font-size:8px;font-weight:600;}
+.nav-item.active{color:#FFD700;}
+.nav-center{position:relative;top:-24px;width:60px;height:60px;min-width:60px;border-radius:50%;background:url('https://i.postimg.cc/qRd9z2w2/1789816528795.jpg') center/cover no-repeat;border:2.5px solid #FFD700;cursor:pointer;z-index:101;flex:0 0 auto;}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(150px);background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;padding:13px 24px;border-radius:50px;font-weight:800;font-size:12px;z-index:999999;transition:all 0.35s;opacity:0;pointer-events:none;max-width:90%;text-align:center;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.toast.error{background:linear-gradient(135deg,#FF1744,#B00020);color:#fff;}
+.toast.success{background:linear-gradient(135deg,#00FF88,#00BFFF);color:#000;}
+
+/* SUCCESS POPUP */
+.success-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(160deg,#0a2a1a,#02120a);border:2.5px solid #00FF88;border-radius:22px;padding:28px 22px;text-align:center;z-index:99999999;transition:transform 0.4s;max-width:300px;width:88%;}
+.success-popup.show{transform:translate(-50%,-50%) scale(1);}
+.success-popup .success-icon{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#00FF88,#00BFFF);display:flex;justify-content:center;align-items:center;color:#000;font-size:34px;margin:0 auto 16px;}
+.success-popup h3{font-size:16px;color:#00FF88;font-weight:900;letter-spacing:2px;margin-bottom:8px;}
+.success-popup p{font-size:12px;color:#fff;margin-bottom:6px;}
+.success-popup .amount{font-size:26px;color:#FFD700;font-weight:900;margin:12px 0;}
+
+/* IMAGE PREVIEW MODAL */
+.image-preview-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.98);z-index:99999999;display:none;justify-content:center;align-items:center;padding:20px;}
+.image-preview-modal.show{display:flex;}
+.image-preview-modal img{max-width:100%;max-height:90vh;border-radius:12px;border:2.5px solid #FFD700;}
+.image-preview-close{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FF1744,#B00020);border:2px solid #FFD700;color:#fff;font-size:16px;cursor:pointer;display:flex;justify-content:center;align-items:center;}
+
+/* LOADING OVERLAY */
+.loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:9999999;display:none;justify-content:center;align-items:center;flex-direction:column;gap:16px;}
+.loading-overlay.show{display:flex;}
+.loading-overlay .spinner{width:60px;height:60px;border:5px solid rgba(255,215,0,0.2);border-top-color:#FFD700;border-radius:50%;animation:spin 0.9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-overlay p{font-size:13px;color:#FFD700;letter-spacing:2px;font-weight:900;}
+</style>
+</head><body>
+
+<div id="toast" class="toast">Action!</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+<div class="spinner"></div>
+<p id="loadingText">PROCESSING...</p>
+</div>
+
+<div class="image-preview-modal" id="imagePreviewModal" onclick="closeImagePreview()">
+<button class="image-preview-close" onclick="closeImagePreview()"><i class="fas fa-times"></i></button>
+<img id="imagePreviewImg" src="" alt="Preview">
+</div>
+
+<!-- HEADER -->
+<div class="header">
+<div class="header-left">
+<div class="back-icon" onclick="window.location.href='dashboard.html'"><i class="fas fa-arrow-left"></i></div>
+<div class="page-title">
+<i class="fas fa-wallet"></i>
+<h3>DEPOSIT</h3>
+</div>
+</div>
+</div>
+
+<!-- BALANCE CARD -->
+<div class="balance-card">
+<div class="balance-label">TOTAL BALANCE</div>
+<div class="balance-amount" id="userBalance">RS. 0.00</div>
+<div class="balance-status">
+<span class="status-dot"></span>
+<span>Account Active</span>
+</div>
+<div class="balance-icon"><i class="fas fa-wallet"></i></div>
+</div>
+
+<!-- PAYMENT METHOD -->
+<div class="section-title">PAYMENT METHOD</div>
+<div class="payment-card" id="jazzcashCard" onclick="selectJazzCash()">
+<div class="payment-card-content">
+<div class="jazzcash-logo"></div>
+<div class="payment-info">
+<h3>JazzCash Deposit</h3>
+<div class="payment-sub">Fast • Secure • 24/7</div>
+<div class="payment-badges">
+<span class="pay-badge instant">Instant</span>
+<span class="pay-badge secure">Secure</span>
+<span class="pay-badge trusted">Trusted</span>
+</div>
+</div>
+<div class="payment-arrow"><i class="fas fa-chevron-right"></i></div>
+</div>
+<div class="payment-hint" id="paymentHint"><i class="fas fa-hand-pointer"></i> Tap to view payment details</div>
+</div>
+
+<!-- JAZZCASH DETAILS -->
+<div class="jc-details-card" id="jcDetailsCard">
+<div class="jc-details-header">
+<h3><i class="fas fa-credit-card"></i> JAZZCASH DETAILS</h3>
+<p>In details par amount bhejein</p>
+</div>
+
+<div class="jc-info-row">
+<span class="jc-info-label">ACCOUNT NUMBER</span>
+<span class="jc-info-value">03157262843
+<button class="jc-copy-btn" onclick="event.stopPropagation();copyText('03039586850')"><i class="fas fa-copy"></i></button>
+</span>
+</div>
+
+<div class="jc-info-row">
+<span class="jc-info-label">ACCOUNT NAME</span>
+<span class="jc-info-value">M.ARSHAD </span>
+</div>
+
+<div class="field-label"><i class="fas fa-coins"></i> DEPOSIT AMOUNT (Rs.) <span class="required">*</span></div>
+<input type="number" id="depositAmount" class="field-input amount-input" placeholder="Enter amount (min 100)" min="100" oninput="onAmountChange(this.value)">
+
+<div class="field-label"><i class="fas fa-receipt"></i> TRANSACTION ID <span style="font-size:9px;color:#888;font-weight:600;text-transform:none;">(Optional)</span></div>
+<input type="text" id="transactionId" class="field-input" placeholder="e.g. 1234567890">
+
+<div class="field-label"><i class="fas fa-camera"></i> PAYMENT SCREENSHOT <span class="required">*</span></div>
+<div class="upload-area" id="uploadBox" onclick="triggerFileInput()">
+<div class="upload-placeholder-content">
+<i class="fas fa-cloud-upload-alt upload-icon"></i>
+<h4>Screenshot upload karne ke liye<br>click karein</h4>
+<p id="uploadStatusText">Koi file select nahi ki gayi</p>
+</div>
+<img class="upload-preview-img" id="previewImg" src="" style="display:none;" alt="Screenshot">
+<button class="upload-remove-btn" id="removeBtn" onclick="event.stopPropagation(); removeImage()" style="display:none;"><i class="fas fa-times"></i></button>
+<input type="file" id="screenshotInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+</div>
+
+<button class="confirm-btn-big" id="submitBtn" onclick="submitDeposit()" disabled>
+<i class="fas fa-check-circle"></i> CONFIRM DEPOSIT
+</button>
+
+</div>
+
+<!-- SUCCESS POPUP -->
+<div class="success-popup" id="successPopup">
+<div class="success-icon"><i class="fas fa-check"></i></div>
+<h3>DEPOSIT SUBMITTED!</h3>
+<p>Your deposit is pending approval</p>
+<div class="amount" id="successAmount">Rs. 0</div>
+<p style="color:#888;font-size:10px;">Admin will verify within 5-30 minutes</p>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<div class="nav-item" onclick="window.location.href='dashboard.html'"><i class="fas fa-home"></i><p>Home</p></div>
+<div class="nav-item" onclick="window.location.href='invest.html'"><i class="fas fa-chart-line"></i><p>Invest</p></div>
+<div class="nav-center" onclick="window.location.href='dashboard.html'"></div>
+<div class="nav-item" onclick="window.location.href='team.html'"><i class="fas fa-users"></i><p>Team</p></div>
+<div class="nav-item" onclick="window.location.href='profile.html'"><i class="fas fa-user"></i><p>Profile</p></div>
+</div><script type="module">
+import { 
+  db, doc, collection, query, where, onSnapshot, getDocs, addDoc 
+} from './firebase-config.js';
+
+var currentUser = null;
+var userDocId = null;
+var userData = null;
+var depositAmountValue = 0;
+var uploadedImageBase64 = null;
+var uploadedFileName = '';
+var isSubmitting = false;
+var jazzcashSelected = false;
+
+var JAZZCASH_ACCOUNT = {
+  name: 'M.ARSHAD',
+  number: '03157262843'
+};
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg, type){
+  var t = document.getElementById('toast');
+  if(!t){ alert(msg); return; }
+  t.className = 'toast';
+  if(type) t.classList.add(type);
+  t.innerText = msg;
+  t.classList.add('show');
+  if(window.tt) clearTimeout(window.tt);
+  window.tt = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+window.showToast = showToast;
+
+/* ============================================================
+   FORMAT
+   ============================================================ */
+function fmt(n){
+  n = Number(n) || 0;
+  return n.toLocaleString('en-US');
+}
+
+/* ============================================================
+   COPY
+   ============================================================ */
+window.copyText = function(text){
+  showToast('Copied: ' + text, 'success');
+  if(navigator.clipboard){ navigator.clipboard.writeText(text); }
+};
+
+/* ============================================================
+   SELECT JAZZCASH
+   ============================================================ */
+window.selectJazzCash = function(){
+  var card = document.getElementById('jazzcashCard');
+  var details = document.getElementById('jcDetailsCard');
+  var hint = document.getElementById('paymentHint');
+
+  if(!jazzcashSelected){
+    jazzcashSelected = true;
+    card.classList.add('selected');
+    details.classList.add('show');
+    if(hint) hint.innerHTML = '<i class="fas fa-check-circle"></i> JazzCash selected - Details below';
+
+    setTimeout(function(){
+      if(details){
+        details.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    }, 200);
+
+    showToast('JazzCash selected - Details show ho gayi', 'success');
+  } else {
+    jazzcashSelected = false;
+    card.classList.remove('selected');
+    details.classList.remove('show');
+    if(hint) hint.innerHTML = '<i class="fas fa-hand-pointer"></i> Tap to view payment details';
+    showToast('JazzCash deselected', 'error');
+  }
+  updateSubmitButton();
+};
+
+/* ============================================================
+   AMOUNT INPUT
+   ============================================================ */
+window.onAmountChange = function(value){
+  depositAmountValue = Number(value) || 0;
+  updateSubmitButton();
+};
+
+function updateSubmitButton(){
+  var btn = document.getElementById('submitBtn');
+  var hasAmount = depositAmountValue >= 100;
+  var hasScreenshot = uploadedImageBase64 !== null;
+  var hasMethod = jazzcashSelected;
+
+  if(hasAmount && hasScreenshot && hasMethod){
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
+}
+
+/* ============================================================
+   SCREENSHOT UPLOAD
+   ============================================================ */
+window.triggerFileInput = function(){
+  if(uploadedImageBase64){
+    showImagePreview(uploadedImageBase64);
+  } else {
+    document.getElementById('screenshotInput').click();
+  }
+};
+
+window.handleFileSelect = function(event){
+  var file = event.target.files[0];
+  if(!file) return;
+
+  if(!file.type.startsWith('image/')){
+    showToast('Only images allowed!', 'error');
+    event.target.value = '';
+    return;
+  }
+
+  if(file.size > 2 * 1024 * 1024){
+    showToast('Image too large! Max 2MB', 'error');
+    event.target.value = '';
+    return;
+  }
+
+  compressImage(file, function(base64Str){
+    uploadedImageBase64 = base64Str;
+    uploadedFileName = file.name;
+
+    var previewImg = document.getElementById('previewImg');
+    previewImg.src = base64Str;
+    previewImg.style.display = 'block';
+
+    var uploadBox = document.getElementById('uploadBox');
+    uploadBox.classList.add('has-image');
+
+    document.getElementById('removeBtn').style.display = 'flex';
+    document.getElementById('uploadStatusText').innerText = file.name;
+
+    updateSubmitButton();
+    showToast('Screenshot uploaded!', 'success');
+  });
+};
+
+function compressImage(file, callback){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var img = new Image();
+    img.onload = function(){
+      var canvas = document.createElement('canvas');
+      var maxWidth = 1200;
+      var maxHeight = 1200;
+      var width = img.width;
+      var height = img.height;
+
+      if(width > maxWidth){
+        height = (maxWidth / width) * height;
+        width = maxWidth;
+      }
+      if(height > maxHeight){
+        width = (maxHeight / height) * width;
+        height = maxHeight;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      var compressed = canvas.toDataURL('image/jpeg', 0.7);
+      callback(compressed);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+window.removeImage = function(){
+  uploadedImageBase64 = null;
+  uploadedFileName = '';
+
+  document.getElementById('screenshotInput').value = '';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('previewImg').style.display = 'none';
+  document.getElementById('uploadBox').classList.remove('has-image');
+  document.getElementById('removeBtn').style.display = 'none';
+  document.getElementById('uploadStatusText').innerText = 'Koi file select nahi ki gayi';
+
+  updateSubmitButton();
+  showToast('Screenshot removed', 'error');
+};
+
+window.showImagePreview = function(src){
+  document.getElementById('imagePreviewImg').src = src;
+  document.getElementById('imagePreviewModal').classList.add('show');
+};
+window.closeImagePreview = function(){
+  document.getElementById('imagePreviewModal').classList.remove('show');
+};
+
+console.log('Part 4 Loaded - Functions Ready');/* ============================================================
+   SUBMIT DEPOSIT
+   ============================================================ */
+window.submitDeposit = async function(){
+  if(isSubmitting) return;
+
+  if(depositAmountValue < 100){
+    showToast('Minimum deposit is Rs. 100', 'error');
+    return;
+  }
+  if(!uploadedImageBase64){
+    showToast('Please upload payment screenshot', 'error');
+    return;
+  }
+  if(!jazzcashSelected){
+    showToast('Pehle JazzCash select karein', 'error');
+    return;
+  }
+  if(!currentUser || !currentUser.email){
+    showToast('User not logged in', 'error');
+    return;
+  }
+
+  isSubmitting = true;
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SUBMITTING...';
+
+  try{
+    var amount = depositAmountValue;
+    var txId = document.getElementById('transactionId').value.trim();
+    var now = new Date();
+
+    await addDoc(collection(db, 'requests'), {
+      userEmail: currentUser.email,
+      userName: currentUser.name || 'User',
+      userDocId: userDocId,
+      type: 'deposit',
+      amount: amount,
+      method: 'jazzcash',
+      methodName: 'JazzCash',
+      accountName: JAZZCASH_ACCOUNT.name,
+      accountNumber: JAZZCASH_ACCOUNT.number,
+      transactionId: txId || '',
+      screenshot: uploadedImageBase64,
+      screenshotName: uploadedFileName,
+      status: 'pending',
+      createdAt: now.toISOString(),
+      approvedAt: null,
+      rejectedAt: null
+    });
+
+    try{
+      await addDoc(collection(db, 'notifications'), {
+        userEmail: currentUser.email,
+        type: 'deposit',
+        title: 'Deposit Request Submitted',
+        message: 'Rs. ' + fmt(amount) + ' deposit via JazzCash submitted. Admin will verify shortly.',
+        amount: amount,
+        createdAt: now.toISOString(),
+        read: false
+      });
+    }catch(e){}
+
+    document.getElementById('successAmount').innerText = 'Rs. ' + fmt(amount);
+    var popup = document.getElementById('successPopup');
+    popup.classList.add('show');
+
+    setTimeout(function(){
+      showToast('Admin ko aap ki request send kar di gayi hai!', 'success');
+    }, 500);
+
+    setTimeout(function(){
+      showToast('Admin 5-30 minute mein verify karega', 'success');
+    }, 2500);
+
+    setTimeout(function(){
+      window.location.href = 'dashboard.html';
+    }, 4500);
+
+  }catch(err){
+    console.error('Deposit error:', err);
+    showToast('Failed to submit. Try again.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-check-circle"></i> CONFIRM DEPOSIT';
+    isSubmitting = false;
+  }
+};
+
+/* ============================================================
+   FIND USER
+   ============================================================ */
+async function findUserDocument(email){
+  var cleanEmail = (email || '').toLowerCase().trim();
+  if(!cleanEmail) throw new Error('Email empty');
+
+  try{
+    var q = query(collection(db, 'users'), where('email', '==', cleanEmail));
+    var snap1 = await getDocs(q);
+    if(!snap1.empty){
+      var d1 = snap1.docs[0];
+      return { id: d1.id, data: d1.data() };
+    }
+  }catch(e){}
+
+  try{
+    var allSnap = await getDocs(collection(db, 'users'));
+    var found = null;
+    allSnap.forEach(function(d){
+      var u = d.data();
+      if(u.email && u.email.toLowerCase().trim() === cleanEmail){
+        found = { id: d.id, data: u };
+      }
+    });
+    if(found) return found;
+  }catch(e){}
+
+  throw new Error('User data nahi mila!');
+}
+
+function updateUI(data){
+  if(!data) return;
+  var bal = Number(data.balance) || 0;
+  var balEl = document.getElementById('userBalance');
+  if(balEl){
+    balEl.innerText = 'RS. ' + bal.toFixed(2);
+  }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+window.addEventListener('load', async function(){
+  var cur = localStorage.getItem('kingcobra_current');
+  if(!cur){ window.location.href = 'index.html'; return; }
+
+  try{ currentUser = JSON.parse(cur); }catch(e){ window.location.href = 'index.html'; return; }
+  if(!currentUser.email){ window.location.href = 'index.html'; return; }
+
+  updateUI(currentUser);
+
+  try{
+    var result = await findUserDocument(currentUser.email);
+    userDocId = result.id;
+    userData = result.data;
+
+    updateUI(userData);
+    currentUser = Object.assign({}, currentUser, userData);
+    localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+
+    onSnapshot(doc(db, 'users', userDocId), function(snap){
+      if(!snap.exists()) return;
+      var u = snap.data();
+      userData = u;
+
+      if(u.blocked === true){
+        document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0000;display:flex;justify-content:center;align-items:center;color:#FF1744;font-size:20px;font-weight:800;flex-direction:column;gap:16px;text-align:center;padding:30px;"><i class="fas fa-ban" style="font-size:60px;"></i><h1>ACCOUNT BLOCKED</h1></div>';
+        return;
+      }
+
+      updateUI(u);
+      currentUser = Object.assign({}, currentUser, u);
+      localStorage.setItem('kingcobra_current', JSON.stringify(currentUser));
+    });
+
+  }catch(err){
+    console.error('Init error:', err);
+    showToast('Error: ' + err.message, 'error');
+  }
+});
+
+console.log('Deposit Page Loaded Successfully');
+</script>
+
+<!-- PWA SCRIPT -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Cobra - Login</title>
+
+<!-- ============================================ -->
+<!-- ✅ PWA META TAGS                             -->
+<!-- ============================================ -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="King Cobra">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head><body>
+<div id="toast" class="toast">Action!</div>
+<div class="glow-bg-1"></div>
+<div class="glow-bg-2"></div>
+<div class="auth-container">
+<div class="auth-brand">
+<div class="cobra-logo-auth">K</div>
+<h1>KING COBRA</h1>
+<p>Secure • Trusted • Profitable</p>
+</div>
+
+<!-- LOGIN FORM -->
+<div id="loginForm" class="auth-form active">
+<div class="input-group">
+<i class="fas fa-envelope"></i>
+<input type="email" id="loginEmail" placeholder="Enter your Email Address">
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="loginPass" placeholder="Password">
+<i class="fas fa-eye toggle-password" onclick="togglePassword('loginPass', this)"></i>
+</div>
+<button class="auth-btn" id="loginBtn" onclick="handleLogin()">
+Login Now <i class="fas fa-arrow-right"></i>
+</button>
+<p class="switch-text">Don't have an account? <span onclick="switchForm('signup')">Sign Up</span></p>
+</div>
+
+<!-- SIGNUP FORM -->
+<div id="signupForm" class="auth-form">
+<div class="input-group">
+<i class="fas fa-user"></i>
+<input type="text" id="signupName" placeholder="Full Name">
+</div>
+<div class="input-group">
+<i class="fas fa-envelope"></i>
+<input type="email" id="signupEmail" placeholder="Email Address">
+</div>
+<div class="input-group">
+<i class="fas fa-lock"></i>
+<input type="password" id="signupPass" placeholder="Create Password">
+<i class="fas fa-eye toggle-password" onclick="togglePassword('signupPass', this)"></i>
+</div>
+<div class="input-group">
+<i class="fas fa-user-tag"></i>
+<input type="text" id="signupRef" placeholder="Referral Code (Optional)">
+</div>
+<button class="auth-btn" id="signupBtn" onclick="handleSignup()">
+Create Account <i class="fas fa-arrow-right"></i>
+</button>
+<p class="switch-text">Already have an account? <span onclick="switchForm('login')">Login</span></p>
+</div>
+
+<div class="auth-features">
+<div class="feature-item"><i class="fas fa-shield-alt"></i><p>100% Secure</p></div>
+<div class="feature-item"><i class="fas fa-bolt"></i><p>Instant Payout</p></div>
+<div class="feature-item"><i class="fas fa-headset"></i><p>24/7 Support</p></div>
+</div>
+</div>
+
+<!-- ⚠️ type="module" ZAROORI HAI -->
+<script type="module" src="script.js"></script>
+
+<!-- ============================================ -->
+<!-- ✅ PWA SCRIPT — </body> se PEHLE             -->
+<!-- ============================================ -->
+<script src="install-pwa.js"></script>
+
+</body>
+</html>
